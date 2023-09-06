@@ -124,6 +124,8 @@ GEM
       racc
     psych (5.1.0)
       stringio
+    puma (5.6.7)
+      nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -186,6 +188,14 @@ GEM
       rubocop (~> 1.51)
     ruby-progressbar (1.13.0)
     sorbet-runtime (0.5.11002)
+    sprockets (4.2.1)
+      concurrent-ruby (~> 1.0)
+      rack (>= 2.2.4, < 4)
+    sprockets-rails (3.4.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      sprockets (>= 3.0.0)
+    sqlite3 (1.6.4-arm64-darwin)
     stringio (3.0.8)
     thor (1.2.2)
     timeout (0.4.0)
@@ -205,8 +215,11 @@ DEPENDENCIES
   minitest-distributed
   minitest-silence (>= 0.2.4)
   mysql2 (~> 0.5)
+  puma (~> 5.0)
   rails
   rubocop-shopify
+  sprockets-rails
+  sqlite3
 
 BUNDLED WITH
    2.4.6
