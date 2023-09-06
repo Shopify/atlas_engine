@@ -1,0 +1,19 @@
+steps:
+  - label: ':ruby: Tests'
+    run:
+      - bundle: ~
+      - bin/rails db:setup
+      - bin/rails test
+    services:
+      redis: 'alpine'
+      mysql: '5.7'
+    timeout: 10m
+    parallelism: 1
+
+  - label: ':rubocop: Ruby Lint'
+    run:
+      - bundle: ~
+      - bundle exec rubocop
+    cache:
+      - tmp/rubocop
+    timeout: 10m

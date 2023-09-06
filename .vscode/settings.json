@@ -1,0 +1,51 @@
+{
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/tmp/**": true,
+    "**/gems/**": true,
+    "**/sorbet/rbi/shims/gems": true,
+    "**/sorbet/rbi/gems": true,
+    "**/test/unit/gems": true,
+    "**/bin/*": true,
+    "**/gems": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/logs/**": true,
+    "**/.bundle/**": true,
+    "**/public/assets/**": true,
+    "**/config/assets/**": true,
+    "**/.sass-cache/**": true,
+    "**/public/tmp/**": true,
+    "**/public/files/**": true,
+    "**/public/bundles/**": true,
+    "**/db/backup/**": true,
+    "**/db/*structure.sql": true,
+    "**/db/schema.rb": true,
+    "**/db/graphql/**": true,
+    "**/vendor/bundle/**": true,
+  },
+  "files.exclude": {
+    "**/node_modules/**": true,
+    "**/tmp/**": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/tmp/**": true,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "ruby.useBundler": true,
+  "ruby.lint": {
+    "rubocop": false
+  },
+  "ruby.codeCompletion": false,
+  "ruby.intellisense": false,
+  "byesig.opacity": 0.4,
+  "byesig.fold": false,
+  "byesig.showIcon": false
+}
+

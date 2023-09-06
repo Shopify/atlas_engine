@@ -1,0 +1,23 @@
+# https://vault.shopify.io/page/-Isogun~dhb8c8e.md
+name: atlas-engine-test-one
+
+vm:
+  ip_address: 192.168.64.207
+  memory: 2G
+  cores: 2
+
+services:
+  - redis
+  - memcached
+  # - toxiproxy
+  - mysql
+  - elasticsearch
+  # - zookeeper
+  # - argus
+  # - magellan
+  # - imagery
+  - nginx
+  # - kafka
+
+hostnames:
+  - atlas-engine-test-one.myshopify.io: {proxy_to_host_port: 24607}

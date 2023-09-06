@@ -1,0 +1,15 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+  shopify-types: rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 3.2
+  Exclude:
+    - bin/*
+    - node_modules/**/*
+    - db/schema.rb
+
+Sorbet/ForbidSuperclassConstLiteral:
+  Exclude:
+    - db/migrate/*.rb
+    - db/lhm/*.rb
