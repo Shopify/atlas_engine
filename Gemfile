@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
+
+gemspec
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
@@ -60,6 +63,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rubocop-shopify", require: false
+  gem "graphiql-rails"
 end
 
 group :development do
