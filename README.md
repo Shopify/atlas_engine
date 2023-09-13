@@ -6,5 +6,6 @@ Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https:
 
 * The gem follows standard Rails practices:
   * `bundle install` to install dependencies
+  * `rails db:setup` to setup database
   * `bin/rails server` to start the server
   * `bin/rails test` to run tests
