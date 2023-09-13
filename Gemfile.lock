@@ -138,7 +138,7 @@ GEM
       racc
     psych (5.1.0)
       stringio
-    puma (5.6.7)
+    puma (6.3.1)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -233,7 +233,7 @@ DEPENDENCIES
   minitest-distributed
   minitest-silence (>= 0.2.4)
   mysql2 (~> 0.5)
-  puma (~> 5.0)
+  puma (~> 6.3)
   rails
   rubocop-shopify
   sprockets-rails
