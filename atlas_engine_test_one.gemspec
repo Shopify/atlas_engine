@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 7.0.7.2"
   spec.add_dependency "graphql"
   spec.add_dependency "graphiql-rails"
+  spec.add_dependency "elasticsearch-model"
+  spec.add_dependency "elasticsearch-rails"
 end

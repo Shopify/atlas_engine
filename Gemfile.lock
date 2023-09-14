@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     atlas_engine_test_one (0.1.0)
+      elasticsearch-model
+      elasticsearch-rails
       graphiql-rails
       graphql
       rails (>= 7.0.7.2)
@@ -84,13 +86,50 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    elasticsearch (7.17.8)
+      elasticsearch-api (= 7.17.8)
+      elasticsearch-transport (= 7.17.8)
+    elasticsearch-api (7.17.8)
+      multi_json
+    elasticsearch-model (7.2.1)
+      activesupport (> 3)
+      elasticsearch (~> 7)
+      hashie
+    elasticsearch-rails (7.2.1)
+    elasticsearch-transport (7.17.8)
+      faraday (~> 1)
+      multi_json
     erubi (1.12.0)
+    faraday (1.10.3)
+      faraday-em_http (~> 1.0)
+      faraday-em_synchrony (~> 1.0)
+      faraday-excon (~> 1.1)
+      faraday-httpclient (~> 1.0)
+      faraday-multipart (~> 1.0)
+      faraday-net_http (~> 1.0)
+      faraday-net_http_persistent (~> 1.0)
+      faraday-patron (~> 1.0)
+      faraday-rack (~> 1.0)
+      faraday-retry (~> 1.0)
+      ruby2_keywords (>= 0.0.4)
+    faraday-em_http (1.0.0)
+    faraday-em_synchrony (1.0.0)
+    faraday-excon (1.1.0)
+    faraday-httpclient (1.0.1)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (1.0.1)
+    faraday-net_http_persistent (1.2.0)
+    faraday-patron (1.0.0)
+    faraday-rack (1.0.0)
+    faraday-retry (1.0.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
     graphiql-rails (1.9.0)
       railties
       sprockets-rails
     graphql (2.1.0)
+    hashie (5.0.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -125,6 +164,8 @@ GEM
       sorbet-runtime
     minitest-silence (0.2.4)
       minitest (~> 5.12)
+    multi_json (1.15.0)
+    multipart-post (2.3.0)
     mysql2 (0.5.5)
     net-imap (0.3.7)
       date
@@ -209,6 +250,7 @@ GEM
     rubocop-shopify (2.14.0)
       rubocop (~> 1.51)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     sorbet-runtime (0.5.11002)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
