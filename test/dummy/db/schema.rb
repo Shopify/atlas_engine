@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
-  create_table "maintenance_tasks_runs", charset: "utf8mb4", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
+  create_table "maintenance_tasks_runs", force: :cascade do |t|
     t.string "task_name", null: false
     t.datetime "started_at", precision: nil
     t.datetime "ended_at", precision: nil
@@ -30,4 +30,29 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.integer "lock_version", default: 0, null: false
     t.index ["task_name", "created_at"], name: "index_maintenance_tasks_runs_on_task_name_and_created_at"
   end
+
+  create_table "post_addresses", force: :cascade do |t|
+    t.string "locale"
+    t.string "country_code"
+    t.string "province_code"
+    t.string "region1"
+    t.string "region2"
+    t.string "region3"
+    t.string "region4"
+    t.string "city"
+    t.string "suburb"
+    t.string "zip"
+    t.string "street"
+    t.string "building_name"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city"], name: "index_post_addresses_on_city"
+    t.index ["country_code"], name: "index_post_addresses_on_country_code"
+    t.index ["province_code"], name: "index_post_addresses_on_province_code"
+    t.index ["street"], name: "index_post_addresses_on_street"
+    t.index ["zip"], name: "index_post_addresses_on_zip"
+  end
+
 end
