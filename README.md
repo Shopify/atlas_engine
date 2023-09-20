@@ -2,6 +2,11 @@
 
 Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https://github.com/Shopify/address/issues/2112
 
+## Installing in local repo (Shopify specific prototyping steps)
+* In Gemfile, `gem "atlas_engine_test_one", git: "https://github.com/Shopify/atlas-engine-test-one"`
+* `bundle lock`
+* `bin/rails generate atlas_engine_test_one:install`
+
 ## Setting up development environment
 * `bundle install` to install dependencies
   * If you get an ssl error with puma installation run
