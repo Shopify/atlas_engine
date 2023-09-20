@@ -1,6 +1,7 @@
 class DummyPostAddresses < ActiveRecord::Migration[7.0]
   def change
     create_table(:atlas_engine_test_one_post_addresses) do |t|
+      t.string(:source_id)
       t.string(:locale)
       t.string(:country_code, index: true)
       t.string(:province_code, index: true)
