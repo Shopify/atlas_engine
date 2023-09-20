@@ -2,7 +2,7 @@ require 'csv'
 
 module AtlasEngineTestOne
   class PostAddressImporter
-    def initialize(file = 'db/bogus_db.csv')
+    def initialize(file)
       @file = file
     end
 
