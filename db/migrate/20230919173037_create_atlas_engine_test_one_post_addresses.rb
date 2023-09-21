@@ -1,4 +1,4 @@
-class DummyPostAddresses < ActiveRecord::Migration[7.0]
+class CreateAtlasEngineTestOnePostAddresses < ActiveRecord::Migration[7.0]
   def change
     create_table(:atlas_engine_test_one_post_addresses) do |t|
       t.string(:source_id)

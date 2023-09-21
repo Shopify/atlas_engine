@@ -11,27 +11,8 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
-  create_table "maintenance_tasks_runs", force: :cascade do |t|
-    t.string "task_name", null: false
-    t.datetime "started_at", precision: nil
-    t.datetime "ended_at", precision: nil
-    t.float "time_running", default: 0.0, null: false
-    t.integer "tick_count", default: 0, null: false
-    t.integer "tick_total"
-    t.string "job_id"
-    t.bigint "cursor"
-    t.string "status", default: "enqueued", null: false
-    t.string "error_class"
-    t.string "error_message"
-    t.text "backtrace"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "arguments"
-    t.integer "lock_version", default: 0, null: false
-    t.index ["task_name", "created_at"], name: "index_maintenance_tasks_runs_on_task_name_and_created_at"
-  end
-
-  create_table "post_addresses", force: :cascade do |t|
+  create_table "atlas_engine_test_one_post_addresses", force: :cascade do |t|
+    t.string "source_id"
     t.string "locale"
     t.string "country_code"
     t.string "province_code"
@@ -48,11 +29,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city"], name: "index_post_addresses_on_city"
-    t.index ["country_code"], name: "index_post_addresses_on_country_code"
-    t.index ["province_code"], name: "index_post_addresses_on_province_code"
-    t.index ["street"], name: "index_post_addresses_on_street"
-    t.index ["zip"], name: "index_post_addresses_on_zip"
+    t.index ["city"], name: "index_atlas_engine_test_one_post_addresses_on_city"
+    t.index ["country_code"], name: "index_atlas_engine_test_one_post_addresses_on_country_code"
+    t.index ["province_code"], name: "index_atlas_engine_test_one_post_addresses_on_province_code"
+    t.index ["street"], name: "index_atlas_engine_test_one_post_addresses_on_street"
+    t.index ["zip"], name: "index_atlas_engine_test_one_post_addresses_on_zip"
   end
 
 end
