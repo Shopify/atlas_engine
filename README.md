@@ -25,6 +25,23 @@ Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https:
 * `docker info` to ensure the daemon is running
 * Run `docker-compose up` to bring up docker containers for ES and mysql.
   * To create an ES container from scratch, follow [this guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
+* Run `docker cp [your es container id]:/usr/share/elasticsearch/config/certs/ca/ca.crt .` to get a copy of the certificate
+on your local machine.
+  * You can find your es container id by running `docker ps`.
+* Set the es certificate environment variable to point to the certificate you now have on your local machine: `export ELASTICSEARCH_CLIENT_CA_CERT=/path/to/certificate/file`
+* Create an API key for your local ES by running the command
+```
+curl --cacert ca.crt -u elastic:changeme -X POST https://localhost:9200/_security/api_key -d "{\"name\": \"my-api-key\"}" -H "Content-type: application/json"
+```
+  * The response should be in the form
+  ```
+  {"id":"some_id","name":"my-api-key","api_key":"some_api_key","encoded":"some_encoded_key"}
+  ```
+* Save the encoded key with `export ELASTICSEARCH_API_KEY=some_encoded_key`
+* Verify ES is setup correctly with this curl command:
+```
+curl --cacert $ELASTICSEARCH_CLIENT_CA_CERT -H "Authorization: ApiKey $ELASTICSEARCH_API_KEY" https://localhost:9200
+```
 
 ### Setting up db
 * `rails db:setup`
