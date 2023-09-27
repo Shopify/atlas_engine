@@ -5,4 +5,5 @@ AtlasEngineTestOne::Engine.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/atlas_engine_test_one/graphql"
   end
   post "/graphql", to: "graphql#execute"
+  get "/connectivity", to: "connectivity#index"
 end
