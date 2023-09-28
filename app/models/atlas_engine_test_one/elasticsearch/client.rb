@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module AtlasEngineTestOne
   module Elasticsearch
@@ -8,6 +9,7 @@ module AtlasEngineTestOne
         open_timeout: 1,
         keep_alive_timeout: 60,
         retry_on_failure: false,
+        headers: {},
       }
 
       def initialize(config = {})
@@ -23,9 +25,9 @@ module AtlasEngineTestOne
           faraday_connection.options.open_timeout = open_timeout
 
           if ENV["ELASTICSEARCH_API_KEY"].present?
-            config[:headers].merge!({ Authorization: "ApiKey #{ ENV["ELASTICSEARCH_API_KEY"] }" })
+            @config[:headers].merge!({ Authorization: "ApiKey #{ ENV["ELASTICSEARCH_API_KEY"] }" })
           end
-          faraday_connection.headers = config[:headers] if config[:headers].present?
+          faraday_connection.headers = @config[:headers] if @config[:headers].present?
 
           if ENV["ELASTICSEARCH_CLIENT_CERT"] && ENV["ELASTICSEARCH_CLIENT_KEY"]
             faraday_connection.ssl.client_cert = ENV["ELASTICSEARCH_CLIENT_CERT"]
@@ -51,11 +53,15 @@ module AtlasEngineTestOne
         end
       end
 
-      def request(method, path, body = nil, options = {})
-        raw_request(method, path, body, options) # TODO: bring back semian and tracing when necessary
+      def get(path, options = {})
+        request("get", path, nil, options)
       end
 
       private
+
+      def request(method, path, body = nil, options = {})
+        raw_request(method, path, body, options) # TODO: bring back semian and tracing when necessary
+      end
 
       # Value is in seconds
       def read_timeout

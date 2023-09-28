@@ -1,4 +1,4 @@
 module AtlasEngineTestOne
-  class ApplicationController < ActionController::Base
+  class ApplicationController < AtlasEngineTestOne.parent_controller.constantize
   end
 end

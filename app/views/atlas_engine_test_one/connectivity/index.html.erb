@@ -1,0 +1,50 @@
+<h2>Elasticsearch Indices</h2>
+<div id="elasticsearch_indices">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Document Count</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @indices&.each do |index| %>
+        <tr>
+          <td><%= index["index"] %></td>
+          <td><%= index["store.size"] %></td>
+          <td><%= index["docs.count"] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<h2>Post Address Records</h2>
+<div id="post_addresses">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Zip</th>
+        <th>Province Code</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @post_addresses&.each do |address| %>
+        <tr>
+          <td><%= address.id %></td>
+          <td><%= address.street %></td>
+          <td><%= address.city %></td>
+          <td><%= address.zip %></td>
+          <td><%= address.province_code %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
