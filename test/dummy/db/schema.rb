@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
-  create_table "atlas_engine_test_one_post_addresses", charset: "utf8mb3", force: :cascade do |t|
+  create_table "atlas_engine_post_addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "source_id"
     t.string "locale"
     t.string "country_code"
@@ -29,11 +29,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city"], name: "index_atlas_engine_test_one_post_addresses_on_city"
-    t.index ["country_code"], name: "index_atlas_engine_test_one_post_addresses_on_country_code"
-    t.index ["province_code"], name: "index_atlas_engine_test_one_post_addresses_on_province_code"
-    t.index ["street"], name: "index_atlas_engine_test_one_post_addresses_on_street"
-    t.index ["zip"], name: "index_atlas_engine_test_one_post_addresses_on_zip"
+    t.index ["city"], name: "index_atlas_engine_post_addresses_on_city"
+    t.index ["country_code"], name: "index_atlas_engine_post_addresses_on_country_code"
+    t.index ["province_code"], name: "index_atlas_engine_post_addresses_on_province_code"
+    t.index ["street"], name: "index_atlas_engine_post_addresses_on_street"
+    t.index ["zip"], name: "index_atlas_engine_post_addresses_on_zip"
   end
 
 end

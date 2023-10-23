@@ -1,5 +1,5 @@
 # https://vault.shopify.io/page/-Isogun~dhb8c8e.md
-name: atlas-engine-test-one
+name: atlas-engine
 
 vm:
   ip_address: 192.168.64.207
@@ -20,4 +20,4 @@ services:
   # - kafka
 
 hostnames:
-  - atlas-engine-test-one.myshopify.io: {proxy_to_host_port: 24607}
+  - atlas-engine.myshopify.io: {proxy_to_host_port: 24607}
