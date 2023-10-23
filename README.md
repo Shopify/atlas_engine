@@ -1,11 +1,11 @@
-# atlas-engine-test-one
+# atlas-engine
 
 Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https://github.com/Shopify/address/issues/2112
 
 ## Installing in local repo (Shopify specific prototyping steps)
-* In Gemfile, `gem "atlas_engine_test_one", git: "https://github.com/Shopify/atlas-engine-test-one"`
+* In Gemfile, `gem "atlas_engine", git: "https://github.com/Shopify/atlas-engine"`
 * `bundle lock`
-* `bin/rails generate atlas_engine_test_one:install`
+* `bin/rails generate atlas_engine:install`
 
 ## Setting up development environment
 * `bundle install` to install dependencies
