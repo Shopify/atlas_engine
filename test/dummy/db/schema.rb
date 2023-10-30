@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_19_173037) do
-  create_table "atlas_engine_post_addresses", charset: "utf8mb3", force: :cascade do |t|
+  create_table "atlas_engine_post_addresses", charset: "utf8", force: :cascade do |t|
     t.string "source_id"
     t.string "locale"
     t.string "country_code"

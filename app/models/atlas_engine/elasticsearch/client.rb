@@ -23,6 +23,7 @@ module AtlasEngine
         @client = Elastic::Transport::Client.new(options) do |faraday_connection|
           faraday_connection.options.timeout = read_timeout
           faraday_connection.options.open_timeout = open_timeout
+          @config[:headers].merge!({ "Content-Type": "application/json" })
 
           if ENV["ELASTICSEARCH_API_KEY"].present?
             @config[:headers].merge!({ Authorization: "ApiKey #{ ENV["ELASTICSEARCH_API_KEY"] }" })
@@ -53,7 +54,7 @@ module AtlasEngine
         end
       end
 
-      def get(path, options = {})
+      def get(path, options = @config.dup)
         request("get", path, nil, options)
       end
 
