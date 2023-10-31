@@ -28,10 +28,11 @@ Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https:
 * Run `docker cp [your es container id]:/usr/share/elasticsearch/config/certs/ca/ca.crt .` to get a copy of the certificate
 on your local machine.
   * You can find your es container id by running `docker ps`.
-* Set the es certificate environment variable to point to the certificate you now have on your local machine: `export ELASTICSEARCH_CLIENT_CA_CERT=/path/to/certificate/file`
+* Set the es certificate environment variable to point to the certificate you now have on your local machine: `export ELASTICSEARCH_CLIENT_CA_CERT=/path/to/certificate/file` (ensure this is the complete path, not relative).
+* Set the ELASTICSEARCH_URL environment variable to point to dockerized elasticsearch: `export ELASTICSEARCH_URL=https://localhost:9200`
 * Create an API key for your local ES by running the command
 ```
-curl --cacert ca.crt -u elastic:changeme -X POST https://localhost:9200/_security/api_key -d "{\"name\": \"my-api-key\"}" -H "Content-type: application/json"
+curl --cacert ca.crt -u elastic:changeme -X POST $ELASTICSEARCH_URL/_security/api_key -d "{\"name\": \"my-api-key\"}" -H "Content-type: application/json"
 ```
   * The response should be in the form
   ```
@@ -40,10 +41,11 @@ curl --cacert ca.crt -u elastic:changeme -X POST https://localhost:9200/_securit
 * Save the encoded key with `export ELASTICSEARCH_API_KEY=some_encoded_key`
 * Verify ES is setup correctly with this curl command:
 ```
-curl --cacert $ELASTICSEARCH_CLIENT_CA_CERT -H "Authorization: ApiKey $ELASTICSEARCH_API_KEY" https://localhost:9200
+curl --cacert $ELASTICSEARCH_CLIENT_CA_CERT -H "Authorization: ApiKey $ELASTICSEARCH_API_KEY" $ELASTICSEARCH_URL
 ```
 
 ### Setting up db
+* `export MYSQL_USER=root; MYSQL_PASSWORD=`
 * `rails db:setup`
 
 ### Starting the App, Testing
