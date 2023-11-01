@@ -18,6 +18,9 @@ gem "sqlite3"
 gem "puma", "~> 6.4"
 
 gem "elastic-transport"
+gem 'worldwide'
+gem "sorbet-static-and-runtime"
+
 
 # # Use Redis adapter to run Action Cable in production
 # # gem "redis", "~> 4.0"
@@ -30,6 +33,7 @@ group :development, :test do
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rubocop-shopify", require: false
   gem "graphiql-rails"
+  gem 'tapioca', require: false
 end
 
 group :development do
