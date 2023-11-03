@@ -29,6 +29,8 @@ gem "sorbet-static-and-runtime"
 # gem "kredis"
 
 group :development, :test do
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rubocop-shopify", require: false

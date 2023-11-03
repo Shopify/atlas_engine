@@ -87,6 +87,10 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     elastic-transport (8.3.0)
       faraday (< 3)
       multi_json
@@ -325,6 +329,7 @@ PLATFORMS
 DEPENDENCIES
   atlas_engine!
   debug
+  dotenv-rails
   elastic-transport
   graphiql-rails
   maintenance_tasks (~> 2.3)
