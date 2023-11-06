@@ -1,4 +1,0 @@
-source_id,locale,country_code,province_code,region1,region2,region3,region4,city,suburb,zip,street,building_name,latitude,longitude
-1,en_US,US,CA,West Coast,Southern California,Los Angeles County,,Los Angeles,Beverly Hills,90210,Rodeo Drive,Shop 1,34.0696,-118.4053
-2,en_US,US,NY,East Coast,New York Metropolitan,New York County,,New York,Manhattan,10007,Broadway,Shop 2,40.7128,-74.0060
-3,en_CA,CA,ON,Eastern Canada,Golden Horseshoe,Hamilton Division,,Hamilton,Dundas,L9H,King Street West,Shop 3,43.2666,-79.9568
