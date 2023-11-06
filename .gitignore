@@ -40,3 +40,5 @@
 /test/dummy/tmp/
 
 ca.crt
+.env
+test/dummy/.env
