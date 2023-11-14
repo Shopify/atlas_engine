@@ -22,7 +22,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Create .env files
-      run: cp .env.template .env && cp .env.template test/dummy/.env
+      run: |
+        cp .env.template .env
+        cp .env.template test/dummy/.env
 
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
@@ -41,6 +43,9 @@ jobs:
 
     - name: Ruby Tests
       run: bundle exec rails test
+
+    - name: Typecheck
+      run: bundle exec srb tc
 
     - name: Archive system test artifacts
       uses: actions/upload-artifact@v3

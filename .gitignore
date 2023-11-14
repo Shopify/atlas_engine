@@ -38,6 +38,7 @@
 /test/dummy/log/*.log
 /test/dummy/storage/
 /test/dummy/tmp/
+test/dummy/db/migrate/
 
 ca.crt
 .env
