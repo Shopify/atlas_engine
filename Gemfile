@@ -18,7 +18,7 @@ gem "sqlite3"
 gem "puma", "~> 6.4"
 
 gem "elastic-transport"
-gem 'worldwide'
+gem "worldwide"
 gem "sorbet-static-and-runtime"
 
 group :development, :test do

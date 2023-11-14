@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "graphiql-rails"
   spec.add_dependency "elasticsearch-model"
   spec.add_dependency "elasticsearch-rails"
+  spec.add_dependency "worldwide"
 end
