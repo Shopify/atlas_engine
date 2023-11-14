@@ -1,6 +1,6 @@
 class CreateAtlasEnginePostAddresses < ActiveRecord::Migration[7.0]
   def change
-    create_table(:atlas_engine_post_addresses) do |t|
+    create_table(:atlas_engine_post_addresses, if_not_exists: true) do |t|
       t.string(:source_id)
       t.string(:locale)
       t.string(:country_code, index: true)

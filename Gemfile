@@ -18,8 +18,8 @@ gem "sqlite3"
 gem "puma", "~> 6.4"
 
 gem "elastic-transport"
-gem "worldwide"
-gem "sorbet-static-and-runtime"
+gem 'worldwide'
+gem 'sorbet-runtime'
 
 group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
@@ -28,6 +28,7 @@ group :development, :test do
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rubocop-shopify", require: false
   gem "graphiql-rails"
+  gem 'sorbet'
   gem 'tapioca', require: false
 end
 

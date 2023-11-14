@@ -4,7 +4,7 @@ This is a rails engine that is meant to provide end-to-end address validation fo
 
 ## Local Setup
 
-## Installing in your rails app
+### Installing in your rails app
 
 Add the engine to your gemfile
 ```
@@ -18,9 +18,9 @@ bundle lock
 bin/rails generate atlas_engine:install
 ```
 
-## Developing in the engine
+### Developing in the engine
 
-### Setup Docker
+#### Setup Docker
 
 ```
 brew install docker
@@ -39,7 +39,7 @@ colima ssh
 
 Verify if docker is running: `docker info`
 
-### Setup Rails
+#### Setup Rails
 
 ```
 bundle install
@@ -48,7 +48,7 @@ bundle install
 bundle config build.puma --with-pkg-config=$(brew --prefix openssl@3)/lib/pkgconfig
 ```
 
-### Setting up Elasticsearch, Mysql
+#### Setting up Elasticsearch, Mysql
 
 ```
 bash setup
@@ -62,11 +62,34 @@ Connecting to Docker services
   _note: if you have updated any of the ports in your .env file then use those ports instead_
 
 
-### Setting up db
+#### Setting up db
 ```
 rails db:setup
 ```
 
-### Starting the App, Testing
+## Using the App
+
+#### Starting the App, Testing
   * `bin/rails server` to start the server
   * `bin/rails test` to run tests
+
+#### Running Sorbet
+
+Generate rbi files for custom code
+```
+bin/tapioca dsl --app-root="test/dummy/"
+```
+
+Generate rbi files for gems
+```
+bin/tapioca gems
+
+# or
+
+bin/tapioca gems --all
+```
+
+Running a sorbet check
+```
+srb tc
+```
