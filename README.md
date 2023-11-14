@@ -1,52 +1,71 @@
-# atlas-engine
+# Atlas Engine
 
-Prototyping for https://vault.shopify.io/gsd/projects/36689, github issue https://github.com/Shopify/address/issues/2112
+This is a rails engine that is meant to provide end-to-end address validation for rails apps
 
-## Installing in local repo (Shopify specific prototyping steps)
-* In Gemfile, `gem "atlas_engine", git: "https://github.com/Shopify/atlas-engine"`
-* `bundle lock`
-* `bin/rails generate atlas_engine:install`
+## Local Setup
 
-## Setting up development environment
-* `bundle install` to install dependencies
-  * If you get an ssl error with puma installation run
-    ```
-    bundle config build.puma --with-pkg-config=$(brew --prefix openssl@3)/lib/pkgconfig
-    ```
+## Installing in your rails app
 
-### Setting up Elasticsearch - MacOS ARM
-* `brew install docker`.
-* `brew install docker-compose`.
-* `brew install colima` for the Docker Daemon.
-* `colima start --cpu 4 --memory 8` to start the Docker Daemon.
-* `colima ssh`
-  * `sudo sysctl -w vm.max_map_count=262144`
-  * `exit`
-* `docker info` to ensure the daemon is running
-* Run `docker-compose up` to bring up docker containers for ES and mysql.
-  * To create an ES container from scratch, follow [this guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
-* Run `docker cp [your es container id]:/usr/share/elasticsearch/config/certs/ca/ca.crt .` to get a copy of the certificate
-on your local machine.
-  * You can find your es container id by running `docker ps`.
-* Set the es certificate environment variable to point to the certificate you now have on your local machine: `export ELASTICSEARCH_CLIENT_CA_CERT=/path/to/certificate/file` (ensure this is the complete path, not relative).
-* Set the ELASTICSEARCH_URL environment variable to point to dockerized elasticsearch: `export ELASTICSEARCH_URL=https://localhost:9200`
-* Create an API key for your local ES by running the command
+Add the engine to your gemfile
 ```
-curl --cacert ca.crt -u elastic:changeme -X POST $ELASTICSEARCH_URL/_security/api_key -d "{\"name\": \"my-api-key\"}" -H "Content-type: application/json"
+gem "atlas_engine", git: "https://github.com/Shopify/atlas-engine"
 ```
-  * The response should be in the form
-  ```
-  {"id":"some_id","name":"my-api-key","api_key":"some_api_key","encoded":"some_encoded_key"}
-  ```
-* Save the encoded key with `export ELASTICSEARCH_API_KEY=some_encoded_key`
-* Verify ES is setup correctly with this curl command:
+
+Run the following commands to install the engine in your rails app
+
 ```
-curl --cacert $ELASTICSEARCH_CLIENT_CA_CERT -H "Authorization: ApiKey $ELASTICSEARCH_API_KEY" $ELASTICSEARCH_URL
+bundle lock
+bin/rails generate atlas_engine:install
 ```
+
+## Developing in the engine
+
+### Setup Docker
+
+```
+brew install docker
+brew install docker-compose
+
+# to setup the docker daemon
+brew install colima
+
+# to start the docker daemon
+colima start --cpu 4 --memory 8`
+colima ssh
+  sudo sysctl -w vm.max_map_count=262144
+  exit
+
+```
+
+Verify if docker is running: `docker info`
+
+### Setup Rails
+
+```
+bundle install
+
+# If you get an ssl error with puma installation run
+bundle config build.puma --with-pkg-config=$(brew --prefix openssl@3)/lib/pkgconfig
+```
+
+### Setting up Elasticsearch, Mysql
+
+```
+bash setup
+docker-compose up
+```
+
+Connecting to Docker services
+  * for Mysql : `mysql --host=127.0.0.1 --user=user --password=changeme`
+  * for Elasticsearch : `http://localhost:9200`
+
+  _note: if you have updated any of the ports in your .env file then use those ports instead_
+
 
 ### Setting up db
-* `export MYSQL_USER=root; MYSQL_PASSWORD=`
-* `rails db:setup`
+```
+rails db:setup
+```
 
 ### Starting the App, Testing
   * `bin/rails server` to start the server

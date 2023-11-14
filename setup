@@ -1,18 +1,6 @@
-CERT_FILENAME=ca.crt
-ELASTICSEARCH_URL="https://localhost:9200"
-CONTAINER_ID=$(docker ps --format '{{.ID}}' --filter "name=atlas-engine-es*")
+ROOT_ENV=.env
+DUMMY_ENV=test/dummy/.env
 
-$(docker cp $CONTAINER_ID:/usr/share/elasticsearch/config/certs/ca/$CERT_FILENAME ./$CERT_FILENAME)
-CERTIFICATE_PATH="$(pwd)/$CERT_FILENAME"
-
-RESPONSE=$(curl --cacert $CERT_FILENAME -u elastic:changeme -X POST $ELASTICSEARCH_URL/_security/api_key -d "{\"name\": \"my-api-key\"}" -H "Content-type: application/json")
-ELASTICSEARCH_API_KEY=$(echo $RESPONSE | awk -F'"encoded":"' '{print $2}' | awk -F'"' '{print $1}')
-
-echo
-echo "Copy paste these environment variables in '.env' and 'test/dummy/.env'"
-echo
-echo
-echo "ELASTICSEARCH_URL=$ELASTICSEARCH_URL"
-echo "ELASTICSEARCH_CLIENT_CA_CERT=\"$CERTIFICATE_PATH\""
-echo "ELASTICSEARCH_API_KEY=\"$ELASTICSEARCH_API_KEY\""
-echo
+# Create .env files from template if not exists
+test -f $ROOT_ENV || cp .env.template $ROOT_ENV
+test -f $DUMMY_ENV || cp .env.template $DUMMY_ENV

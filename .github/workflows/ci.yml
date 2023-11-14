@@ -1,11 +1,11 @@
 name: CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
-    runs-on: shopify-ubuntu-latest
     name: Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }} / ${{ matrix.database }}
+    runs-on: shopify-ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -20,6 +20,10 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v4
+
+    - name: Create .env files
+      run: cp .env.template .env && cp .env.template test/dummy/.env
+
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
       with:
@@ -27,13 +31,17 @@ jobs:
         bundler-cache: true
         cache-version: 1
         rubygems: ${{ matrix.ruby == '3.0' && 'latest' || 'default' }}
+
     - name: Rails version
       if: ${{ matrix.gemfile == 'gemfiles/rails_edge.gemfile' }}
       run: bundle info rails | head -1
+
     - name: Set up database
       run: RAILS_ENV=test bundle exec rails db:setup
+
     - name: Ruby Tests
       run: bundle exec rails test
+
     - name: Archive system test artifacts
       uses: actions/upload-artifact@v3
       if: failure()
