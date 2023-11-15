@@ -171,8 +171,12 @@ GEM
       minitest (~> 5.12)
       redis (>= 5.0.6, < 6)
       sorbet-runtime
+    minitest-focus (1.4.0)
+      minitest (>= 4, < 6)
     minitest-silence (0.2.4)
       minitest (~> 5.12)
+    minitest-suite (0.0.3)
+      minitest
     mocha (2.1.0)
       ruby2_keywords (>= 0.0.5)
     multi_json (1.15.0)
@@ -347,7 +351,9 @@ DEPENDENCIES
   graphiql-rails
   maintenance_tasks (~> 2.3)
   minitest-distributed
+  minitest-focus
   minitest-silence (>= 0.2.4)
+  minitest-suite
   mocha
   mysql2 (~> 0.5)
   pry
