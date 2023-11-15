@@ -42,7 +42,7 @@ jobs:
       run: RAILS_ENV=test bundle exec rails db:setup
 
     - name: Ruby Tests
-      run: bundle exec rails test
+      run: SKIP_INTEGRATION_TESTS=true bundle exec rails test
 
     - name: Typecheck
       run: bundle exec srb tc

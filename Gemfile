@@ -39,6 +39,8 @@ end
 group :test do
   gem "minitest-distributed"
   gem "minitest-silence", ">= 0.2.4", require: false
+  gem 'mocha'
+  gem 'webmock'
 end
 
 gem "maintenance_tasks", "~> 2.3"
