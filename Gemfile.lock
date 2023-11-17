@@ -7,6 +7,7 @@ PATH
       graphiql-rails
       graphql
       rails (>= 7.0.7.2)
+      state_machines-activerecord
       worldwide
 
 GEM
@@ -304,6 +305,13 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.6.8-arm64-darwin)
     sqlite3 (1.6.8-x86_64-linux)
+    state_machines (0.6.0)
+    state_machines-activemodel (0.9.0)
+      activemodel (>= 6.0)
+      state_machines (>= 0.6.0)
+    state_machines-activerecord (0.9.0)
+      activerecord (>= 6.0)
+      state_machines-activemodel (>= 0.9.0)
     stringio (3.0.9)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
@@ -364,6 +372,7 @@ DEPENDENCIES
   sorbet-runtime
   sprockets-rails
   sqlite3
+  state_machines-activerecord
   tapioca
   webmock
   worldwide

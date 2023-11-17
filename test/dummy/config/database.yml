@@ -11,6 +11,8 @@ default: &default
 
 development:
   <<: *default
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
   adapter: mysql2
   pool: 5
   username: <%= ENV.fetch("MYSQL_USER") %>
