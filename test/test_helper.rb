@@ -3,6 +3,9 @@ ENV["RAILS_ENV"] = "test"
 
 require 'mocha/minitest'
 require 'webmock/minitest'
+require 'minitest/focus'
+require 'minitest/suite'
+require 'minitest/mock'
 require "pry"
 
 require_relative "../test/dummy/config/environment"

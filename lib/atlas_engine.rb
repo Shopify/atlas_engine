@@ -14,4 +14,12 @@ module AtlasEngine
   #
   #   @return [String] the name of the parent controller for web UI.
   mattr_accessor :parent_controller, default: "ActionController::Base"
+
+  # @!attribute log_base
+  #
+  #   The parent module for logging. Must be a module that implements the
+  #   `log_message` method.
+  #
+  #   @return [String] the name of the parent module for loggers.
+  mattr_accessor :log_base, default: "AtlasEngine::LogBase"
 end

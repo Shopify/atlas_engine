@@ -41,6 +41,8 @@ group :test do
   gem "minitest-silence", ">= 0.2.4", require: false
   gem 'mocha'
   gem 'webmock'
+  gem 'minitest-focus'
+  gem 'minitest-suite'
 end
 
 gem "maintenance_tasks", "~> 2.3"
