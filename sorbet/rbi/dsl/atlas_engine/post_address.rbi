@@ -469,6 +469,51 @@ class AtlasEngine::PostAddress
   end
 
   module GeneratedAttributeMethods
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges; end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def building_and_unit_ranges=(value); end
+
+    sig { returns(T::Boolean) }
+    def building_and_unit_ranges?; end
+
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def building_and_unit_ranges_came_from_user?; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def building_and_unit_ranges_change; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def building_and_unit_ranges_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def building_and_unit_ranges_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges_in_database; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def building_and_unit_ranges_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def building_and_unit_ranges_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges_previously_was; end
+
+    sig { returns(T.untyped) }
+    def building_and_unit_ranges_was; end
+
+    sig { void }
+    def building_and_unit_ranges_will_change!; end
+
     sig { returns(T.nilable(::String)) }
     def building_name; end
 
@@ -1100,6 +1145,9 @@ class AtlasEngine::PostAddress
     def region4_will_change!; end
 
     sig { void }
+    def restore_building_and_unit_ranges!; end
+
+    sig { void }
     def restore_building_name!; end
 
     sig { void }
@@ -1155,6 +1203,12 @@ class AtlasEngine::PostAddress
 
     sig { void }
     def restore_zip!; end
+
+    sig { returns(T.nilable([T.untyped, T.untyped])) }
+    def saved_change_to_building_and_unit_ranges; end
+
+    sig { returns(T::Boolean) }
+    def saved_change_to_building_and_unit_ranges?; end
 
     sig { returns(T.nilable([T.nilable(::String), T.nilable(::String)])) }
     def saved_change_to_building_name; end
@@ -1449,6 +1503,9 @@ class AtlasEngine::PostAddress
 
     sig { void }
     def updated_at_will_change!; end
+
+    sig { returns(T::Boolean) }
+    def will_save_change_to_building_and_unit_ranges?; end
 
     sig { returns(T::Boolean) }
     def will_save_change_to_building_name?; end

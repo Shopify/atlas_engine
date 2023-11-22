@@ -4,8 +4,9 @@ This is a rails engine that is meant to provide end-to-end address validation fo
 
 ## Local Setup
 
-### Installing in your rails app
+### In your rails app
 
+#### Initial setup
 Add the engine to your gemfile
 ```
 gem "atlas_engine", git: "https://github.com/Shopify/atlas-engine"
@@ -16,6 +17,17 @@ Run the following commands to install the engine in your rails app
 ```
 bundle lock
 bin/rails generate atlas_engine:install
+```
+
+#### Updating to a newer version of the engine
+
+Working with migraitons
+```
+# Copy any migrations from the engine into your app
+rails atlas_engine:install:migrations
+
+# Perform the migrations in your app
+rails db:migrate
 ```
 
 ### Developing in the engine

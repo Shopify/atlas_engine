@@ -10,8 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_14_162955) do
-  create_table "atlas_engine_post_addresses", charset: "utf8mb3", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2023_11_17_145844) do
+  create_table "atlas_engine_country_imports", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "country_code", null: false
+    t.string "state", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "atlas_engine_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "country_import_id", null: false
+    t.text "message"
+    t.json "additional_params"
+    t.integer "category", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_import_id"], name: "index_atlas_engine_events_on_country_import_id"
+  end
+
+  create_table "atlas_engine_post_addresses", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "source_id"
     t.string "locale"
     t.string "country_code"
@@ -29,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_162955) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "building_and_unit_ranges"
     t.index ["city"], name: "index_atlas_engine_post_addresses_on_city"
     t.index ["country_code"], name: "index_atlas_engine_post_addresses_on_country_code"
     t.index ["province_code"], name: "index_atlas_engine_post_addresses_on_province_code"
