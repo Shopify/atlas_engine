@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_145844) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_154658) do
   create_table "atlas_engine_country_imports", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "country_code", null: false
     t.string "state", default: "pending"
@@ -49,7 +49,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_145844) do
     t.json "building_and_unit_ranges"
     t.index ["city"], name: "index_atlas_engine_post_addresses_on_city"
     t.index ["country_code"], name: "index_atlas_engine_post_addresses_on_country_code"
+    t.index ["province_code", "zip", "street", "city", "locale"], name: "index_atlas_engine_post_addresses_on_pc_zp_st_ct_lc", unique: true, length: { province_code: 10, zip: 10, street: 100, locale: 10 }
     t.index ["province_code"], name: "index_atlas_engine_post_addresses_on_province_code"
+    t.index ["source_id", "locale", "country_code"], name: "index_atlas_engine_post_addresses_on_srcid_loc_cc"
     t.index ["street"], name: "index_atlas_engine_post_addresses_on_street"
     t.index ["zip"], name: "index_atlas_engine_post_addresses_on_zip"
   end
