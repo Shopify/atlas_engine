@@ -42,7 +42,7 @@ brew install docker-compose
 brew install colima
 
 # to start the docker daemon
-colima start --cpu 4 --memory 8`
+colima start --cpu 4 --memory 8
 colima ssh
   sudo sysctl -w vm.max_map_count=262144
   exit
@@ -65,6 +65,12 @@ bundle config build.puma --with-pkg-config=$(brew --prefix openssl@3)/lib/pkgcon
 ```
 bash setup
 docker-compose up
+
+# If you encounter an error getting docker credentials, remove or update the `credsStore`
+key in your Docker configuration file:
+
+# ~/.docker/config.json
+"credsStore": "desktop", # remove this line
 ```
 
 Connecting to Docker services
@@ -81,11 +87,11 @@ rails db:setup
 
 ## Using the App
 
-#### Starting the App, Testing
+### Starting the App and Testing
   * `bin/rails server` to start the server
   * `bin/rails test` to run tests
 
-#### Running Sorbet
+### Running Sorbet
 
 Generate rbi files for custom code
 ```
