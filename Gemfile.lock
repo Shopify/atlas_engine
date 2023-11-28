@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    atlas_engine (0.1.2)
+    atlas_engine (0.1.3)
       elasticsearch-model
       elasticsearch-rails
       graphiql-rails
@@ -131,6 +131,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+    frozen_record (0.27.0)
+      activemodel
     globalid (1.2.1)
       activesupport (>= 6.1)
     graphiql-rails (1.9.0)
@@ -356,6 +358,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   elastic-transport
+  frozen_record
   graphiql-rails
   maintenance_tasks (~> 2.3)
   minitest-distributed
@@ -378,4 +381,4 @@ DEPENDENCIES
   worldwide
 
 BUNDLED WITH
-   2.4.6
+   2.4.10
