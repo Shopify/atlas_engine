@@ -281,15 +281,26 @@ class SQLite3::Database
 
   # call-seq: SQLite3::Database.new(file, options = {})
   #
-  # Create a new Database object that opens the given file. If utf16
-  # is +true+, the filename is interpreted as a UTF-16 encoded string.
+  # Create a new Database object that opens the given file.
   #
-  # By default, the new database will return result rows as arrays
-  # (#results_as_hash) and has type translation disabled (#type_translation=).
+  # Supported permissions +options+:
+  # - the default mode is <tt>READWRITE | CREATE</tt>
+  # - +:readonly+: boolean (default false), true to set the mode to +READONLY+
+  # - +:readwrite+: boolean (default false), true to set the mode to +READWRITE+
+  # - +:flags+: set the mode to a combination of SQLite3::Constants::Open flags.
+  #
+  # Supported encoding +options+:
+  # - +:utf16+: boolean (default false), is the filename's encoding UTF-16 (only needed if the filename encoding is not UTF_16LE or BE)
+  #
+  # Other supported +options+:
+  # - +:strict+: boolean (default false), disallow the use of double-quoted string literals (see https://www.sqlite.org/quirks.html#double_quoted_string_literals_are_accepted)
+  # - +:results_as_hash+: boolean (default false), return rows as hashes instead of arrays
+  # - +:type_translation+: boolean (default false), enable type translation
+  # - +:default_transaction_mode+: one of +:deferred+ (default), +:immediate+, or +:exclusive+. If a mode is not specified in a call to #transaction, this will be the default transaction mode.
   #
   # @return [Database] a new instance of Database
   #
-  # source://sqlite3//lib/sqlite3/database.rb#80
+  # source://sqlite3//lib/sqlite3/database.rb#91
   def initialize(file, options = T.unsafe(nil), zvfs = T.unsafe(nil)); end
 
   # Installs (or removes) a block that will be invoked for every access
@@ -297,7 +308,7 @@ class SQLite3::Database
   # is allowed to proceed. Returning 1 causes an authorization error to
   # occur, and returning 2 causes the access to be silently denied.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#155
+  # source://sqlite3//lib/sqlite3/database.rb#167
   def authorizer(&block); end
 
   def authorizer=(_arg0); end
@@ -319,7 +330,7 @@ class SQLite3::Database
   # to allow it to be used in idioms like
   # <tt>abort? and rollback or commit</tt>.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#659
+  # source://sqlite3//lib/sqlite3/database.rb#674
   def commit; end
 
   def complete?(_arg0); end
@@ -361,7 +372,7 @@ class SQLite3::Database
   # See also #create_aggregate_handler for a more object-oriented approach to
   # aggregate functions.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#450
+  # source://sqlite3//lib/sqlite3/database.rb#462
   def create_aggregate(name, arity, step = T.unsafe(nil), finalize = T.unsafe(nil), text_rep = T.unsafe(nil), &block); end
 
   # This is another approach to creating an aggregate function (see
@@ -412,7 +423,7 @@ class SQLite3::Database
   #   db.create_aggregate_handler( LengthsAggregateHandler )
   #   puts db.get_first_value( "select lengths(name) from A" )
   #
-  # source://sqlite3//lib/sqlite3/database.rb#548
+  # source://sqlite3//lib/sqlite3/database.rb#560
   def create_aggregate_handler(handler); end
 
   # Creates a new function for use in SQL statements. It will be added as
@@ -439,7 +450,7 @@ class SQLite3::Database
   #
   #   puts db.get_first_value( "select maim(name) from table" )
   #
-  # source://sqlite3//lib/sqlite3/database.rb#405
+  # source://sqlite3//lib/sqlite3/database.rb#417
   def create_function(name, arity, text_rep = T.unsafe(nil), &block); end
 
   # Define an aggregate function named +name+ using a object template
@@ -453,7 +464,7 @@ class SQLite3::Database
   # already provide a suitable +clone+.
   # The functions arity is the arity of the +step+ method.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#585
+  # source://sqlite3//lib/sqlite3/database.rb#597
   def define_aggregator(name, aggregator); end
 
   def define_function(_arg0); end
@@ -478,7 +489,7 @@ class SQLite3::Database
   # See also #execute2, #query, and #execute_batch for additional ways of
   # executing statements.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#196
+  # source://sqlite3//lib/sqlite3/database.rb#208
   def execute(sql, bind_vars = T.unsafe(nil), *args, &block); end
 
   # Executes the given SQL statement, exactly as with #execute. However, the
@@ -492,7 +503,7 @@ class SQLite3::Database
   # See also #execute, #query, and #execute_batch for additional ways of
   # executing statements.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#233
+  # source://sqlite3//lib/sqlite3/database.rb#245
   def execute2(sql, *bind_vars); end
 
   # Executes all SQL statements in the given string. By contrast, the other
@@ -507,7 +518,7 @@ class SQLite3::Database
   # See also #execute_batch2 for additional ways of
   # executing statements.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#257
+  # source://sqlite3//lib/sqlite3/database.rb#269
   def execute_batch(sql, bind_vars = T.unsafe(nil), *args); end
 
   # Executes all SQL statements in the given string. By contrast, the other
@@ -524,7 +535,7 @@ class SQLite3::Database
   # See also #execute_batch for additional ways of
   # executing statements.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#310
+  # source://sqlite3//lib/sqlite3/database.rb#322
   def execute_batch2(sql, &block); end
 
   def extended_result_codes=(_arg0); end
@@ -533,7 +544,7 @@ class SQLite3::Database
   # to "main".  Main return `nil` or an empty string if the database is
   # temporary or in-memory.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#178
+  # source://sqlite3//lib/sqlite3/database.rb#190
   def filename(db_name = T.unsafe(nil)); end
 
   # A convenience method for obtaining the first row of a result set, and
@@ -541,7 +552,7 @@ class SQLite3::Database
   #
   # See also #get_first_value.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#362
+  # source://sqlite3//lib/sqlite3/database.rb#374
   def get_first_row(sql, *bind_vars); end
 
   # A convenience method for obtaining the first value of the first row of a
@@ -550,7 +561,7 @@ class SQLite3::Database
   #
   # See also #get_first_row.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#371
+  # source://sqlite3//lib/sqlite3/database.rb#383
   def get_first_value(sql, *bind_vars); end
 
   def interrupt; end
@@ -562,7 +573,7 @@ class SQLite3::Database
   #
   # The Statement can then be executed using Statement#execute.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#164
+  # source://sqlite3//lib/sqlite3/database.rb#176
   def prepare(sql); end
 
   # This is a convenience method for creating a statement, binding
@@ -577,7 +588,7 @@ class SQLite3::Database
   # with a block, +close+ will be invoked implicitly when the block
   # terminates.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#332
+  # source://sqlite3//lib/sqlite3/database.rb#344
   def query(sql, bind_vars = T.unsafe(nil), *args); end
 
   # Returns +true+ if the database has been open in readonly mode
@@ -585,7 +596,7 @@ class SQLite3::Database
   #
   # @return [Boolean]
   #
-  # source://sqlite3//lib/sqlite3/database.rb#675
+  # source://sqlite3//lib/sqlite3/database.rb#690
   def readonly?; end
 
   # A boolean that indicates whether rows in result sets should be returned
@@ -605,7 +616,7 @@ class SQLite3::Database
   # to allow it to be used in idioms like
   # <tt>abort? and rollback or commit</tt>.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#668
+  # source://sqlite3//lib/sqlite3/database.rb#683
   def rollback; end
 
   def total_changes; end
@@ -615,8 +626,10 @@ class SQLite3::Database
   # by SQLite, so attempting to nest a transaction will result in a runtime
   # exception.
   #
-  # The +mode+ parameter may be either <tt>:deferred</tt> (the default),
+  # The +mode+ parameter may be either <tt>:deferred</tt>,
   # <tt>:immediate</tt>, or <tt>:exclusive</tt>.
+  # If `nil` is specified, the default transaction mode, which was
+  # passed to #initialize, is used.
   #
   # If a block is given, the database instance is yielded to it, and the
   # transaction is committed when the block terminates. If the block
@@ -628,14 +641,14 @@ class SQLite3::Database
   # transaction explicitly, either by calling #commit, or by calling
   # #rollback.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#637
+  # source://sqlite3//lib/sqlite3/database.rb#651
   def transaction(mode = T.unsafe(nil)); end
 
   def transaction_active?; end
 
   # Translates a +row+ of data from the database with the given +types+
   #
-  # source://sqlite3//lib/sqlite3/database.rb#726
+  # source://sqlite3//lib/sqlite3/database.rb#741
   def translate_from_db(types, row); end
 
   # Return the type translator employed by this database instance. Each
@@ -645,13 +658,13 @@ class SQLite3::Database
   # if a database does not use type translation, it will not be burdened by
   # the overhead of a useless type translator. (See the Translator class.)
   #
-  # source://sqlite3//lib/sqlite3/database.rb#147
+  # source://sqlite3//lib/sqlite3/database.rb#159
   def translator; end
 
-  # source://sqlite3//lib/sqlite3/database.rb#139
+  # source://sqlite3//lib/sqlite3/database.rb#151
   def type_translation; end
 
-  # source://sqlite3//lib/sqlite3/database.rb#132
+  # source://sqlite3//lib/sqlite3/database.rb#144
   def type_translation=(value); end
 
   private
@@ -661,7 +674,7 @@ class SQLite3::Database
   def disable_quirk_mode; end
   def exec_batch(_arg0, _arg1); end
 
-  # source://sqlite3//lib/sqlite3/database.rb#734
+  # source://sqlite3//lib/sqlite3/database.rb#749
   def make_type_translator(should_translate); end
 
   def open16(_arg0); end
@@ -693,7 +706,7 @@ end
 # This class will almost _always_ be instantiated indirectly, by working
 # with the create methods mentioned above.
 #
-# source://sqlite3//lib/sqlite3/database.rb#687
+# source://sqlite3//lib/sqlite3/database.rb#702
 class SQLite3::Database::FunctionProxy
   # Create a new FunctionProxy that encapsulates the given +func+ object.
   # If context is non-nil, the functions context will be set to that. If
@@ -702,48 +715,48 @@ class SQLite3::Database::FunctionProxy
   #
   # @return [FunctionProxy] a new instance of FunctionProxy
   #
-  # source://sqlite3//lib/sqlite3/database.rb#694
+  # source://sqlite3//lib/sqlite3/database.rb#709
   def initialize; end
 
   # Returns the value with the given key from the context. This is only
   # available to aggregate functions.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#714
+  # source://sqlite3//lib/sqlite3/database.rb#729
   def [](key); end
 
   # Sets the value with the given key in the context. This is only
   # available to aggregate functions.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#720
+  # source://sqlite3//lib/sqlite3/database.rb#735
   def []=(key, value); end
 
   # (Only available to aggregate functions.) Returns the number of rows
   # that the aggregate has processed so far. This will include the current
   # row, and so will always return at least 1.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#708
+  # source://sqlite3//lib/sqlite3/database.rb#723
   def count; end
 
   # Returns the value of attribute result.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#688
+  # source://sqlite3//lib/sqlite3/database.rb#703
   def result; end
 
   # Sets the attribute result
   #
   # @param value the value to set the attribute result to.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#688
+  # source://sqlite3//lib/sqlite3/database.rb#703
   def result=(_arg0); end
 
   # Set the result of the function to the given error message.
   # The function will then return that error.
   #
-  # source://sqlite3//lib/sqlite3/database.rb#701
+  # source://sqlite3//lib/sqlite3/database.rb#716
   def set_error(error); end
 end
 
-# source://sqlite3//lib/sqlite3/database.rb#732
+# source://sqlite3//lib/sqlite3/database.rb#747
 SQLite3::Database::NULL_TRANSLATOR = T.let(T.unsafe(nil), Proc)
 
 # source://sqlite3//lib/sqlite3/errors.rb#24

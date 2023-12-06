@@ -22,6 +22,7 @@ gem 'worldwide'
 gem 'sorbet-runtime'
 gem "state_machines-activerecord"
 gem "frozen_record"
+gem "htmlentities"
 
 group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
