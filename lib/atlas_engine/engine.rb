@@ -1,3 +1,6 @@
+# typed: true
+# frozen_string_literal: true
+
 require "rails/all"
 
 module AtlasEngine

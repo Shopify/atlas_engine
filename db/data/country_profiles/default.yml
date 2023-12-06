@@ -1,0 +1,25 @@
+id: DEFAULT
+ingestion:
+  allow_partial_zip?: false
+  correctors: {}
+  settings: {}
+  data_mapper: AddressValidation::Es::DataMappers::DefaultDataMapper
+  open_address:
+    feature_mapper: AddressImporter::OpenAddress::DefaultMapper
+validation:
+  enabled: false
+  index_locales: []
+  default_matching_strategy: local
+  city_fields:
+    - city_aliases
+  normalized_components: []
+  exclusions: {}
+  partial_postal_code_range_for_length: {}
+  has_provinces: true
+  query_builder: AddressValidation::Es::DefaultQueryBuilder
+  address_parser: ValidationTranscriber::AddressParserBase
+  admin:
+    carrier_address_lookups:
+      google: AddressLookup::Google::Lookup
+decompounding_patterns:
+  street: []
