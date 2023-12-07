@@ -142,6 +142,7 @@ GEM
       racc (~> 1.4)
     hashdiff (1.0.1)
     hashie (5.0.0)
+    htmlentities (4.3.4)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -360,6 +361,7 @@ DEPENDENCIES
   elastic-transport
   frozen_record
   graphiql-rails
+  htmlentities
   maintenance_tasks (~> 2.3)
   minitest-distributed
   minitest-focus
