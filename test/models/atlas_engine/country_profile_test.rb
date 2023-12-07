@@ -5,6 +5,9 @@ require "test_helper"
 
 module AtlasEngine
   class CountryProfileTest < ActiveSupport::TestCase
+
+    class SampleChildProfile < AtlasEngine::CountryProfile; end
+
     def setup
       @default_paths = CountryProfile.default_paths.dup
       @country_paths = CountryProfile.country_paths.dup
@@ -258,6 +261,45 @@ module AtlasEngine
         },
         CountryProfile.find("XX").attributes,
       )
+    end
+
+    test ".for creates an instance of the child class" do
+      SampleChildProfile.reset!
+      SampleChildProfile.default_paths = AtlasEngine::CountryProfile.default_paths.dup
+      SampleChildProfile.country_paths = AtlasEngine::CountryProfile.country_paths.dup
+
+      profile = SampleChildProfile.for("US")
+
+      assert_equal(SampleChildProfile, profile.class)
+    end
+
+    test "creates an attribute method if a corresponding method is not already defined" do
+      us_content = <<-YAML
+        id: US
+        feature:
+          name: "sample"
+      YAML
+
+      us_file = Tempfile.new("default")
+      us_file.write(us_content)
+      us_file.rewind
+
+      CountryProfile.reset!
+      CountryProfile.country_paths = [us_file.path]
+
+      profile = CountryProfile.for("US")
+
+      assert_equal({"name"=>"sample"}, profile.feature)
+    end
+
+    test "attribute methods do not override defined methods" do
+      SampleChildProfile.reset!
+      SampleChildProfile.default_paths = AtlasEngine::CountryProfile.default_paths.dup
+      SampleChildProfile.country_paths = AtlasEngine::CountryProfile.country_paths.dup
+
+      profile = SampleChildProfile.for("US")
+
+      assert_equal(CountryProfileValidationSubset, profile.validation.class)
     end
   end
 end

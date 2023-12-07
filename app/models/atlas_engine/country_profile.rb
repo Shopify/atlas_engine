@@ -46,6 +46,9 @@ module AtlasEngine
       File.join(AtlasEngine::Engine.root, "app/countries/*/country_profile.yml")
     ], T::Array[String])
 
+    @attributes = T.let([], T::Array[T.untyped])
+    @records = T.let(nil, T.nilable(T::Array[T.untyped]))
+
     class << self
       extend T::Sig
 
@@ -73,6 +76,27 @@ module AtlasEngine
         @default_attributes = nil
       end
 
+      # Overriding (load_records) from FrozenRecord::Base
+      # so that we only create attribute methods that are not already defined
+      sig { params(force: T::Boolean).returns(T::Array[T.untyped]) }
+      def load_records(force: false)
+        if force || (auto_reloading && file_changed?)
+          unload!
+        end
+
+        @records ||= begin
+          records = backend.load(file_path)
+          if attribute_deserializers.any? || default_attributes
+            records = records.map { |r| assign_defaults!(deserialize_attributes!(r.dup)).freeze }.freeze
+          end
+          @attributes = list_attributes(records).freeze
+          define_attribute_methods(methods_to_be_created)
+          records = FrozenRecord.ignore_max_records_scan { records.map { |r| load(r) }.freeze }
+          index_definitions.values.each { |index| index.build(records) }
+          records
+        end
+      end
+
       sig { params(country_code: String).returns(CountryProfile) }
       def for(country_code)
         raise CountryNotFoundError if country_code.blank?
@@ -82,9 +106,9 @@ module AtlasEngine
         end
 
         begin
-          CountryProfile.find(country_code.upcase)
+          self.find(country_code.upcase)
         rescue FrozenRecord::RecordNotFound
-          CountryProfile.new(default_attributes.merge("id" => country_code.upcase))
+          self.new(default_attributes.merge("id" => country_code.upcase))
         end
       end
 
@@ -121,6 +145,15 @@ module AtlasEngine
           end.pluck(:id).to_set,
           T.nilable(T::Set[String]),
         )
+      end
+
+      private
+
+      sig {returns(T::Array[T.untyped])}
+      def methods_to_be_created
+        @attributes.to_a.flatten.reject do |attribute_name|
+          instance_methods.include?(attribute_name.to_sym)
+        end
       end
     end
 
