@@ -38,11 +38,11 @@ module AtlasEngine
     self.base_path = ""
     self.backend = Backend
 
-    @default_paths = T.let([
+    @@default_paths = T.let([
       File.join(AtlasEngine::Engine.root, "db/data/country_profiles/default.yml")
     ], T::Array[String])
 
-    @country_paths = T.let([
+    @@country_paths = T.let([
       File.join(AtlasEngine::Engine.root, "app/countries/*/country_profile.yml")
     ], T::Array[String])
 
@@ -53,26 +53,40 @@ module AtlasEngine
       extend T::Sig
 
       sig { returns(T::Array[String]) }
-      attr_accessor :default_paths
+      def default_paths
+        @@default_paths
+      end
+
+      sig { params(paths: T::Array[String]).void }
+      def default_paths=(paths)
+        @@default_paths = paths
+      end
 
       sig { returns(T::Array[String]) }
-      attr_accessor :country_paths
+      def country_paths
+        @@country_paths
+      end
+
+      sig { params(paths: T::Array[String]).void }
+      def country_paths=(paths)
+        @@country_paths = paths
+      end
 
       sig { params(paths: T.any(String, T::Array[String])).void }
       def add_default_paths(paths)
-        T.unsafe(@default_paths).append(*Array(paths))
+        T.unsafe(@@default_paths).append(*Array(paths))
       end
 
       sig { params(paths: T.any(String, T::Array[String])).void }
       def add_country_paths(paths)
-        T.unsafe(@country_paths).append(*Array(paths))
+        T.unsafe(@@country_paths).append(*Array(paths))
       end
 
       sig { void }
       def reset!
         unload!
-        @default_paths = []
-        @country_paths = []
+        @@default_paths = []
+        @@country_paths = []
         @default_attributes = nil
       end
 

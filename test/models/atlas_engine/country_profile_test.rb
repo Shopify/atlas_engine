@@ -182,6 +182,12 @@ module AtlasEngine
       assert_same(country_paths, CountryProfile.country_paths)
     end
 
+    test ".reset! resets the list of default and country paths" do
+      CountryProfile.reset!
+      assert_empty CountryProfile.default_paths
+      assert_empty CountryProfile.country_paths
+    end
+
     test ".default_attributes merges multiple default files in order provided" do
       default_content = <<-YAML
         id: DEFAULT
@@ -265,12 +271,7 @@ module AtlasEngine
 
     test ".for creates an instance of the child class" do
       SampleChildProfile.reset!
-      SampleChildProfile.default_paths = AtlasEngine::CountryProfile.default_paths.dup
-      SampleChildProfile.country_paths = AtlasEngine::CountryProfile.country_paths.dup
-
-      profile = SampleChildProfile.for("US")
-
-      assert_equal(SampleChildProfile, profile.class)
+      assert_equal(SampleChildProfile, SampleChildProfile.for("US").class)
     end
 
     test "creates an attribute method if a corresponding method is not already defined" do
@@ -287,19 +288,12 @@ module AtlasEngine
       CountryProfile.reset!
       CountryProfile.country_paths = [us_file.path]
 
-      profile = CountryProfile.for("US")
-
-      assert_equal({"name"=>"sample"}, profile.feature)
+      assert_equal({"name"=>"sample"}, CountryProfile.for("US").feature)
     end
 
     test "attribute methods do not override defined methods" do
       SampleChildProfile.reset!
-      SampleChildProfile.default_paths = AtlasEngine::CountryProfile.default_paths.dup
-      SampleChildProfile.country_paths = AtlasEngine::CountryProfile.country_paths.dup
-
-      profile = SampleChildProfile.for("US")
-
-      assert_equal(CountryProfileValidationSubset, profile.validation.class)
+      assert_equal(CountryProfileValidationSubset, SampleChildProfile.for("US").validation.class)
     end
   end
 end
