@@ -15,7 +15,7 @@ development: &development
   collation: utf8mb4_unicode_ci
   adapter: mysql2
   pool: 5
-  username: <%= ENV.fetch("MYSQL_USER") %>
+  username: <%= ENV.fetch("MYSQL_ROOT_USER") %>
   password: <%= ENV.fetch("MYSQL_PASSWORD") %>
   host: 127.0.0.1
   database: db

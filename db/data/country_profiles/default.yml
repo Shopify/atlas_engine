@@ -5,7 +5,7 @@ ingestion:
   settings: {}
   data_mapper: AddressValidation::Es::DataMappers::DefaultDataMapper
   open_address:
-    feature_mapper: AddressImporter::OpenAddress::DefaultMapper
+    feature_mapper: AtlasEngine::AddressImporter::OpenAddress::DefaultMapper
 validation:
   enabled: false
   index_locales: []

@@ -139,7 +139,7 @@ class Minitest::Distributed::Configuration < ::T::Struct
     sig { params(env: T::Hash[::String, T.nilable(::String)]).returns(T.attached_class) }
     def from_env(env = T.unsafe(nil)); end
 
-    # source://sorbet-runtime/0.5.11122/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11146/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -215,7 +215,7 @@ class Minitest::Distributed::Coordinators::MemoryCoordinator
 
   # @return [ResultAggregate]
   #
-  # source://sorbet-runtime/0.5.11122/lib/types/private/methods/_methods.rb#255
+  # source://sorbet-runtime/0.5.11146/lib/types/private/methods/_methods.rb#255
   def combined_results(*args, **_arg1, &blk); end
 
   # source://minitest-distributed//lib/minitest/distributed/coordinators/memory_coordinator.rb#12
@@ -470,7 +470,7 @@ class Minitest::Distributed::EnqueuedRunnable < ::T::Struct
     end
     def from_redis_stream_claim(claims, pending_messages = T.unsafe(nil), configuration:); end
 
-    # source://sorbet-runtime/0.5.11122/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11146/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -498,7 +498,7 @@ class Minitest::Distributed::EnqueuedRunnable::Result < ::T::Struct
   def requeue?; end
 
   class << self
-    # source://sorbet-runtime/0.5.11122/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11146/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -639,7 +639,7 @@ class Minitest::Distributed::PendingExecution < ::T::Struct
     sig { params(xpending_result: T::Hash[::String, T.untyped]).returns(T.attached_class) }
     def from_xpending(xpending_result); end
 
-    # source://sorbet-runtime/0.5.11122/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11146/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -816,7 +816,7 @@ class Minitest::Distributed::ResultAggregate < ::T::Struct
   def valid?; end
 
   class << self
-    # source://sorbet-runtime/0.5.11122/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11146/lib/types/struct.rb#13
     def inherited(s); end
   end
 end

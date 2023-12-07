@@ -39,6 +39,7 @@ end
 
 group :development do
   gem "pry"
+  gem "pry-byebug"
 end
 
 group :test do
@@ -48,6 +49,7 @@ group :test do
   gem 'webmock'
   gem 'minitest-focus'
   gem 'minitest-suite'
+  gem "factory_bot_rails"
 end
 
 gem "maintenance_tasks", "~> 2.3"

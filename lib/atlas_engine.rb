@@ -31,4 +31,24 @@ module AtlasEngine
   #
   #   @return [String] the name of the module for validation elibility.
   mattr_accessor :validation_eligibility, default: "AtlasEngine::Services::ValidationEligibility"
+
+  # @!attribute address_importer_additional_field_validations
+  #   The Host application can add additional validations to the address importer
+  #   by setting this attribute to a hash of the following format:
+  #   {
+  #     field_name: [Array of additional validation classes]
+  #   }
+  #
+  #   example:
+  #   AtlasEngine.address_importer_additional_field_validations = {
+  #     city: [MyCustomCityValidator],
+  #     province_code: [MyCustomProvinceValidator],
+  #     zip: [MyCustomZipValidator],
+  #   }
+  mattr_accessor :address_importer_additional_field_validations, default: {}
+
+  # @!attribute import_events_notifier
+  #   The Host application can define its own notifier for import events by configuring
+  #   AtlasEngine.address_importer_notifier = MyCustomNotifier
+  mattr_accessor :address_importer_notifier, default: "AtlasEngine::AddressImporter::ImportEventsNotifier::Notifier"
 end

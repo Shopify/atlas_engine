@@ -1,4 +1,6 @@
 require "active_support/core_ext/integer/time"
+require 'factory_bot_rails'
+
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -61,4 +63,9 @@ Rails.application.configure do
   # check if we are running in a git repo and if so get the current git hash
   latest_commit = %x(git rev-parse --git-dir >/dev/null 2>&1 && git log -n 1 --pretty=format:"%H")
   config.version = latest_commit
+
+  # Configure FactoryBot to load factories from the engine paths
+  config.factory_bot.definition_file_paths = [
+    File.join(AtlasEngine::Engine.root, "test/factories")
+  ].union(Dir[File.join(AtlasEngine::Engine.root, "test/countries/*/factories")])
 end

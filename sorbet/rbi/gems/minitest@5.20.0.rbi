@@ -1084,7 +1084,7 @@ class Minitest::Runnable
 
     # Returns all subclasses of Runnable.
     #
-    # source://minitest//lib/minitest.rb#424
+    # source://minitest-suite/0.0.3/lib/minitest/suite.rb#101
     def runnables; end
 
     # Defines the order to run tests (:random by default). Override
@@ -1331,6 +1331,15 @@ class Minitest::Test < ::Minitest::Runnable
   def with_info_handler(&block); end
 
   class << self
+    # source://minitest-focus/1.4.0/lib/minitest/focus.rb#10
+    def add_to_filter(name); end
+
+    # source://minitest-focus/1.4.0/lib/minitest/focus.rb#14
+    def filtered_names; end
+
+    # source://minitest-focus/1.4.0/lib/minitest/focus.rb#40
+    def focus(name = T.unsafe(nil)); end
+
     # Call this at the top of your tests when you absolutely
     # positively need to have ordered tests. In doing so, you're
     # admitting that you suck and your tests are weak.
@@ -1371,6 +1380,12 @@ class Minitest::Test < ::Minitest::Runnable
     #
     # source://minitest//lib/minitest/test.rb#69
     def runnable_methods; end
+
+    # source://minitest-focus/1.4.0/lib/minitest/focus.rb#52
+    def set_focus_trap; end
+
+    # source://minitest-suite/0.0.3/lib/minitest/suite.rb#93
+    def suite(suite_name); end
   end
 end
 

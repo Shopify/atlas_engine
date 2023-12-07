@@ -1,0 +1,21 @@
+city_synonyms:
+- saint, st
+- sainte, ste
+- saints, sts
+- saintes, stes
+street_synonyms:
+- allée, all
+- avenue, av
+- boulevard, bd
+- centre, ctre
+- chemin, chem
+- impasse, imp
+- passage, pas
+- place, pl
+- rond-point, rpt
+- route, rte
+- saint, st
+- sainte, ste
+- saints, sts
+- saintes, stes
+- sentier, sent

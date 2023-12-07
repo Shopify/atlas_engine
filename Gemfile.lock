@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    atlas_engine (0.1.4)
+    atlas_engine (0.1.7)
       elasticsearch-model
       elasticsearch-rails
+      factory_bot_rails
       graphiql-rails
       graphql
       rails (>= 7.0.7.2)
@@ -94,6 +95,7 @@ GEM
     base64 (0.2.0)
     bigdecimal (3.1.4)
     builder (3.2.4)
+    byebug (11.1.3)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
@@ -127,6 +129,11 @@ GEM
       faraday (>= 1, < 3)
       multi_json
     erubi (1.12.0)
+    factory_bot (6.4.2)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.2)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     faraday (2.7.11)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -212,6 +219,9 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    pry-byebug (3.10.1)
+      byebug (~> 11.0)
+      pry (>= 0.13, < 0.15)
     psych (5.1.1.1)
       stringio
     public_suffix (5.0.3)
@@ -362,6 +372,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   elastic-transport
+  factory_bot_rails
   frozen_record
   graphiql-rails
   htmlentities
@@ -373,6 +384,7 @@ DEPENDENCIES
   mocha
   mysql2 (~> 0.5)
   pry
+  pry-byebug
   puma (~> 6.4)
   rails
   rubocop-shopify
