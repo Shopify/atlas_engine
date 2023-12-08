@@ -5,10 +5,6 @@ module AtlasEngine
         @client ||= AtlasEngine::Elasticsearch::Client.new
       end
 
-      def skip_integration_tests?
-        ActiveModel::Type::Boolean.new.cast(ENV.fetch("SKIP_INTEGRATION_TESTS"){ false })
-      end
-
       def generate_random_base_name
         "sample_" + (rand * 100000000).to_i.to_s
       end
@@ -51,8 +47,6 @@ module AtlasEngine
       end
 
       def cleanup_by_prefix(prefix)
-        skip if skip_integration_tests?
-
         client.put("_cluster/settings", {"transient" => {"action.destructive_requires_name" => false}})
         client.delete("/#{correct_name(prefix)}*?ignore_unavailable=true")
       end
