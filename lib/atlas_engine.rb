@@ -22,4 +22,13 @@ module AtlasEngine
   #
   #   @return [String] the name of the parent module for loggers.
   mattr_accessor :log_base, default: "AtlasEngine::LogBase"
+
+  # @!attribute validation_eligibility
+  #
+  #   The module for validation eligibility. Must be a module that implements the
+  #   `validation_enabled(address)` method which returns a boolean that indicates if the provided
+  #   address is eligible for validation.
+  #
+  #   @return [String] the name of the module for validation elibility.
+  mattr_accessor :validation_eligibility, default: "AtlasEngine::Services::ValidationEligibility"
 end

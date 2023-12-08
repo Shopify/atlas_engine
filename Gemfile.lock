@@ -316,6 +316,7 @@ GEM
     state_machines-activerecord (0.9.0)
       activerecord (>= 6.0)
       state_machines-activemodel (>= 0.9.0)
+    statsd-instrument (3.6.1)
     stringio (3.1.0)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
@@ -380,6 +381,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   state_machines-activerecord
+  statsd-instrument
   tapioca
   webmock
   worldwide

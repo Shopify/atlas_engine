@@ -90,4 +90,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # check if we are running in a git repo and if so get the current git hash
+  latest_commit = %x(git rev-parse --git-dir >/dev/null 2>&1 && git log -n 1 --pretty=format:"%H")
+  config.version = latest_commit
 end

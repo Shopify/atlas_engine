@@ -57,4 +57,8 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # check if we are running in a git repo and if so get the current git hash
+  latest_commit = %x(git rev-parse --git-dir >/dev/null 2>&1 && git log -n 1 --pretty=format:"%H")
+  config.version = latest_commit
 end

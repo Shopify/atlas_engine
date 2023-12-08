@@ -67,4 +67,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # check if we are running in a git repo and if so get the current git hash
+  latest_commit = %x(git rev-parse --git-dir >/dev/null 2>&1 && git log -n 1 --pretty=format:"%H")
+  config.version = latest_commit
 end
