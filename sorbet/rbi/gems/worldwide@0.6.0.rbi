@@ -744,30 +744,33 @@ Worldwide::Discounts::ZH_HANS_GROUP = T.let(T.unsafe(nil), Array)
 class Worldwide::Field
   # @return [Field] a new instance of Field
   #
-  # source://worldwide//lib/worldwide/field.rb#22
+  # source://worldwide//lib/worldwide/field.rb#23
   def initialize(country_code:, field_key:); end
 
-  # source://worldwide//lib/worldwide/field.rb#27
+  # source://worldwide//lib/worldwide/field.rb#28
   def autofill(locale: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/field.rb#39
+  # source://worldwide//lib/worldwide/field.rb#40
   def error(code:, locale: T.unsafe(nil), options: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/field.rb#31
+  # source://worldwide//lib/worldwide/field.rb#32
   def label(locale: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/field.rb#35
+  # source://worldwide//lib/worldwide/field.rb#36
   def label_marked_optional(locale: T.unsafe(nil)); end
+
+  # source://worldwide//lib/worldwide/field.rb#44
+  def warning(code:, locale: T.unsafe(nil), options: T.unsafe(nil)); end
 
   private
 
-  # source://worldwide//lib/worldwide/field.rb#45
+  # source://worldwide//lib/worldwide/field.rb#50
   def base_key(country_key); end
 
-  # source://worldwide//lib/worldwide/field.rb#49
+  # source://worldwide//lib/worldwide/field.rb#54
   def default_lookup(key_suffix, options: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/field.rb#55
+  # source://worldwide//lib/worldwide/field.rb#60
   def lookup(key_suffix, locale:, options: T.unsafe(nil)); end
 end
 
