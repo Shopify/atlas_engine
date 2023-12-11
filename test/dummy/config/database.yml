@@ -9,7 +9,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
-development:
+development: &development
   <<: *default
   encoding: utf8mb4
   collation: utf8mb4_unicode_ci
@@ -20,13 +20,10 @@ development:
   host: 127.0.0.1
   database: db
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  <<: *default
-  adapter: sqlite3
-  database: db/test.sqlite3
+  <<: *development
+  database: db_test
+
 
 production:
   <<: *default

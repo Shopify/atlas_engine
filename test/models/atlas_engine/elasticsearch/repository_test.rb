@@ -136,8 +136,6 @@ module AtlasEngine
       end
 
       test "#create_next_index creates an index with provided mappings" do
-        skip if skip_integration_tests?
-
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
         actual_alias_name = @repository.new_alias
@@ -153,7 +151,6 @@ module AtlasEngine
       end
 
       test "#create_next_index creates an index with .new alias if no indices exist" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -187,7 +184,6 @@ module AtlasEngine
       end
 
       test "#create_next_index creates an index having suffix .0" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -202,7 +198,6 @@ module AtlasEngine
       end
 
       test "#create_next_index does not create an index if a .new alias already exists" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -221,7 +216,6 @@ module AtlasEngine
 
       test "#create_next_index creates an index with a .new alias if an active index exists, \
         but a .new alias does not exist" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -239,7 +233,6 @@ module AtlasEngine
       end
 
       test "#create_next_index create new index with an incremented version" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -271,7 +264,6 @@ module AtlasEngine
       end
 
       test "#switch_to_next_index converts a .new alias to an active alias" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -294,7 +286,6 @@ module AtlasEngine
       end
 
       test "#switch_to_next_index does not archive an active alias if a .new alias is not available" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -319,7 +310,6 @@ module AtlasEngine
       end
 
       test "#switch_to_next_index archives an active alias if a .new alias exists" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -350,7 +340,6 @@ module AtlasEngine
       end
 
       test "#switch_to_next_index deletes an archived alias if a .new alias exists" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -394,7 +383,6 @@ module AtlasEngine
       end
 
       test "#save_records_backfill inserts records into the .new index if it exists" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)
@@ -423,7 +411,6 @@ module AtlasEngine
       end
 
       test "#save_records_backfill inserts records into the active index if no .new index exists" do
-        skip if skip_integration_tests?
 
         base_name = generate_random_base_name
         @repository = SampleRepository.new(base_name: base_name)

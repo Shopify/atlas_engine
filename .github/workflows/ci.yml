@@ -1,30 +1,45 @@
 name: CI
 
-on: [push]
+on: push
 
 jobs:
   build:
-    name: Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }} / ${{ matrix.database }}
+    name: Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }}
     runs-on: shopify-ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         gemfile: [Gemfile, gemfiles/rails_6_0.gemfile, gemfiles/rails_6_1.gemfile, gemfiles/rails_7_0.gemfile, gemfiles/rails_edge.gemfile]
         ruby: ["3.0", "3.1", "3.2"]
-        database: [sqlite]
+
+    services:
+      mysql:
+        image: mysql:8.2.0
+        env:
+          MYSQL_ROOT_PASSWORD: changeme
+          MYSQL_DATABASE: db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=3s --health-timeout=3s --health-retries=3
+
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+        env:
+          xpack.security.enabled: false
+          discovery.type: single-node
+        ports:
+          - 9200:9200
+        options: --health-cmd="curl -f http://localhost:9200/_cluster/health || exit 1" --health-interval=5s --health-timeout=3s --health-retries=3
+
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      DB: ${{ matrix.database }}
+      DB: db
       MYSQL_USER: root
       MYSQL_PASSWORD: changeme
+
     steps:
     - name: Check out code
       uses: actions/checkout@v4
-
-    - name: Create .env files
-      run: |
-        cp .env.template .env
-        cp .env.template test/dummy/.env
 
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
@@ -38,11 +53,14 @@ jobs:
       if: ${{ matrix.gemfile == 'gemfiles/rails_edge.gemfile' }}
       run: bundle info rails | head -1
 
+    - name: Setup project
+      run: bash setup
+
     - name: Set up database
       run: RAILS_ENV=test bundle exec rails db:setup
 
     - name: Ruby Tests
-      run: SKIP_INTEGRATION_TESTS=true bundle exec rails test
+      run: bundle exec rails test
 
     - name: Typecheck
       run: bundle exec srb tc
