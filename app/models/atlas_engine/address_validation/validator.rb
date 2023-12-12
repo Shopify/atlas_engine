@@ -44,7 +44,7 @@ module AtlasEngine
       sig do
         params(
           address: AbstractAddress,
-          matching_strategy: MatchingStrategies,
+          matching_strategy: Strategies,
           locale: String,
           context: T::Hash[T.untyped, T.untyped],
         ).void
@@ -64,7 +64,7 @@ module AtlasEngine
         @zip = T.let(address.zip, T.nilable(String))
         @country_code = T.let(address.country_code, T.nilable(String))
         @context = T.let(context, T::Hash[T.untyped, T.untyped])
-        @matching_strategy = T.let(matching_strategy, AddressValidation::MatchingStrategies)
+        @matching_strategy = T.let(matching_strategy, Strategies)
 
         matching_strategy_name = matching_strategy.serialize
         @predicate_pipeline = T.let(PredicatePipeline.find(matching_strategy_name), PredicatePipeline)
