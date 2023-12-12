@@ -8,14 +8,9 @@ module AtlasEngine
     class << self
       extend T::Sig
 
-      sig { params(code: ErrorCode, message: String).void }
+      sig { params(code: ErrorCode, message: String).returns(CodedError) }
       def error(code, message)
         error = CodedError.new(code, message)
-        error_constant_name = code.to_s.underscore.upcase
-
-        raise "#{code} error is already defined" if const_defined?(error_constant_name)
-
-        const_set(error_constant_name, error)
       end
     end
 
