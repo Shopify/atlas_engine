@@ -4,6 +4,8 @@
 module AtlasEngine
   module AddressValidation
     class MatchingStrategies < T::Enum
+      include Strategies
+
       enums do
         Es = new("es")
         EsStreet = new("es_street")
