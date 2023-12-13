@@ -69,7 +69,6 @@ module AtlasEngine
       assert_equal([], profile.validation.normalized_components)
       assert_equal({}, profile.validation.exclusions)
       assert_equal({}, profile.validation.partial_postal_code_range_for_length)
-      assert_equal(true, profile.validation.has_provinces)
       assert_equal("AddressValidation::Es::DefaultQueryBuilder", profile.validation.query_builder)
 
       # PENDING: enable when validation AddressParser logic is moved

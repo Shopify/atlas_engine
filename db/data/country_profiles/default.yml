@@ -15,7 +15,6 @@ validation:
   normalized_components: []
   exclusions: {}
   partial_postal_code_range_for_length: {}
-  has_provinces: true
   query_builder: AddressValidation::Es::DefaultQueryBuilder
   address_parser: ValidationTranscriber::AddressParserBase
   admin:
