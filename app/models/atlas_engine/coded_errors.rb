@@ -13,19 +13,5 @@ module AtlasEngine
         error = CodedError.new(code, message)
       end
     end
-
-    class CodedError < StandardError
-      extend T::Sig
-
-      sig { returns(ErrorCode) }
-      attr_reader :code
-
-      sig { params(code: ErrorCode, message: String).void }
-      def initialize(code, message)
-        @code = code
-        super(message)
-      end
-    end
-    private_constant :CodedError
   end
 end
