@@ -1,30 +1,60 @@
+# typed: false
+# frozen_string_literal: true
+
 module AtlasEngine
   module Types
     class QueryType < Types::BaseObject
-    field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
-      argument :id, ID, required: true, description: "ID of the object."
-    end
+      include LogHelper
 
-    def node(id:)
-      context.schema.object_from_id(id, context)
-    end
+      field :validation, ValidationType, null: false do
+        argument :address, AddressValidation::AddressInput, required: true
+        argument :locale, String, required: true
+        argument :matching_strategy, MatchingStrategyType, required: false
+      end
 
-    field :nodes, [Types::NodeType, null: true], null: true, description: "Fetches a list of objects given a list of IDs." do
-      argument :ids, [ID], required: true, description: "IDs of the objects."
-    end
+      def validation(address:, locale: "en", matching_strategy: nil)
+        raise build_graphql_error(AtlasEngine::AddressValidation::Errors::MISSING_PARAMETER) if address.blank?
 
-    def nodes(ids:)
-      ids.map { |id| context.schema.object_from_id(id, context) }
-    end
+        locale = LocaleFormatHelper.format_locale(locale)
 
-      # Add root-level fields here.
-      # They will be entry points for queries on your schema.
+        country_code = address.country_code
+        tags = ["country:#{country_code}", "matching_strategy:#{matching_strategy}"]
+        measure("validation", tags) do
+          I18n.with_locale(locale) do
+            Services::Validation.validate_address(
+              AtlasEngine::AddressValidation::Request.new(
+                address: address,
+                locale: locale,
+                matching_strategy: matching_strategy
+              ),
+            )
+          end
+        end
+      end
 
-      # TODO: remove me
-      field :test_field, String, null: false,
-        description: "An example field added by the generator"
-      def test_field
-        "Hello World!"
+      private
+
+      def measure(method, tags = [], value = nil, &block)
+        if block
+          StatsD.distribution(
+            "#{method}.request_time",
+            tags: tags,
+            &block
+          )
+        else
+          StatsD.distribution(
+            "#{method}.request_time",
+            value,
+            tags: tags,
+          )
+        end
+      end
+
+      def build_graphql_error(error)
+        GraphQL::ExecutionError.new(
+          error.message,
+          extensions: { "error_code" => error.code },
+        )
       end
     end
   end
