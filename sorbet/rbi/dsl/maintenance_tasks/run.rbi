@@ -850,6 +850,9 @@ class MaintenanceTasks::Run
     Elem = type_member { { fixed: ::MaintenanceTasks::Run } }
 
     sig { returns(T::Array[::MaintenanceTasks::Run]) }
+    def to_a; end
+
+    sig { returns(T::Array[::MaintenanceTasks::Run]) }
     def to_ary; end
   end
 
@@ -941,6 +944,9 @@ class MaintenanceTasks::Run
     def target; end
 
     sig { returns(T::Array[::MaintenanceTasks::Run]) }
+    def to_a; end
+
+    sig { returns(T::Array[::MaintenanceTasks::Run]) }
     def to_ary; end
   end
 
@@ -949,6 +955,9 @@ class MaintenanceTasks::Run
     include GeneratedRelationMethods
 
     Elem = type_member { { fixed: ::MaintenanceTasks::Run } }
+
+    sig { returns(T::Array[::MaintenanceTasks::Run]) }
+    def to_a; end
 
     sig { returns(T::Array[::MaintenanceTasks::Run]) }
     def to_ary; end

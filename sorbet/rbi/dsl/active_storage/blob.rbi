@@ -777,6 +777,9 @@ class ActiveStorage::Blob
     Elem = type_member { { fixed: ::ActiveStorage::Blob } }
 
     sig { returns(T::Array[::ActiveStorage::Blob]) }
+    def to_a; end
+
+    sig { returns(T::Array[::ActiveStorage::Blob]) }
     def to_ary; end
   end
 
@@ -868,6 +871,9 @@ class ActiveStorage::Blob
     def target; end
 
     sig { returns(T::Array[::ActiveStorage::Blob]) }
+    def to_a; end
+
+    sig { returns(T::Array[::ActiveStorage::Blob]) }
     def to_ary; end
   end
 
@@ -876,6 +882,9 @@ class ActiveStorage::Blob
     include GeneratedRelationMethods
 
     Elem = type_member { { fixed: ::ActiveStorage::Blob } }
+
+    sig { returns(T::Array[::ActiveStorage::Blob]) }
+    def to_a; end
 
     sig { returns(T::Array[::ActiveStorage::Blob]) }
     def to_ary; end

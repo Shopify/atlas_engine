@@ -43,7 +43,7 @@ module AtlasEngine
     ], T::Array[String])
 
     @@country_paths = T.let([
-      File.join(AtlasEngine::Engine.root, "app/countries/*/country_profile.yml")
+      File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/country_profile.yml")
     ], T::Array[String])
 
     @attributes = T.let([], T::Array[T.untyped])
