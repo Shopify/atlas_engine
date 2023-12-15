@@ -1,0 +1,15 @@
+id: US
+validation:
+  enabled: true
+  default_matching_strategy: es_street
+  city_fields:
+    - city_aliases
+  exclusions:
+    street:
+      - Us::AddressValidation::Validators::FullAddress::Exclusions::UnsupportedProvinces
+      - Us::AddressValidation::Validators::FullAddress::Exclusions::PoBoxes
+      - Us::AddressValidation::Validators::FullAddress::Exclusions::GeneralDelivery
+  address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica
+  admin:
+    carrier_address_lookups:
+      usps: Us::AddressLookup::Usps::ZipLookup

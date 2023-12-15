@@ -1,3 +1,7 @@
 id: CA
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "7"
 validation:
   address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica

@@ -1,0 +1,95 @@
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        {
+          "bool": {
+            "should": [
+              { "match": { "street": {"query": "Queens Close", "fuzziness": "auto"} } },
+              {
+                "bool": {
+                  "should": [
+                    { "match": { "region4": {"query": "Boothstown", "fuzziness": "auto"} } },
+                    { "match": {"region3": {"query": "Worlsey", "fuzziness": "auto"}} },
+                    {
+                      "nested":{
+                        "path": "city_aliases",
+                        "query": {
+                          "match": {
+                            "city_aliases.alias": {
+                              "query": "Manchester",
+                              "fuzziness": "auto"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              { "match": {"zip": {"query": "M28 1BQ", "fuzziness": "auto"}} }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              { "match": { "street": {"query": "Queens Close, Boothstown", "fuzziness": "auto"} } },
+              {
+                "bool": {
+                  "should": [
+                    { "match": {"region4": {"query": "", "fuzziness": "auto"}} },
+                    { "match": {"region3": {"query": "Worlsey", "fuzziness": "auto"}} },
+                    {
+                      "nested":{
+                        "path": "city_aliases",
+                        "query": {
+                          "match": {
+                            "city_aliases.alias": {
+                              "query": "Manchester",
+                              "fuzziness": "auto"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              { "match": {"zip": {"query": "M28 1BQ", "fuzziness": "auto"}} }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              {"match": {"street": {"query": "Queens Close, Boothstown, Worlsey", "fuzziness": "auto"}}},
+              {
+                "bool": {
+                  "should": [
+                    {"match": {"region4": {"query": "", "fuzziness": "auto"}}},
+                    {"match": {"region3": {"query": "", "fuzziness": "auto"}}},
+                    {
+                      "nested":{
+                        "path": "city_aliases",
+                        "query": {
+                          "match": {
+                            "city_aliases.alias": {
+                              "query": "Manchester",
+                              "fuzziness": "auto"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {"match": {"zip": {"query": "M28 1BQ", "fuzziness": "auto"}}}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

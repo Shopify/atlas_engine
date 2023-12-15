@@ -1,0 +1,142 @@
+mappings:
+  properties:
+    locale:
+      type: keyword
+    approx_building_ranges:
+      type: integer_range
+    region1:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    region2:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    region3:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    region4:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    city_aliases:
+      type: nested
+      dynamic: "false"
+      properties:
+        alias:
+          type: text
+          analyzer: text_analyzer
+          search_analyzer: city_analyzer
+          fields:
+            keyword:
+              type: keyword
+    suburb:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    street:
+      type: text
+      analyzer: text_analyzer
+      search_analyzer: street_analyzer
+      fields:
+        keyword:
+          type: keyword
+    street_stripped:
+      type: text
+      analyzer: text_analyzer
+      search_analyzer: street_analyzer
+      fields:
+        keyword:
+          type: keyword
+    zip:
+      type: "text"
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: "keyword"
+        ngram:
+          type: "text"
+          analyzer: edge_ngram_analyzer
+          search_analyzer: keyword_analyzer
+    building_name:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+    location:
+      type: geo_point
+settings:
+  index:
+    number_of_shards: "<%= number_of_shards %>"
+    number_of_replicas: "<%= number_of_replicas %>"
+    analysis:
+      analyzer:
+        text_analyzer:
+          tokenizer: standard
+          filter:
+          - lowercase
+          - asciifolding
+        keyword_analyzer:
+          tokenizer: keyword
+          filter:
+          - lowercase
+          - asciifolding
+        street_analyzer:
+          tokenizer: standard
+          filter:
+          - lowercase
+          - asciifolding
+          - strip_special_characters
+          <% if street_synonyms.present? %>
+          - street_synonyms
+          <% end %>
+        city_analyzer:
+          tokenizer: standard
+          filter:
+          - lowercase
+          - asciifolding
+          - strip_special_characters
+          <% if city_synonyms.present? %>
+          - city_synonyms
+          <% end %>
+        edge_ngram_analyzer:
+          tokenizer: zip_edge_ngram
+          filter:
+          - lowercase
+          - asciifolding
+      tokenizer:
+        zip_edge_ngram:
+          type: "edge_ngram"
+          <% if country_has_zip? %>
+          min_gram: "<%= zip_edge_min_gram %>"
+          max_gram: "<%= zip_edge_max_gram %>"
+          <% end %>
+      filter:
+        <% if city_synonyms.present? %>
+        city_synonyms:
+          type: synonym_graph
+          lenient: "true"
+          synonyms: <%= city_synonyms %>
+        <% end %>
+        <% if street_synonyms.present? %>
+        street_synonyms:
+          type: synonym_graph
+          lenient: "true"
+          synonyms: <%= street_synonyms %>
+        <% end %>
+        strip_special_characters:
+          type: "pattern_replace"
+          # TODO: Pull from Country Profile https://github.com/Shopify/address/issues/1081
+          pattern: "[!|@|%|&|\"|'|*|,|.|(|)|;|:]"

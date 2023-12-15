@@ -1,0 +1,74 @@
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "dis_max": {
+            "queries": [
+              {
+                "bool": {
+                  "must_not": {
+                    "exists": {
+                      "field": "approx_building_ranges"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "dis_max": {
+            "queries": [
+              {
+                "match": {
+                  "street": {
+                    "query": "Main Street",
+                    "fuzziness": "auto"
+                  }
+                }
+              },
+              {
+                "match": {
+                  "street_stripped": {
+                    "query": "Main Street",
+                    "fuzziness": "auto"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "nested": {
+            "path": "city_aliases",
+            "query": {
+              "match": {
+                "city_aliases.alias": {
+                  "query": "San Francisco",
+                  "fuzziness": "auto"
+                }
+              }
+            }
+          }
+        },
+        {
+          "match": {
+            "zip": {
+              "query": "94102",
+              "fuzziness": "auto"
+            }
+          }
+        },
+        {
+          "term": {
+            "province_code": {
+              "value": "ca"
+            }
+          }
+        }
+      ],
+      "minimum_should_match": 3
+    }
+  }
+}
