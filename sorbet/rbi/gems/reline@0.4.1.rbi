@@ -725,20 +725,28 @@ Reline::FILENAME_COMPLETION_PROC = T.let(T.unsafe(nil), T.untyped)
 # source://reline//lib/reline/face.rb#3
 class Reline::Face
   class << self
-    # source://reline//lib/reline/face.rb#127
+    # source://reline//lib/reline/face.rb#169
     def [](name); end
 
-    # source://reline//lib/reline/face.rb#131
+    # source://reline//lib/reline/face.rb#173
     def config(name, &block); end
 
-    # source://reline//lib/reline/face.rb#136
+    # source://reline//lib/reline/face.rb#178
     def configs; end
 
-    # source://reline//lib/reline/face.rb#140
+    # source://reline//lib/reline/face.rb#164
+    def force_truecolor; end
+
+    # source://reline//lib/reline/face.rb#182
     def load_initial_configs; end
 
-    # source://reline//lib/reline/face.rb#153
+    # source://reline//lib/reline/face.rb#195
     def reset_to_initial_configs; end
+
+    # @return [Boolean]
+    #
+    # source://reline//lib/reline/face.rb#160
+    def truecolor?; end
   end
 end
 
@@ -749,7 +757,7 @@ class Reline::Face::Config
   # source://reline//lib/reline/face.rb#62
   def initialize(name, &block); end
 
-  # source://reline//lib/reline/face.rb#77
+  # source://reline//lib/reline/face.rb#84
   def [](name); end
 
   # source://reline//lib/reline/face.rb#72
@@ -760,18 +768,27 @@ class Reline::Face::Config
   # source://reline//lib/reline/face.rb#70
   def definition; end
 
+  # source://reline//lib/reline/face.rb#77
+  def reconfigure; end
+
   private
 
-  # source://reline//lib/reline/face.rb#93
+  # source://reline//lib/reline/face.rb#126
   def format_to_sgr(ordered_values); end
 
   # @return [Boolean]
   #
-  # source://reline//lib/reline/face.rb#120
+  # source://reline//lib/reline/face.rb#153
   def rgb_expression?(color); end
 
-  # source://reline//lib/reline/face.rb#83
+  # source://reline//lib/reline/face.rb#90
   def sgr_rgb(key, value); end
+
+  # source://reline//lib/reline/face.rb#108
+  def sgr_rgb_256color(key, value); end
+
+  # source://reline//lib/reline/face.rb#99
+  def sgr_rgb_truecolor(key, value); end
 end
 
 # source://reline//lib/reline/face.rb#59

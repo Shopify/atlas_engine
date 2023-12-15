@@ -25,6 +25,7 @@ gem "frozen_record"
 gem "htmlentities"
 gem "annex_29"
 gem "statsd-instrument"
+gem "rubyzip"
 
 group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
