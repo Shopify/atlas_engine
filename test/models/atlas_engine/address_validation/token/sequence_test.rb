@@ -259,6 +259,18 @@ module AtlasEngine
           assert_equal expected_token_values, as_hash_array(sequence)
         end
 
+        test "from_string supports input written in Hangul script" do
+          expected_token_values = [
+            { value: "고양시", start_offset: 0, end_offset: 3, type: "<ALPHANUM>", position: 0, position_length: 1 },
+            { value: "일산동구", start_offset: 4, end_offset: 8, type: "<ALPHANUM>", position: 1, position_length: 1 },
+          ]
+
+          string = "고양시 일산동구"
+          sequence = AddressValidation::Token::Sequence.from_string(string)
+
+          assert_equal expected_token_values, as_hash_array(sequence)
+        end
+
         test "from_string strips diacritics and ligatures" do
           expected_token_values = [
             { value: "beloeil", start_offset: 0, end_offset: 6, type: "<ALPHANUM>", position: 0, position_length: 1 },

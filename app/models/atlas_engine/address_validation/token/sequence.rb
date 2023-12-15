@@ -10,6 +10,7 @@ module AtlasEngine
         class << self
           extend T::Sig
           include Normalizer
+          ACCEPTABLE_CHARACTERS = /\w+|\p{hangul}+/
 
           sig { params(string: T.nilable(String)).returns(Sequence) }
           def from_string(string)
@@ -23,7 +24,7 @@ module AtlasEngine
 
               normalized_substring = normalize(substring)
               # annex 29 returns whitespace and punctuation as separate substrings
-              next unless normalized_substring.match?(/\w/)
+              next unless normalized_substring.match?(ACCEPTABLE_CHARACTERS)
 
               token = Token.new(
                 value: normalized_substring,
