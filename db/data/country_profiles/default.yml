@@ -16,7 +16,7 @@ validation:
   exclusions: {}
   partial_postal_code_range_for_length: {}
   query_builder: AddressValidation::Es::DefaultQueryBuilder
-  address_parser: ValidationTranscriber::AddressParserBase
+  address_parser: AtlasEngine::ValidationTranscriber::AddressParserBase
   admin:
     carrier_address_lookups:
       google: AddressLookup::Google::Lookup
