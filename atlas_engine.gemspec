@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "worldwide"
   spec.add_dependency "state_machines-activerecord"
   spec.add_dependency "factory_bot_rails"
+  spec.add_dependency "rubyzip"
 end

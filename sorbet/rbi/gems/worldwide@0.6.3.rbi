@@ -1287,7 +1287,7 @@ class Worldwide::Region
 
   # Relationships
   #
-  # source://worldwide//lib/worldwide/region.rb#260
+  # source://worldwide//lib/worldwide/region.rb#261
   def add_zone(region); end
 
   # ISO-3166 three-letter code for this region, if there is one.
@@ -1296,18 +1296,18 @@ class Worldwide::Region
   # source://worldwide//lib/worldwide/region.rb#43
   def alpha_three; end
 
-  # source://worldwide//lib/worldwide/region.rb#275
+  # source://worldwide//lib/worldwide/region.rb#277
   def associated_continent; end
 
   # Attributes
   #
-  # source://worldwide//lib/worldwide/region.rb#269
+  # source://worldwide//lib/worldwide/region.rb#271
   def associated_country; end
 
   # The value with which to autofill the zip, if this region has zip autofill active;
   # otherwise, nil.
   #
-  # source://worldwide//lib/worldwide/region.rb#288
+  # source://worldwide//lib/worldwide/region.rb#290
   def autofill_zip; end
 
   # In some countries, an address may have the building number in address2.
@@ -1340,7 +1340,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#293
+  # source://worldwide//lib/worldwide/region.rb#295
   def city_required?; end
 
   # The CLDR code for this region.
@@ -1362,7 +1362,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#298
+  # source://worldwide//lib/worldwide/region.rb#300
   def continent?; end
 
   # Is this Region considered a "country" (top-level political entity "country or region")
@@ -1370,7 +1370,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#304
+  # source://worldwide//lib/worldwide/region.rb#306
   def country?; end
 
   # The suggested currency for use in this region.
@@ -1389,7 +1389,7 @@ class Worldwide::Region
 
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#308
+  # source://worldwide//lib/worldwide/region.rb#310
   def deprecated?; end
 
   # A major city in the given region that can be used as an example
@@ -1405,7 +1405,7 @@ class Worldwide::Region
   # An Worldwide::Field that can be used to ask about the field, including
   # labels, error messages, and an autofill value if there is one.
   #
-  # source://worldwide//lib/worldwide/region.rb#314
+  # source://worldwide//lib/worldwide/region.rb#316
   def field(key:); end
 
   # Unicode codepoints for this region's flag emoji
@@ -1440,7 +1440,7 @@ class Worldwide::Region
 
   # A user-facing name in the currently-active locale's language.
   #
-  # source://worldwide//lib/worldwide/region.rb#321
+  # source://worldwide//lib/worldwide/region.rb#323
   def full_name(locale: T.unsafe(nil)); end
 
   # The string that results from appending " Countries" to the adjectival form of the {group_name}
@@ -1473,7 +1473,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#331
+  # source://worldwide//lib/worldwide/region.rb#334
   def has_zip?; end
 
   # If this flag is set, then we support provinces "under the hood" for this country, but we do not
@@ -1490,7 +1490,7 @@ class Worldwide::Region
   # source://worldwide//lib/worldwide/region.rb#87
   def hide_provinces_from_addresses=(_arg0); end
 
-  # source://worldwide//lib/worldwide/region.rb#254
+  # source://worldwide//lib/worldwide/region.rb#255
   def inspect; end
 
   # The ISO-3166-2 code for this region (e.g. "CA", "CA-ON")
@@ -1599,7 +1599,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#336
+  # source://worldwide//lib/worldwide/region.rb#339
   def province?; end
 
   # If true, then the province is optional for addresses in this region.
@@ -1616,13 +1616,13 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#410
+  # source://worldwide//lib/worldwide/region.rb#411
   def province_optional?; end
 
   # A short-form name for this region, if there is a conventional short form.
   # E.g., returns "ON" for "CA-ON", but "Tokyo" for "JP-13".
   #
-  # source://worldwide//lib/worldwide/region.rb#342
+  # source://worldwide//lib/worldwide/region.rb#345
   def short_name; end
 
   # tags that help us group the region, e.g. "EU-member"
@@ -1694,7 +1694,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#401
+  # source://worldwide//lib/worldwide/region.rb#402
   def valid_zip?(zip, partial_match: T.unsafe(nil)); end
 
   # Day of the week (English language string) on which the week is considered to start in this region.
@@ -1712,7 +1712,7 @@ class Worldwide::Region
   # If the Region has an autofill zip, return the value that will be autofilled
   # Otherwise, return nil
   #
-  # source://worldwide//lib/worldwide/region.rb#387
+  # source://worldwide//lib/worldwide/region.rb#388
   def zip_autofill; end
 
   # Some regions have only a single postal code value.
@@ -1761,7 +1761,7 @@ class Worldwide::Region
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#392
+  # source://worldwide//lib/worldwide/region.rb#393
   def zip_required?; end
 
   # Is a zip value required in this region?  (Possible values:  "optional", "recommended", "required")
@@ -1786,7 +1786,7 @@ class Worldwide::Region
 
   # returns a Region that is a child of this Region
   #
-  # source://worldwide//lib/worldwide/region.rb#347
+  # source://worldwide//lib/worldwide/region.rb#350
   def zone(code: T.unsafe(nil), name: T.unsafe(nil), zip: T.unsafe(nil)); end
 
   # Regions that are sub-regions of this region.
@@ -1796,28 +1796,31 @@ class Worldwide::Region
 
   private
 
-  # source://worldwide//lib/worldwide/region.rb#416
+  # source://worldwide//lib/worldwide/region.rb#417
+  def add_zone_to_hash(zone); end
+
+  # source://worldwide//lib/worldwide/region.rb#428
   def answers_to_cldr_code(search_code); end
 
-  # source://worldwide//lib/worldwide/region.rb#424
+  # source://worldwide//lib/worldwide/region.rb#436
   def answers_to_iso_code(search_code); end
 
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#431
+  # source://worldwide//lib/worldwide/region.rb#443
   def cross_border_zip_includes_province?(zip:, province_code:); end
 
   # Returns true if this country has zones defined, and has postal code prefix data for the zones
   #
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#445
+  # source://worldwide//lib/worldwide/region.rb#457
   def has_zip_prefixes?; end
 
-  # source://worldwide//lib/worldwide/region.rb#451
+  # source://worldwide//lib/worldwide/region.rb#463
   def inspected_fields; end
 
-  # source://worldwide//lib/worldwide/region.rb#455
+  # source://worldwide//lib/worldwide/region.rb#467
   def parent_country; end
 
   # Checks whether the given value is acceptable according to the regular expression defined for the country.
@@ -1825,7 +1828,7 @@ class Worldwide::Region
   # @param value [String] for the postal code
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#462
+  # source://worldwide//lib/worldwide/region.rb#474
   def passes_country_zip_regexp?(value:, partial_match: T.unsafe(nil)); end
 
   # Search a list of zip prefixes (by province or timezone) to find the element that corresponds to the zip
@@ -1836,18 +1839,18 @@ class Worldwide::Region
   #
   # Returns the Region in which the zip belongs based on the prefix, or `nil` if no match is found.
   #
-  # source://worldwide//lib/worldwide/region.rb#484
+  # source://worldwide//lib/worldwide/region.rb#496
   def search_prefixes_by_normalized_zip(prefixes:, zip:, allow_partial_zip: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/region.rb#498
+  # source://worldwide//lib/worldwide/region.rb#510
   def subdivision_code(iso_code); end
 
   # @return [Boolean]
   #
-  # source://worldwide//lib/worldwide/region.rb#505
+  # source://worldwide//lib/worldwide/region.rb#517
   def valid_normalized_zip?(normalized, province_code: T.unsafe(nil), partial_match: T.unsafe(nil)); end
 
-  # source://worldwide//lib/worldwide/region.rb#538
+  # source://worldwide//lib/worldwide/region.rb#550
   def zone_by_normalized_zip(normalized, allow_partial_zip: T.unsafe(nil)); end
 end
 

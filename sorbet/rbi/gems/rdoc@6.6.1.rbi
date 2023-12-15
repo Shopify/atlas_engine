@@ -4428,41 +4428,41 @@ class RDoc::Markdown::Literals
 
   # Alphanumeric = /\p{Word}/
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#425
+  # source://rdoc//lib/rdoc/markdown/literals.rb#406
   def _Alphanumeric; end
 
   # AlphanumericAscii = /[A-Za-z0-9]/
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#432
+  # source://rdoc//lib/rdoc/markdown/literals.rb#413
   def _AlphanumericAscii; end
 
   # BOM = "uFEFF"
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#439
+  # source://rdoc//lib/rdoc/markdown/literals.rb#420
   def _BOM; end
 
   # Newline = /\n|\r\n?|\p{Zl}|\p{Zp}/
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#446
+  # source://rdoc//lib/rdoc/markdown/literals.rb#427
   def _Newline; end
 
   # NonAlphanumeric = /\p{^Word}/
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#453
+  # source://rdoc//lib/rdoc/markdown/literals.rb#434
   def _NonAlphanumeric; end
 
   # Spacechar = /\t|\p{Zs}/
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#460
+  # source://rdoc//lib/rdoc/markdown/literals.rb#441
   def _Spacechar; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#351
+  # source://rdoc//lib/rdoc/markdown/literals.rb#332
   def apply(rule); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#317
+  # source://rdoc//lib/rdoc/markdown/literals.rb#298
   def apply_with_args(rule, *args); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#85
+  # source://rdoc//lib/rdoc/markdown/literals.rb#80
   def current_character(target = T.unsafe(nil)); end
 
   # source://rdoc//lib/rdoc/markdown/literals.rb#41
@@ -4471,15 +4471,15 @@ class RDoc::Markdown::Literals
   # source://rdoc//lib/rdoc/markdown/literals.rb#64
   def current_line(target = T.unsafe(nil)); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#97
+  # source://rdoc//lib/rdoc/markdown/literals.rb#89
   def current_pos_info(target = T.unsafe(nil)); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#298
+  # source://rdoc//lib/rdoc/markdown/literals.rb#279
   def external_invoke(other, rule, *args); end
 
   # Returns the value of attribute failed_rule.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#209
+  # source://rdoc//lib/rdoc/markdown/literals.rb#201
   def failed_rule; end
 
   # Returns the value of attribute failing_rule_offset.
@@ -4487,40 +4487,37 @@ class RDoc::Markdown::Literals
   # source://rdoc//lib/rdoc/markdown/literals.rb#38
   def failing_rule_offset; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#156
+  # source://rdoc//lib/rdoc/markdown/literals.rb#148
   def failure_caret; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#161
+  # source://rdoc//lib/rdoc/markdown/literals.rb#153
   def failure_character; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#144
+  # source://rdoc//lib/rdoc/markdown/literals.rb#136
   def failure_info; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#165
+  # source://rdoc//lib/rdoc/markdown/literals.rb#157
   def failure_oneline; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#109
+  # source://rdoc//lib/rdoc/markdown/literals.rb#223
+  def get_byte; end
+
+  # source://rdoc//lib/rdoc/markdown/literals.rb#101
   def get_line(no); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#123
+  # source://rdoc//lib/rdoc/markdown/literals.rb#115
   def get_text(start); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#384
+  # source://rdoc//lib/rdoc/markdown/literals.rb#365
   def grow_lr(rule, args, start_pos, m); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#105
+  # source://rdoc//lib/rdoc/markdown/literals.rb#97
   def lines; end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#240
-  def match_char_range(char_range); end
-
-  # source://rdoc//lib/rdoc/markdown/literals.rb#211
-  def match_dot; end
-
-  # source://rdoc//lib/rdoc/markdown/literals.rb#220
+  # source://rdoc//lib/rdoc/markdown/literals.rb#203
   def match_string(str); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#263
+  # source://rdoc//lib/rdoc/markdown/literals.rb#244
   def parse(rule = T.unsafe(nil)); end
 
   # Returns the value of attribute pos.
@@ -4540,7 +4537,7 @@ class RDoc::Markdown::Literals
 
   # @raise [ParseError]
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#179
+  # source://rdoc//lib/rdoc/markdown/literals.rb#171
   def raise_error; end
 
   # Returns the value of attribute result.
@@ -4555,21 +4552,21 @@ class RDoc::Markdown::Literals
   # source://rdoc//lib/rdoc/markdown/literals.rb#39
   def result=(_arg0); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#230
+  # source://rdoc//lib/rdoc/markdown/literals.rb#213
   def scan(reg); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#202
+  # source://rdoc//lib/rdoc/markdown/literals.rb#194
   def set_failed_rule(name); end
 
   # Sets the string and current parsing position for the parser.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#128
+  # source://rdoc//lib/rdoc/markdown/literals.rb#120
   def set_string(string, pos); end
 
   # :startdoc:
   # :stopdoc:
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#422
+  # source://rdoc//lib/rdoc/markdown/literals.rb#403
   def setup_foreign_grammar; end
 
   # Prepares for parsing +str+.  If you define a custom initialize you must
@@ -4578,10 +4575,10 @@ class RDoc::Markdown::Literals
   # source://rdoc//lib/rdoc/markdown/literals.rb#26
   def setup_parser(str, debug = T.unsafe(nil)); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#183
+  # source://rdoc//lib/rdoc/markdown/literals.rb#175
   def show_error(io = T.unsafe(nil)); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#135
+  # source://rdoc//lib/rdoc/markdown/literals.rb#127
   def show_pos; end
 
   # Returns the value of attribute string.
@@ -4590,12 +4587,12 @@ class RDoc::Markdown::Literals
   def string; end
 
   class << self
-    # source://rdoc//lib/rdoc/markdown/literals.rb#415
+    # source://rdoc//lib/rdoc/markdown/literals.rb#396
     def rule_info(name, rendered); end
   end
 end
 
-# source://rdoc//lib/rdoc/markdown/literals.rb#95
+# source://rdoc//lib/rdoc/markdown/literals.rb#87
 class RDoc::Markdown::Literals::KpegPosInfo < ::Struct
   # Returns the value of attribute char
   #
@@ -4661,64 +4658,64 @@ class RDoc::Markdown::Literals::KpegPosInfo < ::Struct
   end
 end
 
-# source://rdoc//lib/rdoc/markdown/literals.rb#277
+# source://rdoc//lib/rdoc/markdown/literals.rb#258
 class RDoc::Markdown::Literals::MemoEntry
   # @return [MemoEntry] a new instance of MemoEntry
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#278
+  # source://rdoc//lib/rdoc/markdown/literals.rb#259
   def initialize(ans, pos); end
 
   # Returns the value of attribute ans.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#286
+  # source://rdoc//lib/rdoc/markdown/literals.rb#267
   def ans; end
 
   # Returns the value of attribute left_rec.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#287
+  # source://rdoc//lib/rdoc/markdown/literals.rb#268
   def left_rec; end
 
   # Sets the attribute left_rec
   #
   # @param value the value to set the attribute left_rec to.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#287
+  # source://rdoc//lib/rdoc/markdown/literals.rb#268
   def left_rec=(_arg0); end
 
-  # source://rdoc//lib/rdoc/markdown/literals.rb#289
+  # source://rdoc//lib/rdoc/markdown/literals.rb#270
   def move!(ans, pos, result); end
 
   # Returns the value of attribute pos.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#286
+  # source://rdoc//lib/rdoc/markdown/literals.rb#267
   def pos; end
 
   # Returns the value of attribute result.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#286
+  # source://rdoc//lib/rdoc/markdown/literals.rb#267
   def result; end
 
   # Returns the value of attribute set.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#286
+  # source://rdoc//lib/rdoc/markdown/literals.rb#267
   def set; end
 end
 
-# source://rdoc//lib/rdoc/markdown/literals.rb#406
+# source://rdoc//lib/rdoc/markdown/literals.rb#387
 class RDoc::Markdown::Literals::RuleInfo
   # @return [RuleInfo] a new instance of RuleInfo
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#407
+  # source://rdoc//lib/rdoc/markdown/literals.rb#388
   def initialize(name, rendered); end
 
   # Returns the value of attribute name.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#412
+  # source://rdoc//lib/rdoc/markdown/literals.rb#393
   def name; end
 
   # Returns the value of attribute rendered.
   #
-  # source://rdoc//lib/rdoc/markdown/literals.rb#412
+  # source://rdoc//lib/rdoc/markdown/literals.rb#393
   def rendered; end
 end
 
@@ -6118,7 +6115,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # Adds +blank_line+ to the output
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#288
+  # source://rdoc//lib/rdoc/markup/to_html.rb#290
   def accept_blank_line(blank_line); end
 
   # Adds +block_quote+ to the output
@@ -6129,27 +6126,27 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
   # Adds +heading+ to the output.  The headings greater than 6 are trimmed to
   # level 6.
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#296
+  # source://rdoc//lib/rdoc/markup/to_html.rb#298
   def accept_heading(heading); end
 
   # Finishes consumption of +list+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#259
+  # source://rdoc//lib/rdoc/markup/to_html.rb#261
   def accept_list_end(list); end
 
   # Finishes consumption of +list_item+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#281
+  # source://rdoc//lib/rdoc/markup/to_html.rb#283
   def accept_list_item_end(list_item); end
 
   # Prepares the visitor for consuming +list_item+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#270
+  # source://rdoc//lib/rdoc/markup/to_html.rb#272
   def accept_list_item_start(list_item); end
 
   # Prepares the visitor for consuming +list+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#250
+  # source://rdoc//lib/rdoc/markup/to_html.rb#252
   def accept_list_start(list); end
 
   # Adds +paragraph+ to the output
@@ -6159,22 +6156,22 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # Adds +raw+ to the output
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#317
+  # source://rdoc//lib/rdoc/markup/to_html.rb#319
   def accept_raw(raw); end
 
   # Adds +rule+ to the output
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#243
+  # source://rdoc//lib/rdoc/markup/to_html.rb#245
   def accept_rule(rule); end
 
   # Adds +table+ to the output
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#324
+  # source://rdoc//lib/rdoc/markup/to_html.rb#326
   def accept_table(header, body, aligns); end
 
   # Adds +verbatim+ to the output
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#213
+  # source://rdoc//lib/rdoc/markup/to_html.rb#215
   def accept_verbatim(verbatim); end
 
   # The RDoc::CodeObject HTML is being generated for.  This is used to
@@ -6191,7 +6188,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # CGI-escapes +text+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#349
+  # source://rdoc//lib/rdoc/markup/to_html.rb#351
   def convert_string(text); end
 
   # Returns the generated output
@@ -6212,7 +6209,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
   # Generate a link to +url+ with content +text+.  Handles the special cases
   # for img: and link: described under handle_regexp_HYPERLINK
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#357
+  # source://rdoc//lib/rdoc/markup/to_html.rb#359
   def gen_url(url, text); end
 
   # source://rdoc//lib/rdoc/markup/to_html.rb#84
@@ -6258,7 +6255,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
   #
   # @raise [RDoc::Error]
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#382
+  # source://rdoc//lib/rdoc/markup/to_html.rb#384
   def html_list_name(list_type, open_tag); end
 
   # source://rdoc//lib/rdoc/markup/to_html.rb#26
@@ -6276,7 +6273,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # Maps attributes to HTML tags
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#391
+  # source://rdoc//lib/rdoc/markup/to_html.rb#393
   def init_tags; end
 
   # source://rdoc//lib/rdoc/markup/to_html.rb#27
@@ -6284,20 +6281,20 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # Returns the HTML end-tag for +list_type+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#417
+  # source://rdoc//lib/rdoc/markup/to_html.rb#419
   def list_end_for(list_type); end
 
   # Returns the HTML tag for +list_type+, possible using a label from
   # +list_item+
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#401
+  # source://rdoc//lib/rdoc/markup/to_html.rb#403
   def list_item_start(list_item, list_type); end
 
   # Returns true if text is valid ruby syntax
   #
   # @return [Boolean]
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#431
+  # source://rdoc//lib/rdoc/markup/to_html.rb#433
   def parseable?(text); end
 
   # source://rdoc//lib/rdoc/markup/to_html.rb#25
@@ -6310,7 +6307,7 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
 
   # Converts +item+ to HTML using RDoc::Text#to_html
   #
-  # source://rdoc//lib/rdoc/markup/to_html.rb#445
+  # source://rdoc//lib/rdoc/markup/to_html.rb#447
   def to_html(item); end
 end
 
@@ -10169,234 +10166,234 @@ end
 
 # RD format parser for inline markup such as emphasis, links, footnotes, etc.
 #
-# source://rdoc//lib/rdoc/rd/inline_parser.rb#17
+# source://rdoc//lib/rdoc/rd/inline_parser.rb#665
 class RDoc::RD::InlineParser < ::Racc::Parser
   # Creates a new parser for inline markup in the rd format.  The +block_parser+
   # is used to for footnotes and labels in the inline text.
   #
   # @return [InlineParser] a new instance of InlineParser
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#90
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#738
   def initialize(block_parser); end
 
   # reduce 100 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1102
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1750
   def _reduce_101(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1109
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1757
   def _reduce_102(val, _values, result); end
 
   # reduce 108 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1127
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1775
   def _reduce_109(val, _values, result); end
 
   # reduce 110 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1134
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1782
   def _reduce_111(val, _values, result); end
 
   # reduce 112 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1142
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1790
   def _reduce_113(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1147
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1795
   def _reduce_114(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1152
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1800
   def _reduce_115(val, _values, result); end
 
   # reduce 12 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#765
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1413
   def _reduce_13(val, _values, result); end
 
   # reduce 135 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1197
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1845
   def _reduce_136(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#772
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1420
   def _reduce_14(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#779
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1427
   def _reduce_15(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#786
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1434
   def _reduce_16(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#793
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1441
   def _reduce_17(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#801
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1449
   def _reduce_18(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#807
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1455
   def _reduce_19(val, _values, result); end
 
   # reduce 1 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#737
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1385
   def _reduce_2(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#815
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1463
   def _reduce_20(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#821
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1469
   def _reduce_21(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#830
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1478
   def _reduce_22(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#836
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1484
   def _reduce_23(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#842
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1490
   def _reduce_24(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#848
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1496
   def _reduce_25(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#857
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1505
   def _reduce_26(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#863
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1511
   def _reduce_27(val, _values, result); end
 
   # reduce 28 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#872
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1520
   def _reduce_29(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#742
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1390
   def _reduce_3(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#877
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1525
   def _reduce_30(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#882
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1530
   def _reduce_31(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#888
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1536
   def _reduce_32(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#894
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1542
   def _reduce_33(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#900
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1548
   def _reduce_34(val, _values, result); end
 
   # reduce 35 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#908
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1556
   def _reduce_36(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#913
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1561
   def _reduce_37(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#918
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1566
   def _reduce_38(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#924
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1572
   def _reduce_39(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#930
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1578
   def _reduce_40(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#936
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1584
   def _reduce_41(val, _values, result); end
 
   # reduce 42 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#944
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1592
   def _reduce_43(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#950
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1598
   def _reduce_44(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#956
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1604
   def _reduce_45(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#962
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1610
   def _reduce_46(val, _values, result); end
 
   # reduce 56 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#988
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1636
   def _reduce_57(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#994
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1642
   def _reduce_58(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1000
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1648
   def _reduce_59(val, _values, result); end
 
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1006
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1654
   def _reduce_60(val, _values, result); end
 
   # reduce 61 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1013
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1661
   def _reduce_62(val, _values, result); end
 
   # reduce 63 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1021
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1669
   def _reduce_64(val, _values, result); end
 
   # reduce 77 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1053
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1701
   def _reduce_78(val, _values, result); end
 
   # reduce 137 omitted
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1204
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#1852
   def _reduce_none(val, _values, result); end
 
   # Creates a new RDoc::RD::Inline for the +rdoc+ markup and the raw +reference+
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#239
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#887
   def inline(rdoc, reference = T.unsafe(nil)); end
 
   # Returns the next token from the inline text
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#108
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#756
   def next_token; end
 
   # Returns words following an error
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#228
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#876
   def next_words_on_error; end
 
   # Raises a ParseError when invalid formatting is found
   #
   # @raise [ParseError]
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#188
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#836
   def on_error(et, ev, values); end
 
   # Parses the +inline+ text from RD format into RDoc format.
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#97
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#745
   def parse(inline); end
 
   # Returns words before the error
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#205
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#853
   def prev_words_on_error(ev); end
 
   private
 
   # Returns the last line of +src+
   #
-  # source://rdoc//lib/rdoc/rd/inline_parser.rb#216
+  # source://rdoc//lib/rdoc/rd/inline_parser.rb#864
   def last_line(src); end
 end
 
-# source://rdoc//lib/rdoc/rd/inline_parser.rb#729
+# source://rdoc//lib/rdoc/rd/inline_parser.rb#1377
 RDoc::RD::InlineParser::Racc_debug_parser = T.let(T.unsafe(nil), FalseClass)
 
 # This is the driver for generating RDoc output.  It handles file parsing and
@@ -12257,6 +12254,12 @@ module RDoc::Text
     def encode_fallback(character, encoding, fallback); end
   end
 end
+
+# Character class to be separated by a space when concatenating
+# lines.
+#
+# source://rdoc//lib/rdoc/text.rb#316
+RDoc::Text::SPACE_SEPARATED_LETTER_CLASS = T.let(T.unsafe(nil), Regexp)
 
 # A TokenStream is a list of tokens, gathered during the parse of some entity
 # (say a method). Entities populate these streams by being registered with the
