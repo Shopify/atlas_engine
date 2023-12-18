@@ -11,7 +11,23 @@ module AtlasEngine
 
       class DefaultSampleRepository < AtlasEngine::Elasticsearch::Repository
         def initialize
-          super(client: nil)
+          index_mappings = {
+            "dynamic" => "false",
+            "properties" => {
+              "id" => { "type" => "long" },
+            },
+          }
+
+          index_settings = {
+            "index" => {
+              "number_of_shards" => "1",
+              "number_of_replicas" => "1",
+              "mapping" => {
+                "ignore_malformed" => "true",
+              },
+            },
+          }
+          super(index_base_name: "sample", index_settings:, index_mappings:)
         end
 
         def read_alias_name
@@ -21,13 +37,47 @@ module AtlasEngine
         def record_source(record)
           {}
         end
+
+        def hit_source_to_record(source)
+          source.to_h
+        end
+
+        def build_analyze_result(es_response)
+          es_response["tokens"]
+        end
+
+        def build_search_result(es_response)
+          es_response["hits"]["hits"]
+        end
+
+        def build_term_vectors(es_response)
+          es_response["docs"]
+        end
       end
 
 
       class SampleRepository < AtlasEngine::Elasticsearch::Repository
         def initialize(base_name: "sample")
           @base_name = base_name
-          super(client: nil)
+          index_base_name = base_name
+
+          index_mappings = {
+            "dynamic" => "false",
+            "properties" => {
+              "id" => { "type" => "long" },
+            },
+          }
+
+          index_settings = {
+            "index" => {
+              "number_of_shards" => "1",
+              "number_of_replicas" => "1",
+              "mapping" => {
+                "ignore_malformed" => "true",
+              },
+            },
+          }
+          super(index_base_name:, index_settings:, index_mappings:)
         end
 
         def read_alias_name
@@ -58,6 +108,22 @@ module AtlasEngine
               "number_of_replicas" => 1
             }
           }
+        end
+
+        def hit_source_to_record(source)
+          source.to_h
+        end
+
+        def build_analyze_result(es_response)
+          es_response["tokens"]
+        end
+
+        def build_search_result(es_response)
+          es_response["hits"]["hits"]
+        end
+
+        def build_term_vectors(es_response)
+          es_response["docs"]
         end
       end
 
@@ -427,14 +493,17 @@ module AtlasEngine
         # PENDING: Witing for the index to update, there should be a better way to implement this
         sleep(1)
 
-        response = @repository.client.get("#{@repository.active_alias}/_search")
+        response = @repository.search({})
         assert_equal(
           [
             {"name"=>"A", "email"=>"a@email.com", "age"=>20},
             {"name"=>"B", "email"=>"b@email.com", "age"=>30}
           ],
-          response.body["hits"]["hits"].pluck("_source")
+          response["hits"]["hits"].pluck("_source")
         )
+
+        find_response = @repository.find(response["hits"]["hits"].first["_id"])
+        assert_equal({"name"=>"A", "email"=>"a@email.com", "age"=>20}, find_response)
       ensure
         cleanup_by_prefix(base_name)
       end

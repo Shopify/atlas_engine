@@ -15,6 +15,14 @@ module AtlasEngine
   #   @return [String] the name of the parent controller for web UI.
   mattr_accessor :parent_controller, default: "ActionController::Base"
 
+  # @!attribute elasticsearch_repository
+  #   @scope class
+  #
+  #   The elasticsearch repository implementation that the es datastore will use.
+  #
+  #   @return [String] the class name of the elasticsearch repository implementation.
+  mattr_accessor :elasticsearch_repository, default: "AtlasEngine::Elasticsearch::Repository"
+
   # @!attribute log_base
   #
   #   The parent module for logging. Must be a module that implements the
