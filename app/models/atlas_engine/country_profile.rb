@@ -171,12 +171,12 @@ module AtlasEngine
       end
     end
 
-    sig { returns(CountryProfileValidationSubset) }
+    sig { returns(CountryProfileValidationSubset).checked(:tests) }
     def validation
       CountryProfileValidationSubset.new(hash: attributes["validation"] || {})
     end
 
-    sig { returns(CountryProfileIngestionSubset) }
+    sig { returns(CountryProfileIngestionSubset).checked(:tests) }
     def ingestion
       CountryProfileIngestionSubset.new(hash: attributes["ingestion"])
     end
