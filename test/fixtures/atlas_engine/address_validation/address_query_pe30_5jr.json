@@ -1,0 +1,64 @@
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        {
+          "bool": {
+            "should": [
+              { "match": { "street": {"query": "Brompton Place", "fuzziness": "auto"} } },
+              {
+                "bool": {
+                  "should": [
+                    { "match": { "region4": {"query": "", "fuzziness": "auto"} } },
+                    { "match": { "region3": {"query": "Wisbech Road", "fuzziness": "auto"} } },
+                    { "nested": {
+                      "path": "city_aliases",
+                      "query": {
+                        "match": {
+                          "city_aliases.alias": {
+                            "query": "King's Lynn",
+                            "fuzziness": "auto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                  ]
+                }
+              },
+              { "match": { "zip": {"query": "PE30 5JR", "fuzziness": "auto"} } }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              { "match": {"street": {"query": "Brompton Place, Wisbech Road", "fuzziness": "auto"}} },
+              {
+                "bool": {
+                  "should": [
+                    { "match": {"region4": {"query": "", "fuzziness": "auto"}} },
+                    { "match": {"region3": {"query": "", "fuzziness": "auto"}} },
+                    { "nested": {
+                      "path": "city_aliases",
+                      "query": {
+                        "match": {
+                          "city_aliases.alias": {
+                            "query": "King's Lynn",
+                            "fuzziness": "auto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                  ]
+                }
+              },
+              { "match": {"zip": {"query": "PE30 5JR", "fuzziness": "auto"}} }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

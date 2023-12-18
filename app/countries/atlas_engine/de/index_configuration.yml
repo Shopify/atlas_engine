@@ -1,0 +1,64 @@
+mappings:
+  properties:
+    street:
+      analyzer: street_indexing_analyzer
+    street_stripped:
+      analyzer: street_indexing_analyzer
+    street_decompounded:
+      type: text
+      analyzer: text_analyzer
+      fields:
+        keyword:
+          type: keyword
+settings:
+  index:
+    analysis:
+      analyzer:
+        text_analyzer:
+          filter:
+          - lowercase
+          - german_normalization
+          - asciifolding
+          - strip_special_characters
+        keyword_analyzer:
+          filter:
+          - lowercase
+          - german_normalization
+          - asciifolding
+          - strip_special_characters
+        street_indexing_analyzer:
+          tokenizer: standard
+          filter:
+          - lowercase
+          - german_normalization
+          - asciifolding
+          - strip_special_characters
+          - street_suffix_decompounder
+        street_analyzer:
+          filter:
+          - lowercase
+          - german_normalization
+          - asciifolding
+          - strip_special_characters
+          - street_suffix_decompounder
+          - street_synonyms
+        city_analyzer:
+          filter:
+          - lowercase
+          - german_normalization
+          - asciifolding
+          - strip_special_characters
+        edge_ngram_analyzer:
+          filter:
+            - lowercase
+            - german_normalization
+            - asciifolding
+            - strip_special_characters
+      filter:
+        street_suffix_decompounder:
+          type: pattern_capture
+          preserve_original: "false"
+          patterns:
+            <% country_profile.decompounding_patterns(:street).each do |pattern| %>
+            - <%= pattern %>
+            <% end %>

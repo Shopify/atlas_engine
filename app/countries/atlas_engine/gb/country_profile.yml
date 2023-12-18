@@ -1,0 +1,5 @@
+id: GB
+validation:
+  has_provinces: true
+  query_builder: AtlasEngine::Gb::AddressValidation::Es::QueryBuilder
+  address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica

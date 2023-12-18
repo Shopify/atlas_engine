@@ -1,0 +1,350 @@
+city_synonyms:
+- east, e
+- north, n
+- northeast, north-east, ne
+- northwest, north-west, nw
+- south, s
+- southeast, south-east, se
+- southwest, south-west, sw
+- west, w
+- fort, ft
+- mount, mt
+- point, pt
+- saint, st
+- township, twp
+- air force base, afb
+street_synonyms:
+- east, e
+- north, n
+- northeast, north-east, n-east, ne
+- northwest, north-west, n-west, nw
+- south, s
+- southeast, south-east, s-east, se
+- southwest, south-west, s-west, sw
+- west, w
+- first, 1st
+- second, 2nd
+- third, 3rd
+- fourth, 4th
+- fifth, 5th
+- sixth, 6th
+- seventh, 7th
+- eighth, 8th
+- ninth, 9th
+- tenth, 10th
+- eleventh, 11th
+- twelfth, 12th
+- thirteenth, 13th
+- fourteenth, 14th
+- fifteenth, 15th
+- sixteenth, 16th
+- seventeenth, 17th
+- eighteenth, 18th
+- nineteenth, 19th
+- twentieth, 20th
+- thirtieth, 30th
+- fortieth, 40th
+- fiftieth, 50th
+- sixtieth, 60th
+- seventieth, 70th
+- eightieth, 80th
+- nintieth, 90th
+- one hundredth, 100th
+- ten, 10
+- twenty, 20
+- thirty, 30
+- fourty, 40
+- fifty, 50
+- sixty, 60
+- seventy, 70
+- eighty, 80
+- ninety, 90
+- one hundred, 100
+- county road, county rd, cnty road, cnty rd, cty road, cty rd, cr
+- farm to market, hwy fm, fm
+- state road, state rd, st road, sr
+- state route, state rte, st rte, st rt, sr
+- township road, township rd, twp road, twp rd, tsr
+- private road, pr
+- county, cnty, cty
+- interstate, i
+- saint, st
+- state, st
+- township, twp
+- alabama, al
+- kentucky, ky
+- ohio, oh
+- alaska, ak
+- louisiana, la
+- oklahoma, ok
+- arizona, az
+- maine, me
+- oregon, or
+- arkansas, ar
+- maryland, md
+- pennsylvania, pa
+- american samoa, as
+- massachusetts, ma
+- puerto rico, pr
+- california, ca
+- michigan, mi
+- rhode island, ri
+- colorado, co
+- minnesota, mn
+- south carolina, sc
+- connecticut, ct
+- mississippi, ms
+- south dakota, sd
+- delaware, de
+- missouri, mo
+- tennessee, tn
+- district of columbia, dc
+- montana, mt
+- texas, tx
+- florida, fl
+- nebraska, ne
+- trust territories, tt
+- georgia, ga
+- nevada, nv
+- utah, ut
+- guam, gu
+- new hampshire, nh
+- vermont, vt
+- hawaii, hi
+- new jersey, nj
+- virginia, va
+- idaho, id
+- new mexico, nm
+- virgin islands, vi
+- illinois, il
+- new york, ny
+- washington, wa
+- indiana, in
+- north carolina, nc
+- west virginia, wv
+- iowa, ia
+- north dakota, nd
+- wisconsin, wi
+- kansas, ks
+- northern mariana islands, mp
+- wyoming, wy
+- allee, aly
+- alley, ally, aly
+- annex, annx, anex, anx
+- arcade, arc
+- avenue, avenu, aven, av, ave
+- bayoo, byu
+- bayou, byu
+- beach, bch
+- bend, bnd
+- bluff, bluf, blf
+- bluffs, blfs
+- bottom, bottm, bot, btm
+- boulevard, boulv, boul, blvd
+- branch, brnch, br
+- bridge, brdge, brg
+- brook, brk
+- brooks, brks
+- burg, bg
+- burgs, bgs
+- bypass, bypas, bypa, byps, byp
+- camp, cmp, cp
+- canyon, canyn, cnyn, cyn
+- cape, cpe
+- causeway, causewa, cswy
+- center, centr, cent, cen, cnter, cntr, ctr
+- centre, ctr
+- centers, ctrs
+- circle, circl, circ, crcle, crcl, cir
+- circles, cirs
+- cliff, clf
+- cliffs, clfs
+- club, clb
+- common, cmn
+- commons, cmns
+- corner, cor
+- corners, cors
+- course, crse
+- court, ct
+- courts, cts
+- cove, cv
+- coves, cvs
+- creek, crk
+- crescent, crsent, crsnt, cres
+- crest, crst
+- crossing, crssing, xing
+- crossroad, xrd
+- crossroads, xrds
+- curve, curv
+- dale, dl
+- dam, dm
+- divide, div, dvd, dv
+- drive, driv, drv, dr
+- drives, drs
+- estate, est
+- estates, ests
+- exp, expy
+- expr, expy
+- express, expy
+- expressway, express, expr, expw, exp, expy
+- extension, extnsn, extn, ext
+- falls, fls
+- ferry, frry, fry
+- field, fld
+- fields, flds
+- flat, flt
+- flats, flts
+- ford, frd
+- fords, frds
+- forest, forests, frst
+- forge, forg, frg
+- forges, frgs
+- fork, frk
+- forks, frks
+- fort, frt, ft
+- freeway, freewy, frway, frwy, fwy
+- garden, gardn, grden, grdn, gdn
+- gardens, grdns, gdns
+- gateway, gatewy, gatway, gtway, gtwy
+- glen, gln
+- glens, glns
+- green, grn
+- greens, grns
+- grove, grov, grv
+- groves, grvs
+- harbor, harbr, harb, hrbor, hbr
+- harbors, hbrs
+- haven, hvn
+- heights, ht, hts
+- highway, highwy, hiway, hiwy, hway, hwy
+- hill, hl
+- hills, hls
+- hollow, hollows, holws, hllw, holw
+- inlet, inlt
+- island, islnd, is
+- islands, islnds, iss
+- isles, isle
+- junction, juncton, junctn, jction, jctn, jct
+- junctions, jctns, jcts
+- key, ky
+- keys, kys
+- knoll, knol, knl
+- knolls, knls
+- lake, lk
+- lakes, lks
+- landing, lndng, lndg
+- lane, ln
+- light, lgt
+- lights, lgts
+- loaf, lf
+- lock, lck
+- locks, lcks
+- lodge, lodg, ldge, ldg
+- loops, loop
+- manor, mnr
+- manors, mnrs
+- meadow, mdw
+- meadows, medows, mdw, mdws
+- mill, ml
+- mills, mls
+- mission, missn, mssn, msn
+- motorway, mtwy
+- mount, mnt, mt
+- mountain, mountin, mntain, mntn, mtin, mtn
+- mountains, mntns, mtns
+- neck, nck
+- orchard, orchrd, orch
+- ovl, oval
+- overpass, opas
+- park, prk
+- parks, park
+- parkway, parkwy, pkway, pky, pkwy
+- parkways, pkwys, pkwy
+- passage, psge
+- paths, path
+- pikes, pike
+- pine, pne
+- pines, pnes
+- place, pl
+- plain, pln
+- plains, plns
+- plaza, plza, plz
+- point, pt
+- points, pts
+- port, prt
+- ports, prts
+- prairie, prr, pr
+- radial, rad, radl
+- radiel, radl
+- ranch, ranches, rnchs, rnch
+- rapid, rpd
+- rapids, rpds
+- rest, rst
+- ridge, rdge, rdg
+- ridges, rdgs
+- river, rivr, rvr, riv
+- road, rd
+- roads, rds
+- route, rt, rte
+- shoal, shl
+- shoals, shls, shls
+- shoar, shr
+- shore, shr
+- shoars, shrs
+- shores, shrs
+- skyway, skwy
+- spring, sprng, spng, spg
+- springs, sprngs, spngs, spgs
+- square, squa, sqre, sqr, sq
+- squares, sqrs, sqs
+- station, statn, stn, sta
+- stravenue, straven, stravn, strav, strvnue, strvn, stra
+- stream, strm
+- streme, strm
+- street, strt, str, st
+- streets, sts
+- summit, sumitt, sumit, smt
+- terrace, terr, ter
+- throughway, trwy
+- trace, traces, trce
+- track, tracks, trks, trk, trak
+- trafficway, trfy
+- trail, trails, trls, trl
+- trailer, trlrs, trlr
+- tunnel, tunnels, tunnl, tunel, tunls, tunl
+- turnpike, turnpk, trnpk, tpke
+- underpass, upas
+- union, un
+- unions, uns
+- valley, vally, vlly, vly
+- valleys, vlys
+- viaduct, viadct, vdct, via
+- view, vw
+- views, vws
+- village, villag, vill, villiage, villg, vlg
+- villages, villiages, vlgs
+- ville, vl
+- vista, vist, vsta, vst, vis
+- walks, walk
+- well, wl
+- wy, way
+- wells, wls
+- avenida, ave
+- calle, cll
+- caminito, cmt
+- camino, cam
+- cerrada, cer
+- circulo, cir
+- entrada, ent
+- paseo, pso
+- placita, pla
+- rancho, rch
+- vereda, ver
+- barriada, bda
+- jardines, jard
+- parcelas, parc
+- residencial, res
+- sector, sect, sec
+- urbanization, urb
+- doctor, dr
+- air force base, afb

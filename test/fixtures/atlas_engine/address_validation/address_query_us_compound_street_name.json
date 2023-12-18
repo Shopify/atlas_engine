@@ -1,0 +1,89 @@
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "dis_max": {
+            "queries": [
+              {
+                "term": {
+                  "approx_building_ranges": {
+                    "value": 18108
+                  }
+                }
+              },
+              {
+                "bool": {
+                  "must_not": {
+                    "exists": {
+                      "field": "approx_building_ranges"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "dis_max": {
+            "queries": [
+              {
+                "match": {
+                  "street": {
+                    "query": "S Park View Dr",
+                    "fuzziness": "auto"
+                  }
+                }
+              },
+              {
+                "match": {
+                  "street": {
+                    "query": "S ParkView Dr",
+                    "fuzziness": "auto"
+                  }
+                }
+              },
+              {
+                "match": {
+                  "street_stripped": {
+                    "query": "S ParkView Dr",
+                    "fuzziness": "auto"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "nested": {
+            "path": "city_aliases",
+            "query": {
+              "match": {
+                "city_aliases.alias": {
+                  "query": "Houston",
+                  "fuzziness": "auto"
+                }
+              }
+            }
+          }
+        },
+        {
+          "match": {
+            "zip": {
+              "query": "77084",
+              "fuzziness": "auto"
+            }
+          }
+        },
+        {
+          "term": {
+            "province_code": {
+              "value": "tx"
+            }
+          }
+        }
+      ],
+      "minimum_should_match": 3
+    }
+  }
+}

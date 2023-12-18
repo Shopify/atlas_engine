@@ -1,0 +1,4 @@
+id: DE
+decompounding_patterns:
+  street:
+  - (?<name>\w+)(?<suffix>allee|gasse|kai|lande|pfad|platz|pl|ring|strasse|str|weg|zeile)(?:\b)

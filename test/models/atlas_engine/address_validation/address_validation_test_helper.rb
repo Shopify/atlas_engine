@@ -38,7 +38,7 @@ module AtlasEngine
       end
 
       def expected_address_query(suffix)
-        JSON.parse(File.read("test/fixtures/address_validation/address_query_#{suffix}.json"))
+        JSON.parse(File.read("test/fixtures/atlas_engine/address_validation/address_query_#{suffix}.json"))
       end
 
       def filled_result
