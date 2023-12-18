@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_154658) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_02_213964) do
   create_table "atlas_engine_country_imports", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "country_code", null: false
     t.string "state", default: "pending"
@@ -54,6 +54,27 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_154658) do
     t.index ["source_id", "locale", "country_code"], name: "index_atlas_engine_post_addresses_on_srcid_loc_cc"
     t.index ["street"], name: "index_atlas_engine_post_addresses_on_street"
     t.index ["zip"], name: "index_atlas_engine_post_addresses_on_zip"
+  end
+
+  create_table "maintenance_tasks_runs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "task_name", null: false
+    t.datetime "started_at", precision: nil
+    t.datetime "ended_at", precision: nil
+    t.float "time_running", default: 0.0, null: false
+    t.bigint "tick_count", default: 0, null: false
+    t.bigint "tick_total"
+    t.string "job_id"
+    t.string "cursor"
+    t.string "status", default: "enqueued", null: false
+    t.string "error_class"
+    t.string "error_message"
+    t.text "backtrace"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "arguments"
+    t.integer "lock_version", default: 0, null: false
+    t.text "metadata"
+    t.index ["task_name", "status", "created_at"], name: "index_maintenance_tasks_runs", order: { created_at: :desc }
   end
 
 end
