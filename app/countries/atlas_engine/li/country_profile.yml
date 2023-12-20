@@ -1,12 +1,14 @@
-id: DE
+id: LI
 ingestion:
-  settings:
-    min_zip_edge_ngram: "1"
-    max_zip_edge_ngram: "5"
+  correctors:
+    open_address:
+      - Li::AddressImporter::Corrections::OpenAddress::CityCorrector
   data_mapper: AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
+  enabled: true
   has_provinces: true
-  address_parser: De::ValidationTranscriber::AddressParser
+  default_matching_strategy: es
+  address_parser: At::ValidationTranscriber::AddressParser
   normalized_components:
   - region2
   - region3
@@ -17,14 +19,3 @@ validation:
 decompounding_patterns:
   street:
   - (?<name>\w+)(?<suffix>allee|gasse|kai|lande|pfad|platz|pl|ring|strasse|str|weg|zeile)(?:\b)
-osm:
-  languages: [de]
-  max_admin_level: 9
-  admin_level_map:
-    default:
-      4: region1
-      5: region2
-      6: region3
-      7: region4
-      8: city
-      9: suburb

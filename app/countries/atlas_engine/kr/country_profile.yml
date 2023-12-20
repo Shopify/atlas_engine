@@ -1,0 +1,9 @@
+id: KR
+ingestion:
+  open_address:
+    feature_mapper: Kr::AddressImporter::OpenAddress::Mapper
+validation:
+  enabled: true
+  default_matching_strategy: es
+  script_restrictions:
+    - Hangul

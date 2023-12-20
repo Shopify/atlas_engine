@@ -1,6 +1,8 @@
 id: FR
 ingestion:
   correctors:
+    geo:
+      - Fr::AddressImporter::Corrections::Geo::Corrector
     open_address:
       - AtlasEngine::Fr::AddressImporter::Corrections::OpenAddress::CityCorrector
   settings:
@@ -8,7 +10,7 @@ ingestion:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "5"
 validation:
-  address_parser: AtlasEngine::Fr::ValidationTranscriber::AddressParser
+  address_parser: Fr::ValidationTranscriber::AddressParser
   enabled: true
   default_matching_strategy: es
   admin:

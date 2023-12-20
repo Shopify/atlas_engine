@@ -1,0 +1,5 @@
+id: SE
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "6"

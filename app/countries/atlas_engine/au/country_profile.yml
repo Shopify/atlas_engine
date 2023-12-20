@@ -8,8 +8,6 @@ ingestion:
     max_zip_edge_ngram: "4"
   open_address:
     feature_mapper: Au::AddressImporter::OpenAddress::Mapper
-geocode:
-  elasticsearch_enabled?: true
 osm:
   languages: [en]
   max_admin_level: 9

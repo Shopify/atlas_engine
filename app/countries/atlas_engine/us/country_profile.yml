@@ -13,3 +13,13 @@ validation:
   admin:
     carrier_address_lookups:
       usps: Us::AddressLookup::Usps::ZipLookup
+ingestion:
+  correctors:
+    geo:
+      - Us::AddressImporter::Corrections::Geo::CityCorrector
+    usps:
+      - Us::AddressImporter::Corrections::Usps::AbbreviationCorrector
+  settings:
+    number_of_shards: "7"
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "10"

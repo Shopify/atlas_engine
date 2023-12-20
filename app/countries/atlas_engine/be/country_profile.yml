@@ -1,0 +1,22 @@
+id: BE
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "4"
+osm:
+  languages: [fr, nl, de]
+  max_admin_level: 8
+  admin_level_map:
+    default:
+      9: suburb # quartier, although not loaded as per max_admin_level
+      8: city
+      7: region3 # arrondisement
+      6: region2 # province
+      4: region1 # region (Wallonia, Flanders, Brussels)
+validation:
+  enabled: true
+  default_matching_strategy: local
+  index_locales:
+  - fr
+  - nl
+  - de

@@ -1,7 +1,33 @@
 id: CA
 ingestion:
+  correctors:
+    geo:
+      - Ca::AddressImporter::Corrections::Geo::FrLocaleFilter
   settings:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "7"
 validation:
   address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica
+osm:
+  languages: [en, fr]
+  max_admin_level: 10 # want suburb for QC
+  admin_level_map:
+    default:
+      4: region1 # provinces and territories
+      5: region2 # major regions (larger than regional municipalities)
+      6: city
+      8: suburb
+    BC:
+      4: region1 # provinces and territories
+      5: region2 # major regions (larger than regional municipalities)
+      6: region3
+      7: region4 # arrondisement
+      8: city
+      10: suburb
+    QC:
+      4: region1 # provinces and territories
+      5: region2 # major regions (larger than regional municipalities)
+      6: region3
+      7: region4 # arrondisement
+      8: city
+      10: suburb

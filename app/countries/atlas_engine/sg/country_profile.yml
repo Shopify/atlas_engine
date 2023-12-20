@@ -1,0 +1,8 @@
+id: SG
+osm:
+  languages: [en, ms, zh, ta] # English, Malay, Mandarin Chinese, Tamil
+  max_admin_level: 6
+  admin_level_map:
+    default:
+      2: city # Singapore is a city-state
+      6: suburb
