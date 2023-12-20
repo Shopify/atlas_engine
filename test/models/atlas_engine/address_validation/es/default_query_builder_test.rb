@@ -32,6 +32,15 @@ module AtlasEngine
           assert_equal expected_address_query("us_missing"), query_builder.full_address_query
         end
 
+        test "#full_address_query returns a query with minimum_should_match of at least 2" do
+          query_builder = DefaultQueryBuilder.new(us_address)
+          query_builder.stubs(:city_clause).returns(nil)
+          query_builder.stubs(:zip_clause).returns(nil)
+          query_builder.stubs(:province_clause).returns(nil)
+
+          assert_equal expected_address_query("with_under_4_clauses"), query_builder.full_address_query
+        end
+
         test "#full_address_query returns a valid query for an input with address1 and address2" do
           query_builder = DefaultQueryBuilder.new(us_a2_address)
           assert_equal expected_address_query("us_a2"), query_builder.full_address_query

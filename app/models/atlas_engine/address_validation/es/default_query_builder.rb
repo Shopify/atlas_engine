@@ -5,8 +5,6 @@ module AtlasEngine
   module AddressValidation
     module Es
       class DefaultQueryBuilder < QueryBuilder
-        extend T::Sig
-
         sig { params(address: AbstractAddress).void }
         def initialize(address)
           super(address)
@@ -26,7 +24,7 @@ module AtlasEngine
               "bool" =>
                 {
                   "should" => clauses,
-                  "minimum_should_match" => clauses.count - 2,
+                  "minimum_should_match" => [clauses.count - 2, 2].max,
                 },
             },
           }
