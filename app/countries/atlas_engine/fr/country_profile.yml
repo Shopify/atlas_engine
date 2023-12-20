@@ -1,8 +1,6 @@
 id: FR
 ingestion:
   correctors:
-    geo:
-      - Fr::AddressImporter::Corrections::Geo::Corrector
     open_address:
       - AtlasEngine::Fr::AddressImporter::Corrections::OpenAddress::CityCorrector
   settings:
@@ -13,6 +11,3 @@ validation:
   address_parser: Fr::ValidationTranscriber::AddressParser
   enabled: true
   default_matching_strategy: es
-  admin:
-    carrier_address_lookups:
-      la_poste: AtlasEngine::Fr::AddressLookup::LaPoste::Lookup

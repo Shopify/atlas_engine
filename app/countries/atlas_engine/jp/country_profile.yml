@@ -1,9 +1,0 @@
-id: JP
-ingestion:
-  correctors:
-    geo:
-     - Jp::AddressImporter::Corrections::Geo::LocaleCorrector
-  data_mapper: Jp::AddressValidation::Es::DataMapper
-  settings:
-    min_zip_edge_ngram: "3"
-    max_zip_edge_ngram: "8"

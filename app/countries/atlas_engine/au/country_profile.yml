@@ -1,22 +1,10 @@
 id: AU
 ingestion:
-  correctors:
-    geo:
-      - Au::AddressImporter::Geo::Corrector
   settings:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "4"
   open_address:
     feature_mapper: Au::AddressImporter::OpenAddress::Mapper
-osm:
-  languages: [en]
-  max_admin_level: 9
-  admin_level_map:
-    default:
-      4: region1
-      6: region2
-      7: region3
-      9: city
 validation:
   address_parser: Au::ValidationTranscriber::AddressParser
   enabled: true

@@ -1,12 +1,4 @@
 id: DK
-osm:
-  languages: [da, en]
-  max_admin_level: 8
-  admin_level_map:
-    default:
-      4: region1
-      7: city
-      8: suburb
 validation:
   enabled: true
   default_matching_strategy: es

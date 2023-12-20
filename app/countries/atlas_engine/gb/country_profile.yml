@@ -4,9 +4,6 @@ validation:
   query_builder: AtlasEngine::Gb::AddressValidation::Es::QueryBuilder
   address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica
 ingestion:
-  correctors:
-    geo:
-      - AddressImporter::Corrections::Geo::GbMistakeSuppressor
   settings:
     number_of_shards: "2"
     min_zip_edge_ngram: "1"

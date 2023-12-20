@@ -12,9 +12,6 @@ validation:
   default_matching_strategy: es
   has_provinces: true
   address_parser: At::ValidationTranscriber::AddressParser
-  admin:
-    carrier_address_lookups:
-      austrian_post: At::AddressLookup::AustrianPost::Lookup
   normalized_components:
   - region2
   - region3

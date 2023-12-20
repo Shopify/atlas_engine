@@ -3,12 +3,3 @@ validation:
   address_parser: Pl::ValidationTranscriber::AddressParser
   enabled: true
   default_matching_strategy: es
-osm:
-  languages: [pl]
-  max_admin_level: 8
-  admin_level_map:
-    default:
-      8: city
-      7: region3 # gmina / commune
-      6: region2 # powiat / county
-      4: region1 # województwo / voivodeship

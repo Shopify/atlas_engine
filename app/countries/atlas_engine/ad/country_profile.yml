@@ -1,9 +1,0 @@
-id: AD
-osm:
-  max_admin_level: 8 # Map file only has 7 and 8 though
-  admin_level_map:
-    default:
-      7: region1 # commune
-      8: city
-  postcode_required: false
-  housenumber_required: false
