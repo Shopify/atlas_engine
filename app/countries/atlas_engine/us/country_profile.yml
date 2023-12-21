@@ -4,12 +4,9 @@ validation:
   default_matching_strategy: es_street
   city_fields:
     - city_aliases
-  exclusions:
-    street:
-      - Us::AddressValidation::Validators::FullAddress::Exclusions::UnsupportedProvinces
-      - Us::AddressValidation::Validators::FullAddress::Exclusions::PoBoxes
-      - Us::AddressValidation::Validators::FullAddress::Exclusions::GeneralDelivery
   address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica
-  admin:
-    carrier_address_lookups:
-      usps: Us::AddressLookup::Usps::ZipLookup
+ingestion:
+  settings:
+    number_of_shards: "7"
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "10"

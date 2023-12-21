@@ -1,0 +1,9 @@
+id: AR
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "8"
+validation:
+  partial_postal_code_range_for_length:
+    4: 1..4
+    5: 0..4

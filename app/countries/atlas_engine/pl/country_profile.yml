@@ -1,0 +1,5 @@
+id: PL
+validation:
+  address_parser: Pl::ValidationTranscriber::AddressParser
+  enabled: true
+  default_matching_strategy: es

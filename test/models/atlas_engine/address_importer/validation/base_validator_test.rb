@@ -91,7 +91,7 @@ module AtlasEngine
 
           FieldValidations::MockInvalidValidator.expects(:new).with(
             address: @address,
-            allow_partial_zip: false,
+            allow_partial_zip: true,
           ).returns(invalid_validator_mock)
 
           validator = BaseValidator.new(

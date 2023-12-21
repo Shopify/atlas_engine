@@ -1,0 +1,14 @@
+id: CH
+validation:
+  enabled: true
+  default_matching_strategy: local
+  index_locales:
+    - de
+    - fr
+    - it
+ingestion:
+  open_address:
+    feature_mapper: Ch::AddressImporter::OpenAddress::Mapper
+  correctors:
+    open_address:
+      - Ch::AddressImporter::Corrections::OpenAddress::LocaleCorrector

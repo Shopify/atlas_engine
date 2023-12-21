@@ -1,0 +1,5 @@
+id: 'NO' # YAML treats NO as a boolean, so we need to quote it
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "4"

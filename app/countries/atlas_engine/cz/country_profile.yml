@@ -1,0 +1,6 @@
+id: CZ
+validation:
+  enabled: true
+  default_matching_strategy: es
+  address_parser: Dk::ValidationTranscriber::AddressParser
+  has_provinces: false

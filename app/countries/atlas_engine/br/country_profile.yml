@@ -1,0 +1,4 @@
+id: BR
+ingestion:
+  settings:
+    number_of_shards: "2"

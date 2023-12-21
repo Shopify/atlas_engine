@@ -3,3 +3,8 @@ validation:
   has_provinces: true
   query_builder: AtlasEngine::Gb::AddressValidation::Es::QueryBuilder
   address_parser: AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica
+ingestion:
+  settings:
+    number_of_shards: "2"
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "8"

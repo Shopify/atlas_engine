@@ -1,0 +1,18 @@
+id: NL
+ingestion:
+  correctors:
+    open_address:
+      - Nl::AddressImporter::Corrections::OpenAddress::CityCorrector
+  data_mapper: AddressValidation::Es::DataMappers::DecompoundingDataMapper
+validation:
+  enabled: true
+  has_provinces: true
+  default_matching_strategy: es
+  normalized_components:
+  - street_decompounded
+  address_parser: Nl::ValidationTranscriber::AddressParser
+decompounding_patterns:
+  street:
+  - (?<name>\w+)(?<suffix>dwarsstraat|dwstr|dwarsweg|dwwg|dijk|dk|gracht|gr|kade|kd|kanaal|kan)(?:\b)
+  - (?<name>\w+)(?<suffix>laan|leane|loane|ln|park|pk|plantsoen|plnts|plein|pln|singel|sngl)(?:\b)
+  - (?<name>\w+)(?<suffix>straat|strjitte|str|straatweg|strwg|weg|wg)(?:\b)

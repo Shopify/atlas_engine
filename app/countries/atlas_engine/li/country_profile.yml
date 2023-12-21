@@ -1,12 +1,14 @@
-id: DE
+id: LI
 ingestion:
-  settings:
-    min_zip_edge_ngram: "1"
-    max_zip_edge_ngram: "5"
+  correctors:
+    open_address:
+      - Li::AddressImporter::Corrections::OpenAddress::CityCorrector
   data_mapper: AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
+  enabled: true
   has_provinces: true
-  address_parser: De::ValidationTranscriber::AddressParser
+  default_matching_strategy: es
+  address_parser: At::ValidationTranscriber::AddressParser
   normalized_components:
   - region2
   - region3

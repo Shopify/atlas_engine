@@ -1,0 +1,12 @@
+id: BE
+ingestion:
+  settings:
+    min_zip_edge_ngram: "1"
+    max_zip_edge_ngram: "4"
+validation:
+  enabled: true
+  default_matching_strategy: local
+  index_locales:
+  - fr
+  - nl
+  - de

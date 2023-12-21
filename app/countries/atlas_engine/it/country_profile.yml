@@ -1,0 +1,13 @@
+id: IT
+validation:
+  enabled: true
+  default_matching_strategy: es
+  index_locales:
+    - it
+ingestion:
+  open_address:
+    feature_mapper: It::AddressImporter::OpenAddress::Mapper
+  correctors:
+    open_address:
+      - It::AddressImporter::Corrections::OpenAddress::CityCorrector
+      - It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector

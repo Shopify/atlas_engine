@@ -1,0 +1,12 @@
+id: LU
+validation:
+  enabled: true
+  has_provinces: true
+  default_matching_strategy: es
+  index_locales:
+    - fr
+    - lb
+ingestion:
+  correctors:
+    open_address:
+      - Lu::AddressImporter::Corrections::OpenAddress::LocaleCorrector

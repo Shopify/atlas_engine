@@ -1,0 +1,6 @@
+id: DK
+validation:
+  enabled: true
+  default_matching_strategy: es
+  has_provinces: false
+  address_parser: Dk::ValidationTranscriber::AddressParser

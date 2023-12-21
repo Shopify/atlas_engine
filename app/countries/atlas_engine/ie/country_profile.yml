@@ -1,0 +1,3 @@
+id: IE
+ingestion:
+  allow_partial_zip?: true
