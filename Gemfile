@@ -53,4 +53,4 @@ group :test do
   gem "factory_bot_rails"
 end
 
-gem "maintenance_tasks", "~> 2.3"
+gem "maintenance_tasks", "~> 2.4"
