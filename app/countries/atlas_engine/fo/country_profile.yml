@@ -1,0 +1,5 @@
+id: FO
+validation:
+  enabled: true
+  default_matching_strategy: es
+  has_provinces: false
