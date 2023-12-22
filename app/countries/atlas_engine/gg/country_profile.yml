@@ -1,0 +1,7 @@
+id: GG
+validation:
+  enabled: true
+  default_matching_strategy: es
+  has_provinces: false
+  restrictions:
+    - Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity
