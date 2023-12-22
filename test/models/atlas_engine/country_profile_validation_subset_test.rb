@@ -25,7 +25,7 @@ module AtlasEngine
 
     test "#restrictions returns the correct restrictions if defined" do
       profile = CountryProfile.for("GG")
-      assert_equal ["Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity"], profile.validation.restrictions
+      assert_equal ["AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity"], profile.validation.restrictions
     end
   end
 end
