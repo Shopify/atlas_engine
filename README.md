@@ -87,6 +87,9 @@ rails db:setup
 
 ## Using the App
 
+### Infrastructure Requirements
+The elasticsearch implementation depends on the ICU analysis plugin. Refer to the [Dockfile](./Dockfile) leveraged in local setup for plugin installation. 
+
 ### Starting the App and Testing
   * `bin/rails server` to start the server
   * `bin/rails test` to run tests

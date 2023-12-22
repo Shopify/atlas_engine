@@ -18,27 +18,27 @@ settings:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
         keyword_analyzer:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
         street_indexing_analyzer:
           tokenizer: standard
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - street_suffix_decompounder
         street_analyzer:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - street_suffix_decompounder
           - street_synonyms
@@ -46,13 +46,13 @@ settings:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
         edge_ngram_analyzer:
           filter:
             - lowercase
             - german_normalization
-            - asciifolding
+            - icu_folding
             - strip_special_characters
       filter:
         street_suffix_decompounder:

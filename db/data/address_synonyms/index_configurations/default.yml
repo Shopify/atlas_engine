@@ -87,17 +87,17 @@ settings:
           tokenizer: standard
           filter:
           - lowercase
-          - asciifolding
+          - icu_folding
         keyword_analyzer:
           tokenizer: keyword
           filter:
           - lowercase
-          - asciifolding
+          - icu_folding
         street_analyzer:
           tokenizer: standard
           filter:
           - lowercase
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           <% if street_synonyms.present? %>
           - street_synonyms
@@ -106,7 +106,7 @@ settings:
           tokenizer: standard
           filter:
           - lowercase
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           <% if city_synonyms.present? %>
           - city_synonyms
@@ -115,7 +115,7 @@ settings:
           tokenizer: zip_edge_ngram
           filter:
           - lowercase
-          - asciifolding
+          - icu_folding
       tokenizer:
         zip_edge_ngram:
           type: "edge_ngram"
