@@ -20,14 +20,14 @@ settings:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
         street_indexing_analyzer:
           tokenizer: standard
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - street_suffix_decompounder
         street_decompounding_analyzer:
@@ -35,7 +35,7 @@ settings:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - street_suffix_decompounder
           - street_synonyms
@@ -43,14 +43,14 @@ settings:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - street_synonyms
         city_analyzer:
           filter:
           - lowercase
           - german_normalization
-          - asciifolding
+          - icu_folding
           - strip_special_characters
           - city_synonyms
       filter:

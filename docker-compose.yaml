@@ -6,7 +6,7 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: "db"
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
@@ -14,10 +14,11 @@ services:
     ports:
       - ${MYSQL_PORT}:3306
     volumes:
-      - 'mysql-data:/var/lib/mysql'
+      - "mysql-data:/var/lib/mysql"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    build: .
     container_name: elasticsearch
     mem_limit: ${ES_MEM_LIMIT}
     environment:
