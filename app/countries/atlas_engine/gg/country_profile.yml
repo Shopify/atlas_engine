@@ -4,4 +4,4 @@ validation:
   default_matching_strategy: es
   has_provinces: false
   restrictions:
-    - Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity
+    - AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity
