@@ -6,7 +6,7 @@ ingestion:
   settings:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "4"
-  data_mapper: AddressValidation::Es::DataMappers::DecompoundingDataMapper
+  data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
   enabled: true
   default_matching_strategy: es
