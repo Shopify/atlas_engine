@@ -3,7 +3,7 @@ ingestion:
   correctors:
     open_address:
       - Nl::AddressImporter::Corrections::OpenAddress::CityCorrector
-  data_mapper: AddressValidation::Es::DataMappers::DecompoundingDataMapper
+  data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
   enabled: true
   has_provinces: true

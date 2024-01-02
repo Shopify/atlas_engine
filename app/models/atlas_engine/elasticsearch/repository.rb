@@ -7,48 +7,55 @@ module AtlasEngine
       include RepositoryInterface
       extend T::Sig
       extend T::Helpers
-      abstract!
 
       INITIAL_INDEX_VERSION = 0
 
-      sig { override.returns(ClientInterface) }
+      sig { returns(ClientInterface) }
       attr_reader :client
 
-      sig { params(client: T.nilable(ClientInterface)).void }
-      def initialize(client: nil)
-        @client = T.let(client || Client.new, ClientInterface)
-      end
+      sig { returns(String) }
+      attr_reader :index_base_name
 
-      sig { override.returns(T.nilable(T::Hash[String, T.untyped])) }
-      def index_mappings
-        {
-          "dynamic" => "false",
-          "properties" => {
-            "id" => { "type" => "long" },
-          },
-        }
-      end
+      sig { returns(T::Hash[String, T.untyped]) }
+      attr_reader :index_mappings
 
-      sig { override.returns(T::Hash[Symbol, T.untyped]) }
-      def index_settings
-        {
-          "index" => {
-            "number_of_shards" => "1",
-            "number_of_replicas" => "1",
-            "mapping" => {
-              "ignore_malformed" => "true",
-            },
-          },
-        }
+      sig { returns(T::Hash[Symbol, T.untyped]) }
+      attr_reader :index_settings
+
+      sig { returns(T.proc.params(arg0: T.untyped).returns(T.untyped)) }
+      attr_reader :mapper_callable
+
+      sig do
+        override.params(
+          index_base_name: String,
+          index_settings: T::Hash[Symbol, T.untyped],
+          index_mappings: T.nilable(T::Hash[String, T.untyped]),
+          mapper_callable: T.nilable(T.proc.params(arg0: T.untyped).returns(T.untyped)),
+        ).void
+      end
+      def initialize(index_base_name:, index_settings:, index_mappings:, mapper_callable: nil)
+        @client = T.let(Client.new, ClientInterface)
+        @index_base_name = T.let(index_base_name, String)
+        @index_mappings = T.let(index_mappings || default_mapping, T::Hash[String, T.untyped])
+        @index_settings = T.let(index_settings, T::Hash[Symbol, T.untyped])
+        @mapper_callable = T.let(
+          mapper_callable || ->(record) { record.to_hash },
+          T.proc.params(arg0: T.untyped).returns(T.untyped)
+        )
       end
 
       sig { override.returns(String) }
       def base_alias_name
         if Rails.env.test?
-          "test_#{read_alias_name}"
+          "test_#{index_base_name.to_s.downcase}"
         else
-          read_alias_name
+          index_base_name.to_s.downcase
         end
+      end
+
+      sig { override.returns(String) }
+      def read_alias_name
+        base_alias_name
       end
 
       sig do
@@ -120,7 +127,54 @@ module AtlasEngine
         client.post("/#{alias_name}/_bulk", body)
       end
 
+      sig { override.params(query: T::Hash[String, T.untyped]).returns(T::Hash[String, T.untyped]) }
+      def search(query)
+        path = "/#{active_alias}/_search"
+        response = client.post(path, query, {})
+
+        response.body
+      end
+
+      sig { override.params(query: T::Hash[String, T.untyped]).returns(T::Hash[String, T.untyped]) }
+      def analyze(query)
+        path = "/#{active_alias}/_analyze"
+        response = client.post(path, query, {})
+
+        response.body
+      end
+
+      sig { override.params(query: T::Hash[String, T.untyped]).returns(T::Hash[String, T.untyped]) }
+      def term_vectors(query)
+        path = "/#{active_alias}/_mtermvectors"
+        response = client.post(path, query, {})
+
+        response.body
+      end
+
+      sig { override.params(id: T.any(String, Integer)).returns(T::Hash[String, T.untyped]) }
+      def find(id)
+        path = "/#{active_alias}/_doc/#{id}"
+        response = client.get(path, nil, {})
+
+        response.body["_source"]
+      end
+
+      sig { override.params(post_address: PostAddressData).returns(T::Hash[Symbol, T.untyped]) }
+      def record_source(post_address)
+        mapper_callable.call(post_address).compact
+      end
+
       private
+
+      sig { returns(T::Hash[String, T.untyped]) }
+      def default_mapping
+        {
+          "dynamic" => "false",
+          "properties" => {
+            "id" => { "type" => "long" },
+          },
+        }
+      end
 
       sig { void }
       def update_all_aliases_of_index
