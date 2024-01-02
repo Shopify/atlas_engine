@@ -21,6 +21,10 @@ module AtlasEngine
       test "#truncate prefers the method's country_code param over the instance's country_code" do
         assert_equal "12345", ZipTruncator.new(country_code: "ie").truncate(zip: "1234560", country_code: "us")
       end
+
+      test "#truncate returns nil when zip is nil" do
+        assert_nil ZipTruncator.new(country_code: "tt").truncate(zip: nil, country_code: "tt")
+      end
     end
   end
 end
