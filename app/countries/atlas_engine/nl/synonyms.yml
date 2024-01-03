@@ -1,0 +1,92 @@
+street_synonyms:
+# dutch
+## directionals
+- noord, n
+- oost, o
+- west, w
+- zuid, z
+## street suffixes
+- boulevard, bd, bld, boulev
+- dijk, dk
+- dwarsstraat, dwstr
+- dwarsweg, dwwg
+- gracht, gr
+- kade, kd
+- kanaal, kan
+- laan, leane, loane, ln
+- park, pk
+- plantsoen, plnts
+- plein, pln, ln
+- singel, sngl
+- square, sq
+- steenweg, stwg
+- straat, str
+- straatweg, strwg
+- van, v
+- weg, wg
+## titles
+- aalmoezenier, aalm  # Chaplain
+- admiraal, adm  # Admiral
+- baron, bar  # Baron
+- baronesse, bsse  # Baroness
+- bisschop, biss  # Bishop
+- burgemeester, burg  # Mayor
+- commissaris, comm  # Commissioner
+- deken, dkn  # Deacon
+- dokter, doctor, dr  # Doctor
+- dominee, ds  # Minister, Vicar, Padre
+- douairière, dre  # Dowager
+- gebroeders, gebr  # Brothers
+- generaal, gen  # General
+- graaf, gr  # Duke
+- gravin, gr  # Duchess
+- hertog, htg  # Earl
+- ingenieur, ir  # Engineer
+- jonkheer, jhr  # Esquire
+- kanunnik, kan  # Canon
+- kapelaan, kap  # Curate, Chaplain
+- kapitein, kapt  # Captain
+- kardinaal, kard  # Cardinal
+- keizer, kzr  # Emperor
+- kolonel, kol  # Colonel
+- koning, kon  # King
+- koningin, kon  # Queen
+- luitenant generaal, lt gen  # Lieutenant-General
+- majoor, maj  # Major
+- meester, mr  # Mister (academic grade)
+- minister, min  # Minister (political)
+- monseigneur, mgr  # Monseigneur
+- notaris, not  # Notary
+- pastoor, past  # Pastor
+- pater, ptr  # Father (religious)
+- paters, ptrs  # Fathers (religious)
+- president, pres  # President
+- prins, pr  # Prince
+- princes, pr  # Princess
+- professor, prof  # Professor
+- rector, rect  # Rector
+- ridder, rdr  # Knight
+- secretaris, secr  # Secretary
+- sinjeur, sinj  # Cleric
+- sint, st  # Saint
+- wethouder, weth  # Alderman
+- zuster, zr  # Sister (religious)
+- zusters, zrs  # Sisters (religious)
+## common words
+- aan de, a d, ad
+- het, 't
+- van, v
+# friesian
+## directionals
+- east, o
+- noard, n
+- sud, s
+## street suffixes
+- strjitte, str
+
+city_synonyms:
+## common words
+- aan de, a d, ad
+- het, 't
+- sint, st
+- van, v
