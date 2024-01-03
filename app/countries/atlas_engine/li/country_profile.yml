@@ -2,13 +2,13 @@ id: LI
 ingestion:
   correctors:
     open_address:
-      - Li::AddressImporter::Corrections::OpenAddress::CityCorrector
+      - AtlasEngine::Li::AddressImporter::Corrections::OpenAddress::CityCorrector
   data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
   enabled: true
   has_provinces: true
   default_matching_strategy: es
-  address_parser: At::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::At::ValidationTranscriber::AddressParser
   normalized_components:
   - region2
   - region3

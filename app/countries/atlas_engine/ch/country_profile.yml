@@ -8,7 +8,7 @@ validation:
     - it
 ingestion:
   open_address:
-    feature_mapper: Ch::AddressImporter::OpenAddress::Mapper
+    feature_mapper: AtlasEngine::Ch::AddressImporter::OpenAddress::Mapper
   correctors:
     open_address:
-      - Ch::AddressImporter::Corrections::OpenAddress::LocaleCorrector
+      - AtlasEngine::Ch::AddressImporter::Corrections::OpenAddress::LocaleCorrector

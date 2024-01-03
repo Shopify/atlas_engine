@@ -2,7 +2,7 @@ id: AT
 ingestion:
   correctors:
     open_address:
-      - At::AddressImporter::Corrections::OpenAddress::CityCorrector
+      - AtlasEngine::At::AddressImporter::Corrections::OpenAddress::CityCorrector
   settings:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "4"
@@ -11,7 +11,7 @@ validation:
   enabled: true
   default_matching_strategy: es
   has_provinces: true
-  address_parser: At::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::At::ValidationTranscriber::AddressParser
   normalized_components:
   - region2
   - region3

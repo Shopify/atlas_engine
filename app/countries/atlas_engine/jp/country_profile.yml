@@ -1,0 +1,6 @@
+id: JP
+ingestion:
+  data_mapper: AtlasEngine::Jp::AddressValidation::Es::DataMapper
+  settings:
+    min_zip_edge_ngram: "3"
+    max_zip_edge_ngram: "8"
