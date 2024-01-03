@@ -2,5 +2,5 @@ id: LT
 validation:
   enabled: true
   default_matching_strategy: es
-  address_parser: Lt::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::Lt::ValidationTranscriber::AddressParser
   has_provinces: false
