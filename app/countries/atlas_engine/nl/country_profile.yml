@@ -2,7 +2,7 @@ id: NL
 ingestion:
   correctors:
     open_address:
-      - Nl::AddressImporter::Corrections::OpenAddress::CityCorrector
+      - AtlasEngine::Nl::AddressImporter::Corrections::OpenAddress::CityCorrector
   data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DecompoundingDataMapper
 validation:
   enabled: true
@@ -10,7 +10,7 @@ validation:
   default_matching_strategy: es
   normalized_components:
   - street_decompounded
-  address_parser: Nl::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::Nl::ValidationTranscriber::AddressParser
 decompounding_patterns:
   street:
   - (?<name>\w+)(?<suffix>dwarsstraat|dwstr|dwarsweg|dwwg|dijk|dk|gracht|gr|kade|kd|kanaal|kan)(?:\b)
