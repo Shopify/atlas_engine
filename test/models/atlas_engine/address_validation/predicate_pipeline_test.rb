@@ -24,12 +24,10 @@ module AtlasEngine
       end
 
       test "pipeline returns full address validator class if defined" do
-        skip
-        # PENDING: enable when full address is moved to atlas engine
-        # assert_equal AtlasEngine::AddressValidation::Es::Validators::FullAddress,
-        #   PredicatePipeline.find("es").full_address_validator
-        # assert_equal AtlasEngine::AddressValidation::Es::Validators::FullAddressStreet,
-        #   PredicatePipeline.find("es_street").full_address_validator
+        assert_equal AtlasEngine::AddressValidation::Es::Validators::FullAddress,
+          PredicatePipeline.find("es").full_address_validator
+        assert_equal AtlasEngine::AddressValidation::Es::Validators::FullAddressStreet,
+          PredicatePipeline.find("es_street").full_address_validator
       end
 
       private

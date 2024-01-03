@@ -1,0 +1,58 @@
+id: es_street
+pipeline:
+  - field: country
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Country::Exists
+  - field: country
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Country::ValidForZip
+  - field: province
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Province::Exists
+  - field: province
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Province::ValidForCountry
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::Present
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoHtmlTags
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoEmojis
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::City::Present
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxLength
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxTokenCount
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoHtmlTags
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoUrl
+  - field: city
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoEmojis
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Street::Present
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxLength
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxTokenCount
+  - field: address2
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxLength
+  - field: address2
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NotExceedMaxTokenCount
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoHtmlTags
+  - field: address2
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoHtmlTags
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoUrl
+  - field: address2
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoUrl
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoEmojis
+  - field: address2
+    class: AtlasEngine::AddressValidation::Validators::Predicates::NoEmojis
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Street::BuildingNumberInAddress1OrAddress2
+  - field: address1
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Street::BuildingNumberInAddress1
+  - field: phone
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Phone::Valid
+
+full_address_validator: AtlasEngine::AddressValidation::Es::Validators::FullAddressStreet
