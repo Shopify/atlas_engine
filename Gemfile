@@ -36,6 +36,7 @@ group :development, :test do
   gem "graphiql-rails"
   gem 'sorbet'
   gem 'tapioca', require: false
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -50,7 +51,6 @@ group :test do
   gem 'webmock'
   gem 'minitest-focus'
   gem 'minitest-suite'
-  gem "factory_bot_rails"
 end
 
 gem "maintenance_tasks", "~> 2.4"

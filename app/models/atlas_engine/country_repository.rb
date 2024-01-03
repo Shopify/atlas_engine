@@ -11,6 +11,7 @@ module AtlasEngine
     delegate :active_alias,
       :archived_alias,
       :new_alias,
+      :read_alias_name,
       :record_source,
       :create_next_index,
       :switch_to_next_index,
