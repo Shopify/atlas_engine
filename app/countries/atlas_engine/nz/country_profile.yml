@@ -1,0 +1,3 @@
+id: NZ
+validation:
+  address_parser: AtlasEngine::ValidationTranscriber::AddressParserOceanic

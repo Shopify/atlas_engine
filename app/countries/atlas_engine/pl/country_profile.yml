@@ -1,5 +1,5 @@
 id: PL
 validation:
-  address_parser: Pl::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::Pl::ValidationTranscriber::AddressParser
   enabled: true
   default_matching_strategy: es
