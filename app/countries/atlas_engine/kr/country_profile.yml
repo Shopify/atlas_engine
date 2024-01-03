@@ -5,5 +5,5 @@ ingestion:
 validation:
   enabled: true
   default_matching_strategy: es
-  script_restrictions:
-    - Hangul
+  restrictions:
+    - AtlasEngine::Kr::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedScript
