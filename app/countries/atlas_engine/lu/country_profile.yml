@@ -9,4 +9,4 @@ validation:
 ingestion:
   correctors:
     open_address:
-      - Lu::AddressImporter::Corrections::OpenAddress::LocaleCorrector
+      - AtlasEngine::Lu::AddressImporter::Corrections::OpenAddress::LocaleCorrector
