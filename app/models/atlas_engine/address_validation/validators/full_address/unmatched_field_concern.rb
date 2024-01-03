@@ -24,7 +24,7 @@ module AtlasEngine
             params(
               unmatched_component: Symbol,
               matched_components: T::Array[Symbol],
-              address: Types::AddressValidation::AddressInput,
+              address: AbstractAddress,
               suggestion_ids: T::Array[String],
               unmatched_field: T.nilable(Symbol),
             ).void

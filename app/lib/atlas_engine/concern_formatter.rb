@@ -6,7 +6,7 @@ module AtlasEngine
     include Kernel # https://github.com/sorbet/sorbet/issues/1109
     extend T::Sig
 
-    sig { returns(Types::AddressValidation::AddressInput) }
+    sig { returns(AddressValidation::AbstractAddress) }
     def address
       raise NotImplementedError
     end

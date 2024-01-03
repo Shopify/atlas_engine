@@ -11,7 +11,7 @@ module AtlasEngine
 
             sig do
               params(
-                address: Types::AddressValidation::AddressInput,
+                address: AbstractAddress,
                 suggestion_ids: T::Array[String],
               ).returns(T.nilable(AddressValidation::Concern))
             end

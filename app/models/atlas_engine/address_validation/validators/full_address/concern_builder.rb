@@ -17,7 +17,7 @@ module AtlasEngine
 
             sig do
               params(
-                address: Types::AddressValidation::AddressInput,
+                address: AbstractAddress,
                 unmatched_component_keys: T::Array[Symbol],
               ).returns(T::Boolean)
             end
@@ -34,7 +34,7 @@ module AtlasEngine
               unmatched_component_keys.size > UNMATCHED_COMPONENTS_SUGGESTION_THRESHOLD
             end
 
-            sig { params(address: Types::AddressValidation::AddressInput).returns(T::Boolean) }
+            sig { params(address: AbstractAddress).returns(T::Boolean) }
             def valid_zip_for_province?(address)
               !country_has_zip_codes(address) || province_postal_code_valid?(address)
             end
@@ -46,7 +46,7 @@ module AtlasEngine
               component_keys.include?(:province_code) && component_keys.intersection([:zip, :city]).one?
             end
 
-            sig { params(address: Types::AddressValidation::AddressInput).returns(T::Boolean) }
+            sig { params(address: AbstractAddress).returns(T::Boolean) }
             def country_has_zip_codes(address)
               Worldwide.region(code: address.country_code).has_zip?
             end
@@ -68,7 +68,7 @@ module AtlasEngine
             params(
               unmatched_component: Symbol,
               matched_components: T::Array[Symbol],
-              address: Types::AddressValidation::AddressInput,
+              address: AbstractAddress,
               suggestion_ids: T::Array[String],
               unmatched_field: T.nilable(Symbol),
             ).void

@@ -9,7 +9,7 @@ module AtlasEngine
           include ConcernFormatter
           attr_reader :address
 
-          sig { params(address: Types::AddressValidation::AddressInput, suggestion_ids: T::Array[String]).void }
+          sig { params(address: AbstractAddress, suggestion_ids: T::Array[String]).void }
           def initialize(address, suggestion_ids)
             @address = address
 
