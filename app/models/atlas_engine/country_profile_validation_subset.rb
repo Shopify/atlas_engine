@@ -37,12 +37,6 @@ module AtlasEngine
       Range.new(*range.split("..").map(&:to_i))
     end
 
-    sig { returns(T::Array[T.nilable(Symbol)]) }
-    def script_restrictions
-      attributes.dig("script_restrictions")&.map(&:to_sym) || []
-    end
-
-
     # PENDING: enable sig once move complete
     # sig { returns(T::Class[ValidationTranscriber::AddressParserBase]) }
     def address_parser
