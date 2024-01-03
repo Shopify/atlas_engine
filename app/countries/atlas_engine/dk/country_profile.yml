@@ -3,4 +3,4 @@ validation:
   enabled: true
   default_matching_strategy: es
   has_provinces: false
-  address_parser: Dk::ValidationTranscriber::AddressParser
+  address_parser: AtlasEngine::Dk::ValidationTranscriber::AddressParser
