@@ -7,7 +7,6 @@ module AtlasEngine
       module Validators
         class FullAddress < FullAddressValidatorBase
           include LogHelper
-          include ScriptSupport
 
           attr_reader :address, :result
           attr_accessor :session
@@ -97,7 +96,7 @@ module AtlasEngine
           def supported_address?(address)
             country_profile = CountryProfile.for(T.must(address.country_code))
             restrictions = country_profile.validation.validation_restrictions
-            supported_script?(address) && restrictions.none? { |restriction| restriction.apply?(address) }
+            restrictions.none? { |restriction| restriction.apply?(address) }
           end
 
           sig { returns(T::Array[CandidateTuple]) }
