@@ -13,6 +13,16 @@ module AtlasEngine
         @candidate = AddressValidation::Candidate.from(hit)
       end
 
+      test "index is nil if not specified" do
+        candidate = AddressValidation::Candidate.new(id: "id", source: {})
+        assert_nil candidate.index
+      end
+
+      test ".from derives attributes from hit" do
+        assert_equal "4529374", @candidate.id
+        assert_equal "us.1", @candidate.index
+      end
+
       test "#component returns the component object for a selected column of a hit" do
         assert_equal @candidate.component(:city).value, ["Daly City"]
         assert_equal @candidate.component(:zip).value, "94014"

@@ -5,10 +5,10 @@ module AtlasEngine
   module AddressValidation
     class Candidate
       extend T::Sig
-      attr_reader :id
+      attr_reader :id, :index
 
-      sig { params(id: String, source: Hash).void }
-      def initialize(id:, source:)
+      sig { params(id: String, source: Hash, index: T.nilable(String)).void }
+      def initialize(id:, source:, index: nil)
         components_hash = Hash.new { |hash, key| hash[key] = Component.new(key, nil) }
 
         @components = source.each_with_object(components_hash) do |(key, value), hash|
@@ -17,6 +17,7 @@ module AtlasEngine
 
         @id = id
         @components[:id] = Component.new(:id, id)
+        @index = index
       end
 
       sig { params(name: Symbol).returns(T.nilable(Component)) }
@@ -57,7 +58,8 @@ module AtlasEngine
           id = hit.dig("_id")
           source = hit.dig("_source")
           source["city"] = source["city_aliases"].map(&:values).flatten if source["city_aliases"]
-          new(id: id, source: source)
+          index = hit.dig("_index")
+          new(id: id, source: source, index: index)
         end
       end
 
