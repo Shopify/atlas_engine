@@ -2,6 +2,18 @@ require "atlas_engine/version"
 require "atlas_engine/engine"
 require "graphql"
 require "graphiql/rails"
+require "elastic-transport"
+require "elasticsearch/model"
+require "elasticsearch/rails"
+require "worldwide"
+require "state_machines-activerecord"
+require "zip"
+require "frozen_record"
+require "annex_29"
+require "maintenance_tasks"
+require "htmlentities"
+require "sorbet-runtime"
+require "statsd-instrument"
 
 module AtlasEngine
 
