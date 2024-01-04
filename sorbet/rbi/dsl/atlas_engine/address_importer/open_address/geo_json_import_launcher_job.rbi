@@ -11,10 +11,11 @@ class AtlasEngine::AddressImporter::OpenAddress::GeoJsonImportLauncherJob
         country_code: ::String,
         geojson_file_path: ::String,
         clear_records: T::Boolean,
-        locale: ::String
+        locale: ::String,
+        block: T.nilable(T.proc.params(job: AtlasEngine::AddressImporter::OpenAddress::GeoJsonImportLauncherJob).void)
       ).returns(T.any(AtlasEngine::AddressImporter::OpenAddress::GeoJsonImportLauncherJob, FalseClass))
     end
-    def perform_later(country_code:, geojson_file_path:, clear_records:, locale:); end
+    def perform_later(country_code:, geojson_file_path:, clear_records:, locale:, &block); end
 
     sig do
       params(

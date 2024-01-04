@@ -9,6 +9,12 @@ class AtlasEngine::AddressValidation::PredicatePipeline
 
   module FrozenRecordAttributeMethods
     sig { returns(T.untyped) }
+    def full_address_validator; end
+
+    sig { returns(T::Boolean) }
+    def full_address_validator?; end
+
+    sig { returns(T.untyped) }
     def id; end
 
     sig { returns(T::Boolean) }
