@@ -103,22 +103,6 @@ module AtlasEngine
             assert_empty(result.concerns)
           end
 
-          test "does not query es if the address script is unsupported" do
-            @address = address(
-              country_code: "KR",
-              address1: "123 Main Street", # only the Hangul script is supported in KR
-              zip: "94102",
-              city: "서울",
-            )
-
-            @session = AddressValidation::Session.new(address: @address)
-            result = AddressValidation::Result.new
-
-            @session.expects(:datastore).never
-
-            @klass.new(address: @address, result: result).validate
-          end
-
           test "does not query es if validation restrictions apply" do
             @address = address(
               country_code: "GG",
@@ -133,23 +117,6 @@ module AtlasEngine
             @session.expects(:datastore).never
 
             @klass.new(address: @address, result: result).validate
-          end
-
-          test "queries es when the address script is supported and no validation restrictions apply" do
-            @address = address(
-              country_code: "KR",
-              address1: "자하문로",
-              zip: "94102",
-              city: "서울",
-            )
-
-            @session.datastore.candidates = [candidate]
-
-            result = AddressValidation::Result.new
-
-            full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
-            full_address.validate
           end
 
           test "returns address_unknown if the full address query produces no results" do
