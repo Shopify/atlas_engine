@@ -24,8 +24,7 @@ module AtlasEngine
       attributes.dig("settings", "min_zip_edge_ngram")
     end
 
-    # PENDING: enable sig once move complete
-    # sig { returns(T::Class[AddressImporter::OpenAddress::DefaultMapper]) }
+    sig { returns(T::Class[AddressImporter::OpenAddress::DefaultMapper]) }
     def open_address_feature_mapper
       # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("open_address", "feature_mapper").constantize
@@ -37,8 +36,7 @@ module AtlasEngine
       attributes.dig("settings", "max_zip_edge_ngram")
     end
 
-    # PENDING: ENable sig once move complete
-    # sig { returns(T::Class[AddressValidation::Es::DataMappers::DefaultDataMapper]) }
+    sig { returns(T::Class[AddressValidation::Es::DataMappers::DefaultDataMapper]) }
     def data_mapper
       # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("data_mapper").constantize

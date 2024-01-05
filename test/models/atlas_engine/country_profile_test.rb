@@ -71,47 +71,32 @@ module AtlasEngine
       assert_equal({}, profile.validation.partial_postal_code_range_for_length)
       assert_equal("AtlasEngine::AddressValidation::Es::DefaultQueryBuilder", profile.validation.query_builder)
 
-      # PENDING: enable when validation AddressParser logic is moved
-      skip
-      assert_equal("ValidationTranscriber::AddressParserBase", profile.validation.address_parser.class)
+      assert_equal(ValidationTranscriber::AddressParserBase, profile.validation.address_parser)
     end
 
     test ".partial_zip_allowed_countries returns a list of profiles with partial_zip_allowed?: true" do
-      # PENDING: enable when all profiles have been moved
-      skip
       assert_equal Set.new(["IE"]), CountryProfile.partial_zip_allowed_countries
     end
 
-    # test "#correctors returns an array of corrector class names for a given data source" do
-    #   # PENDING: enable when all profile, correctors have been moved
-    #   skip
-
-    #   country_profile = CountryProfile.for("JP")
-    #   assert_equal [AddressImporter::Corrections::Geo::LocaleCorrector],
-    #     country_profile.ingestion.correctors(source: "geo")
-    # end
+    test "#correctors returns an array of corrector class names for a given data source" do
+      country_profile = CountryProfile.for("IT")
+      assert_equal([
+        AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector,
+        AtlasEngine::It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector,
+      ],
+        country_profile.ingestion.correctors(source: "open_address"))
+    end
 
     test "#correctors returns an empty array when an unknown source is provided" do
       assert_equal [], CountryProfile.for("JP").ingestion.correctors(source: "bogus")
     end
 
-    # test "#validation.validation_exclusions returns an array of exclusion class names for a given component" do
-    #   # PENDING: Enable when validation classes have moved
-    #   skip
-
-    #   country_profile = CountryProfile.for("US")
-
-    #   expected_exclusion_classes = [
-    #     AddressValidation::Validators::FullAddress::Exclusions::UsUnsupportedProvinces,
-    #     AddressValidation::Validators::FullAddress::Exclusions::UsPoBoxes,
-    #     AddressValidation::Validators::FullAddress::Exclusions::UsGeneralDelivery,
-    #   ]
-    #   assert_equal expected_exclusion_classes, country_profile.validation.validation_exclusions(component: "street")
-    # end
+    test "#validation.validation_exclusions returns an array of exclusion class names for a given component" do
+      country_profile = CountryProfile.for("US")
+      assert_equal [], country_profile.validation.validation_exclusions(component: "street")
+    end
 
     test "#validation_exclusions returns an empty array when an unknown component is provided" do
-      # PENDING: Enable after validation has moved over completely
-      skip
       assert_equal [], CountryProfile.for("US").validation.validation_exclusions(component: "bogus")
     end
 
@@ -120,31 +105,20 @@ module AtlasEngine
     end
 
     test "#validation.enabled returns true when defined per country" do
-      # PENDING: Enable when all countries have moved
-      skip
-
       assert CountryProfile.for("US").validation.enabled
     end
 
     test "#validation.partial_postal_code_range returns a postal code range for a given length" do
-      # PENDING: Enable when all profiles have moved over
-      skip
-
       country_profile = CountryProfile.for("AR")
       assert_equal 1..4, country_profile.validation.partial_postal_code_range(4)
     end
 
     test "#validation.normalized_components returns an array of components for a given country" do
-      # PENDING: Enable when all profiles have moved over
-      skip
       assert_equal ["region2", "region3", "region4", "city_aliases.alias", "suburb", "street_decompounded"],
         CountryProfile.for("DE").validation.normalized_components
     end
 
     test "#decompounding_patterns returns an array of patterns if the profile defines some for a given field" do
-      # PENDING: enable when all profiles have been moved
-      skip
-
       profile = CountryProfile.for("DE")
       assert_not_empty profile.decompounding_patterns(:street)
     end
