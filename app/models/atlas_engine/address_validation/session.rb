@@ -33,12 +33,20 @@ module AtlasEngine
           ValidationTranscriber::AddressParsings.new(address_input: address),
           ValidationTranscriber::AddressParsings,
         )
+
+        @datastore_hash = T.let({}, T::Hash[String, AtlasEngine::AddressValidation::DatastoreBase])
       end
 
-      sig { params(locale: T.nilable(T.any(String, Symbol))).returns(AtlasEngine::AddressValidation::DatastoreBase) }
-      def datastore(locale: nil)
-        @datastore_hash ||= T.let({}, T.nilable(T::Hash[T.untyped, AtlasEngine::AddressValidation::DatastoreBase]))
-        @datastore_hash[locale] ||= AtlasEngine::AddressValidation::Es::Datastore.new(address: address)
+      sig { params(index: T.nilable(String)).returns(AtlasEngine::AddressValidation::DatastoreBase) }
+      def datastore(index: nil)
+        if index.blank?
+          index_locales = CountryProfile.for(country_code).validation.index_locales
+          raise ArgumentError, "multi-locale country requires index or locale" if index_locales.present?
+
+          index = CountryRepository.index_name(country_code:)
+        end
+
+        @datastore_hash[index] ||= AtlasEngine::AddressValidation::Es::Datastore.new(address: address)
       end
     end
   end

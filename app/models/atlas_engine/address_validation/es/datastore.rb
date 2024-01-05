@@ -10,12 +10,13 @@ module AtlasEngine
         include DatastoreBase
         extend T::Sig
 
-        attr_reader :index_locales
+        attr_reader :index
         attr_writer :candidates # meant for test setup only
 
-        sig { params(address: AbstractAddress).void }
-        def initialize(address:)
+        sig { params(address: AbstractAddress, index: T.nilable(String)).void }
+        def initialize(address:, index: nil)
           @address = address
+          @index = index
           @parsings = ValidationTranscriber::AddressParsings.new(address_input: address)
           raise ArgumentError, "address has no country_code" if address.country_code.blank?
 
@@ -32,6 +33,7 @@ module AtlasEngine
           @repository ||= CountryRepository.new(
             country_code: country_code.downcase,
             repository_class: AtlasEngine.elasticsearch_repository.constantize,
+            index:,
             index_configuration: nil,
           )
         end

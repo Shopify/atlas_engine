@@ -8,6 +8,15 @@ module AtlasEngine
 
     PostAddressData = T.type_alias { T.any(PostAddress, T::Hash[Symbol, T.untyped]) }
 
+    class << self
+      extend T::Sig
+
+      sig { params(country_code: T.any(String, Symbol), locale: T.nilable(String)).returns(String) }
+      def index_name(country_code:, locale: nil)
+        (locale.present? ? "#{country_code}_#{locale}" : country_code.to_s).downcase
+      end
+    end
+
     delegate :active_alias,
       :archived_alias,
       :new_alias,

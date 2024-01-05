@@ -13,6 +13,11 @@ module AtlasEngine
       attributes.dig("default_matching_strategy")
     end
 
+    sig { returns(T::Array[String]) }
+    def index_locales
+      attributes.dig("index_locales") || []
+    end
+
     sig do
       params(component: String)
         .returns(T::Array[T.class_of(AddressValidation::Validators::FullAddress::Exclusions::ExclusionBase)])
