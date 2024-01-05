@@ -22,12 +22,13 @@ end
 group :development do
   gem "pry"
   gem "pry-byebug"
-  # for the dummy app
-  gem "sqlite3"
 end
 
 group :test do
+  # for the dummy app
+  gem "sqlite3"
   gem "puma"
+
   gem "minitest-distributed"
   gem "minitest-silence", ">= 0.2.4", require: false
   gem "mocha"
