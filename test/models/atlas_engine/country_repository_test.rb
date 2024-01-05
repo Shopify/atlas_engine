@@ -38,6 +38,33 @@ module AtlasEngine
       }
     end
 
+    test "#initialize accepts an optional index name" do
+      stub_request(:get, %r{http\://.*/test_custom_index/_doc/123})
+        .to_return(status: 200, body: document_result.to_json, headers: { "Content-Type" => "application/json" })
+
+      repo = CountryRepository.new(
+        country_code: "US",
+        repository_class: Elasticsearch::Repository,
+        index: "custom_index"
+      )
+
+      response = repo.find(123)
+      assert_equal document_result[:_source].stringify_keys, response
+    end
+
+    test "#initialize uses the country code as the index name when index param is blank" do
+      stub_request(:get, %r{http\://.*/test_us/_doc/123})
+        .to_return(status: 200, body: document_result.to_json, headers: { "Content-Type" => "application/json" })
+
+      repo = CountryRepository.new(
+        country_code: "US",
+        repository_class: Elasticsearch::Repository,
+      )
+
+      response = repo.find(123)
+      assert_equal document_result[:_source].stringify_keys, response
+    end
+
     test "#record_source persists non-nil fields from the post_address without modification" do
       mock_mapped_data = {
         id: "123",

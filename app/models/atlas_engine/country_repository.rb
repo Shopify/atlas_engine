@@ -22,17 +22,18 @@ module AtlasEngine
       params(
         country_code: T.any(String, Symbol),
         repository_class: T::Class[Elasticsearch::RepositoryInterface],
+        index: T.nilable(String),
         index_configuration: T.nilable(IndexConfigurationFactory::IndexConfigurations),
       ).void
     end
-    def initialize(country_code:, repository_class:, index_configuration: nil)
+    def initialize(country_code:, repository_class:, index: nil, index_configuration: nil)
       @country_code = T.let(country_code.to_s.downcase, String)
 
       @country_profile = T.let(CountryProfile.for(@country_code), CountryProfile)
 
       @repository = T.let(
         repository_class.new(
-          index_base_name: @country_code,
+          index_base_name: index.presence || @country_code,
           index_mappings: index_configuration.present? ? index_configuration["mappings"] : {},
           index_settings: index_configuration.present? ? index_configuration["settings"] : {},
           mapper_callable: mapper_callable,
