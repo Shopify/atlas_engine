@@ -13,11 +13,10 @@ module AtlasEngine
       attributes.dig("default_matching_strategy")
     end
 
-    # PENDING: enable sig once move complete
-    # sig do
-    #   params(component: String)
-    #     .returns(T::Array[T.class_of(AddressValidation::Validators::FullAddress::Exclusions::ExclusionBase)])
-    # end
+    sig do
+      params(component: String)
+        .returns(T::Array[T.class_of(AddressValidation::Validators::FullAddress::Exclusions::ExclusionBase)])
+    end
     def validation_exclusions(component:)
       validation_exclusions = attributes.dig("exclusions", component) || []
       validation_exclusions.map(&:constantize)
@@ -37,15 +36,14 @@ module AtlasEngine
       Range.new(*range.split("..").map(&:to_i))
     end
 
-    # PENDING: enable sig once move complete
-    # sig { returns(T::Class[ValidationTranscriber::AddressParserBase]) }
+    sig { returns(T::Class[ValidationTranscriber::AddressParserBase]) }
     def address_parser
       # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("address_parser").constantize
       # rubocop:enable Sorbet/ConstantsFromStrings
     end
 
-    # PENDING: enable sig once move complete
+    # PENDING: Move this to Atlas Private (not required in Engine)
     # sig { returns(T::Hash[Symbol, T::Class[AddressLookup::Base]]) }
     def carrier_address_lookups
       attributes.dig("admin", "carrier_address_lookups").transform_values(&:constantize)
