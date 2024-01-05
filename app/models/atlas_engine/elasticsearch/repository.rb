@@ -133,6 +133,8 @@ module AtlasEngine
         response = client.post(path, query, {})
 
         response.body
+      rescue ::Elastic::Transport::Transport::Error
+        { "hits" => { "hits" => [] } }
       end
 
       sig { override.params(query: T::Hash[String, T.untyped]).returns(T::Hash[String, T.untyped]) }
@@ -141,6 +143,8 @@ module AtlasEngine
         response = client.post(path, query, {})
 
         response.body
+      rescue ::Elastic::Transport::Transport::Error
+        { "tokens" => [] }
       end
 
       sig { override.params(query: T::Hash[String, T.untyped]).returns(T::Hash[String, T.untyped]) }
@@ -149,6 +153,8 @@ module AtlasEngine
         response = client.post(path, query, {})
 
         response.body
+      rescue ::Elastic::Transport::Transport::Error
+        { "docs" => [] }
       end
 
       sig { override.params(id: T.any(String, Integer)).returns(T::Hash[String, T.untyped]) }
@@ -157,6 +163,8 @@ module AtlasEngine
         response = client.get(path, nil, {})
 
         response.body["_source"]
+      rescue ::Elastic::Transport::Transport::Error
+        {}
       end
 
       sig { override.params(post_address: PostAddressData).returns(T::Hash[Symbol, T.untyped]) }

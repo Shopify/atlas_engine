@@ -51,13 +51,6 @@ module AtlasEngine
           if ENV["ELASTICSEARCH_INSECURE_NO_VERIFY_SERVER"]
             faraday_connection.ssl.verify = false
           end
-
-          # faraday_adapter(f) do |client|
-          #   timeout = @config[:keep_alive_timeout]
-
-          #   client.keep_alive_timeout = timeout if client.respond_to?(:keep_alive_timeout=)
-          #   client.idle_timeout = timeout if client.respond_to?(:idle_timeout=)
-          # end
         end, Elastic::Transport::Client)
       end
 

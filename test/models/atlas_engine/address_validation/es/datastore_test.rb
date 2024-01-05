@@ -45,6 +45,15 @@ module AtlasEngine
           assert_requested(:post, %r{http\://.*/test_us/_analyze}, times: 1)
         end
 
+        test "#fetch_city_sequence returns empty sequence on bad ES response" do
+          stub_request(:post, %r{http\://.*/test_us/_analyze})
+            .with(body: { analyzer: "city_analyzer", text: "San Francisco" })
+            .to_return(status: 400, body: "", headers: @headers)
+
+          sequence = @datastore.fetch_city_sequence
+          assert_empty sequence
+        end
+
         test "#fetch_city_sequence does not call ES for the same query even when there is no response" do
           stub_request(:post, %r{http\://.*/test_us/_analyze})
             .to_return(status: 200, body: { "tokens": [] }.to_json, headers: @headers)
@@ -297,14 +306,13 @@ module AtlasEngine
           end
         end
 
-        test "#fetch_street_sequences raises any underlying error" do
+        test "#fetch_street_sequences returns empty sequence on error" do
           stub_request(:post, %r{http\://.*/test_us/_analyze})
             .with(body: { analyzer: "street_analyzer", text: "Main Street" })
             .to_return(status: 400)
 
-          assert_raises(Elastic::Transport::Transport::Errors::BadRequest) do
-            @datastore.fetch_street_sequences
-          end
+          sequences = @datastore.fetch_street_sequences
+          assert_empty sequences.first
         end
 
         test "#fetch_street_sequences_async returns a pending future that resolves as an array of sequences" do
@@ -431,6 +439,14 @@ module AtlasEngine
             assert_sequence_array_equality expected_sequences[1], candidate.component(:city).sequences
             assert_sequence_array_equality expected_sequences[2], candidate.component(:street).sequences
           end
+        end
+
+        test "#fetch_full_address_candidates returns empty on error" do
+          stub_request(:post, %r{http\://.*/test_us/_search})
+            .to_return(status: 400, body: full_address_results.to_json, headers: @headers)
+
+          candidates = @datastore.fetch_full_address_candidates
+          assert_empty candidates
         end
 
         test "#fetch_full_address_candidates measures the time to retrieve candidates" do
