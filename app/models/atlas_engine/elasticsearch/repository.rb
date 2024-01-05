@@ -164,6 +164,14 @@ module AtlasEngine
         mapper_callable.call(post_address).compact
       end
 
+      sig { returns(T::Array[T.untyped]) }
+      def indices
+        path = "/_cat/indices?format=json"
+        response = client.get(path, nil, {})
+
+        response.body
+      end
+
       private
 
       sig { returns(T::Hash[String, T.untyped]) }

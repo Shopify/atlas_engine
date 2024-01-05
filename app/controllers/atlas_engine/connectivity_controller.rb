@@ -2,7 +2,12 @@ module AtlasEngine
   class ConnectivityController < ApplicationController
 
     def initialize
-      @repository = AtlasEngine::Elasticsearch::Repository.new
+      @repository = AtlasEngine::Elasticsearch::Repository.new(
+        index_base_name: "",
+        index_settings: {},
+        index_mappings: {},
+        mapper_callable: nil
+      )
     end
 
     def index
