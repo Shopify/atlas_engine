@@ -21,7 +21,7 @@ bin/rails generate atlas_engine:install
 
 #### Updating to a newer version of the engine
 
-Working with migraitons
+Working with migrations
 ```
 # Copy any migrations from the engine into your app
 rails atlas_engine:install:migrations
@@ -85,10 +85,17 @@ Connecting to Docker services
 rails db:setup
 ```
 
+#### Setting up maintenance tasks
+After locally setting up Atlas Engine:
+```
+rails app:maintenance_tasks:install:migrations
+rails db:migrate
+```
+
 ## Using the App
 
 ### Infrastructure Requirements
-The elasticsearch implementation depends on the ICU analysis plugin. Refer to the [Dockfile](./Dockfile) leveraged in local setup for plugin installation. 
+The elasticsearch implementation depends on the ICU analysis plugin. Refer to the [Dockfile](./Dockfile) leveraged in local setup for plugin installation.
 
 ### Starting the App and Testing
   * `bin/rails server` to start the server
