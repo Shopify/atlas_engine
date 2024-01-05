@@ -1,6 +1,5 @@
 inherit_gem:
   rubocop-shopify: rubocop.yml
-  shopify-types: rubocop.yml
 
 AllCops:
   TargetRubyVersion: 3.2
