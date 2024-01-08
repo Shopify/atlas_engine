@@ -2,14 +2,20 @@ PATH
   remote: .
   specs:
     atlas_engine (0.1.8)
+      annex_29
+      elastic-transport
       elasticsearch-model
       elasticsearch-rails
-      factory_bot_rails
+      frozen_record
       graphiql-rails
       graphql
+      htmlentities
+      maintenance_tasks
       rails (>= 7.0.7.2)
       rubyzip
+      sorbet-runtime
       state_machines-activerecord
+      statsd-instrument
       worldwide
 
 GEM
@@ -89,7 +95,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     annex_29 (0.1.1)
     ast (2.4.2)
@@ -135,7 +141,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faraday (2.7.11)
+    faraday (2.8.1)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -149,7 +155,7 @@ GEM
       sprockets-rails
     graphql (2.2.4)
       racc (~> 1.4)
-    hashdiff (1.0.1)
+    hashdiff (1.1.0)
     hashie (5.0.0)
     htmlentities (4.3.4)
     i18n (1.12.0)
@@ -160,7 +166,7 @@ GEM
       reline (>= 0.3.8)
     job-iteration (1.4.1)
       activejob (>= 5.2)
-    json (2.6.3)
+    json (2.7.1)
     language_server-protocol (3.17.0.3)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -196,7 +202,7 @@ GEM
     multi_json (1.15.0)
     mutex_m (0.2.0)
     mysql2 (0.5.5)
-    net-imap (0.4.5)
+    net-imap (0.4.9)
       date
       net-protocol
     net-pop (0.1.2)
@@ -215,7 +221,7 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
-    phonelib (0.8.5)
+    phonelib (0.8.6)
     prettier_print (1.2.1)
     prism (0.19.0)
     pry (0.14.2)
@@ -226,9 +232,7 @@ GEM
       pry (>= 0.13, < 0.15)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.3)
-    puma (6.4.2)
-      nio4r (~> 2.0)
+    public_suffix (5.0.4)
     racc (1.7.3)
     rack (3.0.8)
     rack-session (2.0.0)
@@ -276,13 +280,13 @@ GEM
       psych (>= 4.0.0)
     redis (5.0.8)
       redis-client (>= 0.17.0)
-    redis-client (0.18.0)
+    redis-client (0.19.1)
       connection_pool
-    regexp_parser (2.8.2)
+    regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
     rexml (3.2.6)
-    rubocop (1.57.2)
+    rubocop (1.59.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -290,7 +294,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.28.1, < 2.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.30.0)
@@ -320,8 +324,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.7.0-arm64-darwin)
-    sqlite3 (1.7.0-x86_64-linux)
     state_machines (0.6.0)
     state_machines-activemodel (0.9.0)
       activemodel (>= 6.0)
@@ -370,37 +372,23 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  annex_29
   atlas_engine!
   debug
   dotenv-rails
-  elastic-transport
   factory_bot_rails
-  frozen_record
-  graphiql-rails
-  htmlentities
-  maintenance_tasks (~> 2.4)
   minitest-distributed
   minitest-focus
   minitest-silence (>= 0.2.4)
   minitest-suite
   mocha
-  mysql2 (~> 0.5)
+  mysql2
   pry
   pry-byebug
-  puma (~> 6.4)
-  rails
   rubocop-shopify
-  rubyzip
   sorbet
-  sorbet-runtime
   sprockets-rails
-  sqlite3
-  state_machines-activerecord
-  statsd-instrument
   tapioca
   webmock
-  worldwide
 
 BUNDLED WITH
-   2.4.10
+   2.4.6
