@@ -5,11 +5,6 @@ module AtlasEngine
   module AddressValidation
     module Es
       class DefaultQueryBuilder < QueryBuilder
-        sig { params(address: AbstractAddress).void }
-        def initialize(address)
-          super(address)
-        end
-
         sig { override.returns(T::Hash[String, T.untyped]) }
         def full_address_query
           clauses = [

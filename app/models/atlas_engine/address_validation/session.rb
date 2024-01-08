@@ -15,8 +15,8 @@ module AtlasEngine
       sig { returns(MatchingStrategies) }
       attr_accessor :matching_strategy
 
-      sig { returns(ValidationTranscriber::AddressParsings) }
-      attr_reader :parsings
+      sig { returns(T::Hash[String, AtlasEngine::AddressValidation::DatastoreBase]) }
+      attr_reader :datastore_hash
 
       def_delegators :@address, :address1, :address2, :city, :province_code, :country_code, :zip, :phone
 
@@ -29,24 +29,18 @@ module AtlasEngine
       def initialize(address:, matching_strategy: MatchingStrategies::Es)
         @address = address
         @matching_strategy = matching_strategy
-        @parsings = T.let(
-          ValidationTranscriber::AddressParsings.new(address_input: address),
-          ValidationTranscriber::AddressParsings,
-        )
-
         @datastore_hash = T.let({}, T::Hash[String, AtlasEngine::AddressValidation::DatastoreBase])
       end
 
-      sig { params(index: T.nilable(String)).returns(AtlasEngine::AddressValidation::DatastoreBase) }
-      def datastore(index: nil)
-        if index.blank?
-          index_locales = CountryProfile.for(country_code).validation.index_locales
-          raise ArgumentError, "multi-locale country requires index or locale" if index_locales.present?
+      sig { params(locale: T.nilable(String)).returns(ValidationTranscriber::AddressParsings) }
+      def parsings(locale: nil)
+        datastore(locale: locale).parsings
+      end
 
-          index = CountryRepository.index_name(country_code:)
-        end
-
-        @datastore_hash[index] ||= AtlasEngine::AddressValidation::Es::Datastore.new(address: address)
+      sig { params(locale: T.nilable(String)).returns(AtlasEngine::AddressValidation::DatastoreBase) }
+      def datastore(locale: nil)
+        key = locale || "default"
+        @datastore_hash[key] ||= AtlasEngine::AddressValidation::Es::Datastore.new(address: address, locale: locale)
       end
     end
   end

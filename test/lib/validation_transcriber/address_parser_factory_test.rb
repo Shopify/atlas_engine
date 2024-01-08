@@ -13,6 +13,37 @@ module AtlasEngine
         end
       end
 
+      test "create raises an error if locale is not provided for a multi-locale country" do
+        profile_attributes = {
+          "id" => "CH",
+          "validation" => {
+            "key" => "some_value",
+            "index_locales" => ["de", "fr"],
+            "address_parser" => "AtlasEngine::ValidationTranscriber::AddressParserBase",
+          },
+        }
+        CountryProfile.any_instance.stubs(:attributes).returns(profile_attributes)
+
+        assert_raises(ArgumentError) do
+          AddressParserFactory.create(address: AddressValidation::Address.new(country_code: "CH"))
+        end
+      end
+
+      test "returns address parser if locale is provided for a multi-locale country" do
+        profile_attributes = {
+          "id" => "CH",
+          "validation" => {
+            "key" => "some_value",
+            "index_locales" => ["de", "fr"],
+            "address_parser" => "AtlasEngine::ValidationTranscriber::AddressParserBase",
+          },
+        }
+        CountryProfile.any_instance.stubs(:attributes).returns(profile_attributes)
+
+        parser = AddressParserFactory.create(address: AddressValidation::Address.new(country_code: "CH"), locale: "de")
+        assert_instance_of(AddressParserBase, parser)
+      end
+
       test "create returns an AddressParserBase for any given NON north american address" do
         profile_attributes = {
           "id" => "XX",

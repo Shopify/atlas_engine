@@ -38,14 +38,37 @@ module AtlasEngine
       }
     end
 
-    test "#initialize accepts an optional index name" do
-      stub_request(:get, %r{http\://.*/test_custom_index/_doc/123})
+    test "#initialize requires locale for multi-locale country" do
+      stub_request(:get, %r{http\://.*/test_ch_de/_doc/123})
+        .to_return(status: 200, body: document_result.to_json, headers: { "Content-Type" => "application/json" })
+
+      repo = CountryRepository.new(
+        country_code: "CH",
+        repository_class: Elasticsearch::Repository,
+        locale: "de"
+      )
+
+      response = repo.find(123)
+      assert_equal document_result[:_source].stringify_keys, response
+    end
+
+    test "#initialize raises error if locale is not provided for multi-locale country" do
+      assert_raises(ArgumentError) do
+        repo = CountryRepository.new(
+          country_code: "CH",
+          repository_class: Elasticsearch::Repository,
+        )
+      end
+    end
+
+    test "#initialize ignores locale if country is not multi-locale" do
+      stub_request(:get, %r{http\://.*/test_us/_doc/123})
         .to_return(status: 200, body: document_result.to_json, headers: { "Content-Type" => "application/json" })
 
       repo = CountryRepository.new(
         country_code: "US",
         repository_class: Elasticsearch::Repository,
-        index: "custom_index"
+        locale: "en"
       )
 
       response = repo.find(123)

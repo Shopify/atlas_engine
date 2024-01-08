@@ -22,6 +22,31 @@ module AtlasEngine
         assert_equal "1234567890", session.phone
       end
 
+      test "parsings returns the correct parsings" do
+        session = AddressValidation::Session.new(address: address)
+        assert_equal [{:building_num=>"123", :street=>"Main Street"}], session.parsings.parsings
+      end
+
+      test "datastore returns the correct datastore" do
+        session = AddressValidation::Session.new(address: address)
+
+        assert_equal AtlasEngine::AddressValidation::Es::Datastore, session.datastore.class
+        assert_equal 1, session.datastore_hash.size
+      end
+
+      test "datastore caches by locale" do
+        session = AddressValidation::Session.new(address: address_ch)
+        assert_equal AtlasEngine::AddressValidation::Es::Datastore, session.datastore(locale: "it").class
+        assert_equal 1, session.datastore_hash.size
+
+        session.datastore(locale: "it")
+        assert_equal 1, session.datastore_hash.size
+
+        ch_session = AddressValidation::Session.new(address: address_ch)
+        assert_equal AtlasEngine::AddressValidation::Es::Datastore, session.datastore(locale: "fr").class
+        assert_equal 2, session.datastore_hash.size
+      end
+
       private
 
       def address

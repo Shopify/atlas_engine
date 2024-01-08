@@ -53,7 +53,7 @@ module Maintenance
         @repository ||= ::AtlasEngine::CountryRepository.new(
           country_code: T.must(country_code),
           repository_class: ::AtlasEngine.elasticsearch_repository.constantize,
-          index: ::AtlasEngine::CountryRepository.index_name(country_code:, locale:),
+          locale: sanitized_locale,
           index_configuration: index_configuration,
         )
       end

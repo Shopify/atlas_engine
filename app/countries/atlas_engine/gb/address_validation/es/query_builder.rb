@@ -8,9 +8,9 @@ module AtlasEngine
         class QueryBuilder < AtlasEngine::AddressValidation::Es::QueryBuilder
           extend T::Sig
 
-          sig { params(address: AtlasEngine::AddressValidation::AbstractAddress).void }
-          def initialize(address)
-            super(address)
+          sig { params(address: AtlasEngine::AddressValidation::AbstractAddress, locale: T.nilable(String)).void }
+          def initialize(address, locale = nil)
+            super(address, locale)
 
             @parsings = T.let(
               AtlasEngine::Gb::ValidationTranscriber::FullAddressParser

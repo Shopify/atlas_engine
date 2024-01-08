@@ -10,20 +10,25 @@ module AtlasEngine
         include DatastoreBase
         extend T::Sig
 
-        attr_reader :index
+        attr_reader :parsings
         attr_writer :candidates # meant for test setup only
 
-        sig { params(address: AbstractAddress, index: T.nilable(String)).void }
-        def initialize(address:, index: nil)
+        sig { params(address: AbstractAddress, locale: T.nilable(String)).void }
+        def initialize(address:, locale: nil)
           @address = address
-          @index = index
-          @parsings = ValidationTranscriber::AddressParsings.new(address_input: address)
+          @locale = locale
+
           raise ArgumentError, "address has no country_code" if address.country_code.blank?
 
           @country_code = T.must(address.country_code.to_s)
-
           @profile = CountryProfile.for(country_code.to_s.upcase)
-          @query_builder = QueryBuilder.for(address)
+
+          if locale.nil? && @profile.validation.index_locales.present?
+            raise ArgumentError, "#{country_code} is a multi-locale country and requires a locale"
+          end
+
+          @parsings = ValidationTranscriber::AddressParsings.new(address_input: address, locale: locale)
+          @query_builder = QueryBuilder.for(address, locale)
         end
 
         sig do
@@ -33,7 +38,7 @@ module AtlasEngine
           @repository ||= CountryRepository.new(
             country_code: country_code.downcase,
             repository_class: AtlasEngine.elasticsearch_repository.constantize,
-            index:,
+            locale: locale&.downcase,
             index_configuration: nil,
           )
         end
@@ -102,7 +107,7 @@ module AtlasEngine
 
         private
 
-        attr_reader :address, :country_code, :profile, :query_builder
+        attr_reader :address, :country_code, :locale, :profile, :query_builder
 
         sig { returns(Token::Sequence) }
         def fetch_city_sequence_internal

@@ -12,20 +12,20 @@ module AtlasEngine
         class << self
           extend T::Sig
 
-          sig { params(address: AbstractAddress).returns(QueryBuilder) }
-          def for(address)
+          sig { params(address: AbstractAddress, locale: T.nilable(String)).returns(QueryBuilder) }
+          def for(address, locale = nil)
             profile = CountryProfile.for(T.must(address.country_code))
             # rubocop:disable Sorbet/ConstantsFromStrings
-            profile.attributes.dig("validation", "query_builder").constantize.new(address)
+            profile.attributes.dig("validation", "query_builder").constantize.new(address, locale)
             # rubocop:enable Sorbet/ConstantsFromStrings
           end
         end
 
-        sig { params(address: AbstractAddress).void }
-        def initialize(address)
+        sig { params(address: AbstractAddress, locale: T.nilable(String)).void }
+        def initialize(address, locale = nil)
           @address = address
           @profile = CountryProfile.for(T.must(address.country_code))
-          @parsings = ValidationTranscriber::AddressParsings.new(address_input: address)
+          @parsings = ValidationTranscriber::AddressParsings.new(address_input: address, locale: locale)
         end
 
         sig { abstract.returns(T::Hash[String, T.untyped]) }
