@@ -233,8 +233,6 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
-    puma (6.4.2)
-      nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.8)
     rack-session (2.0.0)
@@ -326,8 +324,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.7.0-arm64-darwin)
-    sqlite3 (1.7.0-x86_64-linux)
     state_machines (0.6.0)
     state_machines-activemodel (0.9.0)
       activemodel (>= 6.0)
@@ -388,10 +384,9 @@ DEPENDENCIES
   mysql2
   pry
   pry-byebug
-  puma
   rubocop-shopify
   sorbet
-  sqlite3
+  sprockets-rails
   tapioca
   webmock
 

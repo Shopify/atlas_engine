@@ -10,6 +10,8 @@ gem "mysql2"
 
 group :development, :test do
   gem "dotenv-rails", require: "dotenv/rails-now"
+  # For loading the /graphiql assests
+  gem "sprockets-rails"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :mingw, :x64_mingw]
@@ -25,10 +27,6 @@ group :development do
 end
 
 group :test do
-  # for the dummy app
-  gem "sqlite3"
-  gem "puma"
-
   gem "minitest-distributed"
   gem "minitest-silence", ">= 0.2.4", require: false
   gem "mocha"

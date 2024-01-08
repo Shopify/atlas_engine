@@ -3,11 +3,11 @@ require_relative "lib/atlas_engine/version"
 Gem::Specification.new do |spec|
   spec.name        = "atlas_engine"
   spec.version     = AtlasEngine::VERSION
-  spec.authors     = ["Roch Lefebvre"]
-  spec.email       = ["roch.lefebvre@shopify.com"]
+  spec.authors     = ["Shopify"]
+  spec.email       = ["developers@shopify.com"]
   spec.homepage    = "https://github.com/Shopify/atlas-engine"
-  spec.summary     = "Summary of AtlasEngine."
-  spec.description = "Description of AtlasEngine."
+  spec.summary     = "Global Address Validation API"
+  spec.description = "The Atlas Engine is a rails engine that provides a GraphQL API for global address validation."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
