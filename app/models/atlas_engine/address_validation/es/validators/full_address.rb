@@ -32,24 +32,19 @@ module AtlasEngine
               return AddressValidation::Validators::FullAddress::UnsupportedScriptResult.new(session:, result:)
             end
 
-            street_sequences_future = session.datastore.fetch_street_sequences_async
-            city_sequences_future = session.datastore.fetch_city_sequence_async
-            best_candidate = sorted_candidates.first
+            best_candidate = AddressValidation::Es::CandidateSelector.new(
+              datastore: session.datastore,
+              address: session.address,
+            ).best_candidate
 
-            begin
-              if best_candidate.nil?
-                AddressValidation::Validators::FullAddress::NoCandidateResult.new(session:, result:)
-              else
-                AddressValidation::Validators::FullAddress::CandidateResult.new(
-                  candidate: best_candidate,
-                  result: result,
-                  session: session,
-                )
-              end
-            ensure
-              # We want our futures to complete even when we do not consume their value.
-              street_sequences_future.wait!
-              city_sequences_future.wait!
+            if best_candidate.nil?
+              AddressValidation::Validators::FullAddress::NoCandidateResult.new(session:, result:)
+            else
+              AddressValidation::Validators::FullAddress::CandidateResult.new(
+                candidate: best_candidate,
+                result: result,
+                session: session,
+              )
             end
           end
 
@@ -97,54 +92,6 @@ module AtlasEngine
             country_profile = CountryProfile.for(T.must(address.country_code))
             restrictions = country_profile.validation.validation_restrictions
             restrictions.none? { |restriction| restriction.apply?(address) }
-          end
-
-          sig { returns(T::Array[CandidateTuple]) }
-          def sorted_candidates
-            @sorted_candidates ||= begin
-              sorted_candidate_tuples = session.datastore.fetch_full_address_candidates
-                .filter_map.with_index(1) do |candidate, position|
-                  tuple = CandidateTuple.new(address_comparison(candidate), position, candidate)
-                  tuple if tuple.address_comparison.potential_match?
-                end.sort
-
-              emit_sorted_candidates(sorted_candidate_tuples)
-              sorted_candidate_tuples
-            end
-          end
-
-          sig { params(candidate: Candidate).returns(AddressValidation::Validators::FullAddress::AddressComparison) }
-          def address_comparison(candidate)
-            AddressValidation::Validators::FullAddress::AddressComparison.new(
-              street_comparison: AddressValidation::Validators::FullAddress::ComparisonHelper.street_comparison(
-                session: session, candidate: candidate,
-              ),
-              city_comparison: AddressValidation::Validators::FullAddress::ComparisonHelper.city_comparison(
-                session: session, candidate: candidate,
-              ),
-              zip_comparison: AddressValidation::Validators::FullAddress::ComparisonHelper.zip_comparison(
-                session: session, candidate: candidate,
-              ),
-              province_code_comparison: AddressValidation::Validators::FullAddress::ComparisonHelper
-              .province_code_comparison(
-                session: session, candidate: candidate,
-              ),
-              building_comparison: AddressValidation::Validators::FullAddress::ComparisonHelper.building_comparison(
-                session: session, candidate: candidate,
-              ),
-            )
-          end
-
-          sig { params(sorted_candidate_tuples: T::Array[CandidateTuple]).void }
-          def emit_sorted_candidates(sorted_candidate_tuples)
-            log_info("Sorted candidates:\n #{sorted_candidate_tuples.map { |tuple| tuple.candidate.serialize }}")
-
-            initial_position_top_candidate = sorted_candidate_tuples.first&.position || 0
-            StatsD.distribution(
-              "AddressValidation.query.initial_position_top_candidate",
-              initial_position_top_candidate,
-              tags: { position: initial_position_top_candidate },
-            )
           end
         end
       end

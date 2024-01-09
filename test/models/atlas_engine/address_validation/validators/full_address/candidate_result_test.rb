@@ -385,13 +385,9 @@ module AtlasEngine
 
           def address_comparison(candidate, session)
             AddressValidation::Validators::FullAddress::AddressComparison.new(
-              street_comparison: ComparisonHelper.street_comparison(session: session, candidate: candidate),
-              city_comparison: ComparisonHelper.city_comparison(session: session, candidate: candidate),
-              zip_comparison: ComparisonHelper.zip_comparison(session: session, candidate: candidate),
-              province_code_comparison: ComparisonHelper.province_code_comparison(
-                session: session, candidate: candidate,
-              ),
-              building_comparison: ComparisonHelper.building_comparison(session: session, candidate: candidate),
+              address: session.address,
+              candidate: candidate,
+              datastore: session.datastore,
             )
           end
 

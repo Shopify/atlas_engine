@@ -15,22 +15,28 @@ module AtlasEngine
             :province_code_comparison,
             :building_comparison
 
-          sig do
-            params(
-              street_comparison: T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison),
-              city_comparison: T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison),
-              zip_comparison: T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison),
-              province_code_comparison: T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison),
-              building_comparison: NumberComparison,
-            ).void
-          end
-          def initialize(street_comparison:, city_comparison:, zip_comparison:, province_code_comparison:,
-            building_comparison:)
-            @street_comparison = street_comparison
-            @city_comparison = city_comparison
-            @zip_comparison = zip_comparison
-            @province_code_comparison = province_code_comparison
-            @building_comparison = building_comparison
+          sig { params(address: AbstractAddress, candidate: Candidate, datastore: DatastoreBase).void }
+          def initialize(address:, candidate:, datastore:)
+            @street_comparison = ComparisonHelper.street_comparison(
+              datastore: datastore,
+              candidate: candidate
+            )
+            @city_comparison = ComparisonHelper.city_comparison(
+              datastore: datastore,
+              candidate: candidate
+            )
+            @zip_comparison = ComparisonHelper.zip_comparison(
+              address: address,
+              candidate: candidate
+            )
+            @province_code_comparison = ComparisonHelper.province_code_comparison(
+              address: address,
+              candidate: candidate
+            )
+            @building_comparison = ComparisonHelper.building_comparison(
+              datastore: datastore,
+              candidate: candidate,
+            )
           end
 
           sig { params(other: AddressComparison).returns(Integer) }
