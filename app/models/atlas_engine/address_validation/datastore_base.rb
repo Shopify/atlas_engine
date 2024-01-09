@@ -19,6 +19,9 @@ module AtlasEngine
 
       sig { abstract.returns(T::Hash[T.untyped, T.untyped]) }
       def validation_response; end
+
+      sig { abstract.returns(ValidationTranscriber::AddressParsings) }
+      def parsings; end
     end
   end
 end

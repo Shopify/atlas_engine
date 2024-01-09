@@ -7,11 +7,18 @@ module AtlasEngine
       class << self
         extend T::Sig
 
-        sig { params(address: AddressValidation::AbstractAddress).returns(AddressParserBase) }
-        def create(address:)
+        sig do
+          params(address: AddressValidation::AbstractAddress, locale: T.nilable(String)).returns(AddressParserBase)
+        end
+        def create(address:, locale: nil)
           raise ArgumentError, "country_code cannot be nil" if address.country_code.nil?
+          profile = CountryProfile.for(T.must(address.country_code))
 
-          CountryProfile.for(T.must(address.country_code)).validation.address_parser.new(address: address)
+          if locale.nil? && profile.validation.index_locales.present?
+            raise ArgumentError, "#{address.country_code} is a multi-locale country and requires a locale"
+          end
+
+          profile.validation.address_parser.new(address: address)
         end
       end
     end

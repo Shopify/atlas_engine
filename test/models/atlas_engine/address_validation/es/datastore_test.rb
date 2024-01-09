@@ -25,6 +25,17 @@ module AtlasEngine
           end
         end
 
+        test "#initialize raises an argument error if the address is in a multi-locale country with no locale" do
+          assert_raises(ArgumentError) do
+            AddressValidation::Es::Datastore.new(address: build_address(country_code: "CH"))
+          end
+        end
+
+        test "datastore can be initialized with a locale in a multi-locale country" do
+          datastore = AddressValidation::Es::Datastore.new(address: build_address(country_code: "CH"), locale: "de")
+          assert_equal "test_ch_de", datastore.repository.active_alias
+        end
+
         test "#fetch_city_sequence returns a sequence of tokens for the address' city" do
           stub_request(:post, %r{http\://.*/test_us/_analyze})
             .with(body: { analyzer: "city_analyzer", text: "San Francisco" })

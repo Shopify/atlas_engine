@@ -12,14 +12,14 @@ module AtlasEngine
       sig { returns(T::Array[ParsedComponents]) }
       attr_reader :parsings
 
-      sig { params(address_input: AddressValidation::AbstractAddress).void }
-      def initialize(address_input:)
+      sig { params(address_input: AddressValidation::AbstractAddress, locale: T.nilable(String)).void }
+      def initialize(address_input:, locale: nil)
         @parsings = T.let(
           begin
             if address_input.country_code.blank?
               []
             else
-              parsing_result = AddressParserFactory.create(address: address_input).parse
+              parsing_result = AddressParserFactory.create(address: address_input, locale: locale).parse
               log_unparsable_address(address_input) if parsing_result.empty?
               parsing_result
             end

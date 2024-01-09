@@ -22,18 +22,17 @@ module AtlasEngine
       params(
         country_code: T.any(String, Symbol),
         repository_class: T::Class[Elasticsearch::RepositoryInterface],
-        index: T.nilable(String),
+        locale: T.nilable(String),
         index_configuration: T.nilable(IndexConfigurationFactory::IndexConfigurations),
       ).void
     end
-    def initialize(country_code:, repository_class:, index: nil, index_configuration: nil)
+    def initialize(country_code:, repository_class:, locale: nil, index_configuration: nil)
       @country_code = T.let(country_code.to_s.downcase, String)
-
       @country_profile = T.let(CountryProfile.for(@country_code), CountryProfile)
 
       @repository = T.let(
         repository_class.new(
-          index_base_name: index.presence || @country_code,
+          index_base_name: index_name(country_code: @country_code, locale: locale),
           index_mappings: index_configuration.present? ? index_configuration["mappings"] : {},
           index_settings: index_configuration.present? ? index_configuration["settings"] : {},
           mapper_callable: mapper_callable,
@@ -63,6 +62,19 @@ module AtlasEngine
     end
 
     private
+
+    sig { params(country_code: T.any(String, Symbol), locale: T.nilable(String)).returns(String) }
+    def index_name(country_code:, locale: nil)
+      if country_profile.validation.index_locales.present?
+        if country_profile.validation.index_locales.include?(locale)
+          "#{country_code}_#{locale}"
+        else
+          raise ArgumentError, "#{country_code} is a multi-locale country and requires a locale"
+        end
+      else
+        country_code.to_s.downcase
+      end
+    end
 
     sig { returns(CountryProfile) }
     attr_reader :country_profile
