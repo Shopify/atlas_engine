@@ -2,8 +2,6 @@ id: IT
 validation:
   enabled: true
   default_matching_strategy: es
-  index_locales:
-    - it
 ingestion:
   open_address:
     feature_mapper: AtlasEngine::It::AddressImporter::OpenAddress::Mapper

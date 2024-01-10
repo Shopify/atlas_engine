@@ -14,7 +14,7 @@ module AtlasEngine
           raise ArgumentError, "country_code cannot be nil" if address.country_code.nil?
           profile = CountryProfile.for(T.must(address.country_code), locale)
 
-          if locale.nil? && profile.validation.index_locales.present?
+          if locale.nil? && profile.validation.multi_locale?
             raise ArgumentError, "#{address.country_code} is a multi-locale country and requires a locale"
           end
 
