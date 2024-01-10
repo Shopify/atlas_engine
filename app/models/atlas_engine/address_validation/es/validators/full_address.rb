@@ -27,21 +27,17 @@ module AtlasEngine
             result
           end
 
+          sig { returns(AddressValidation::Validators::FullAddress::CandidateResultBase) }
           def build_candidate_result
             unless supported_address?(address)
               return AddressValidation::Validators::FullAddress::UnsupportedScriptResult.new(session:, result:)
             end
 
-            best_candidate = AddressValidation::Es::CandidateSelector.new(
-              datastore: session.datastore,
-              address: session.address,
-            ).best_candidate
-
             if best_candidate.nil?
               AddressValidation::Validators::FullAddress::NoCandidateResult.new(session:, result:)
             else
               AddressValidation::Validators::FullAddress::CandidateResult.new(
-                candidate: best_candidate,
+                candidate: T.must(best_candidate),
                 result: result,
                 session: session,
               )
@@ -49,6 +45,35 @@ module AtlasEngine
           end
 
           private
+
+          sig { returns(T.nilable(CandidateTuple)) }
+          def best_candidate
+            @best_candidate ||= T.let(
+              begin
+                index_locales = CountryProfile.for(address.country_code).validation.index_locales
+
+                candidate_futures = if index_locales.empty?
+                  [best_candidate_future]
+                else
+                  index_locales.map { |locale| best_candidate_future(locale) }
+                end
+
+                candidate_futures.filter_map(&:value!).min
+              ensure
+                # We want our futures to complete even when we do not consume their value.
+                candidate_futures&.map { |future| future.wait! }
+              end,
+              T.nilable(CandidateTuple)
+            )
+          end
+
+          sig { params(locale: T.nilable(String)).returns(Concurrent::Promises::Future) }
+          def best_candidate_future(locale = nil)
+            AddressValidation::Es::CandidateSelector.new(
+              datastore: session.datastore(locale: locale),
+              address: session.address,
+            ).best_candidate_async
+          end
 
           sig do
             params(candidate_result: T.nilable(AddressValidation::Validators::FullAddress::CandidateResultBase))

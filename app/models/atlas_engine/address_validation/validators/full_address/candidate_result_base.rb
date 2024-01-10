@@ -17,6 +17,9 @@ module AtlasEngine
             @result = result
           end
 
+          sig { void }
+          def update_result; end
+
           private
 
           attr_reader :session, :result
