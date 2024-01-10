@@ -49,6 +49,23 @@ module AtlasEngine
       assert_equal "US", CountryProfile.for("us").id
     end
 
+    test ".for returns a localized CountryProfile for a valid country code and locale" do
+      CountryProfile.expects(:find).with("CH_DE").returns(CountryProfile.new(id: "CH_DE"))
+      assert_equal "CH_DE", CountryProfile.for("CH", "DE").id
+    end
+
+    test ".for returns a CountryProfile if there is no profile yaml for the locale" do
+      CountryProfile.expects(:find).with("CH_DE").raises(FrozenRecord::RecordNotFound)
+      CountryProfile.expects(:find).with("CH").returns(CountryProfile.new(id: "CH"))
+      assert_equal "CH", CountryProfile.for("CH", "DE").id
+    end
+
+    test ".for returns the default profile if there is no profile yaml for the country and locale" do
+      CountryProfile.expects(:find).with("CH_DE").raises(FrozenRecord::RecordNotFound)
+      CountryProfile.expects(:find).with("CH").raises(FrozenRecord::RecordNotFound)
+      assert_equal "CH", CountryProfile.for("CH", "DE").id
+    end
+
     test "default_attributes loads correctly from default.yml" do
       expected = YAML.load_file(CountryProfile.default_paths.first)
       assert_equal expected, CountryProfile.default_attributes
@@ -239,6 +256,62 @@ module AtlasEngine
           },
         },
         CountryProfile.find("XX").attributes,
+      )
+    end
+
+    test "Countries having both a base country profile and locale extensions produce base and localized variants" do
+      base_content = <<-YAML
+        id: XX
+        feature:
+          label: "label"
+          name: "sample"
+      YAML
+
+      base_file = Tempfile.new("xx")
+      base_file.write(base_content)
+      base_file.rewind
+
+      locale_content = <<-YAML
+        id: XX_YY
+        feature:
+          name: "new sample"
+          enabled: true
+        feature_2:
+          valid?: true
+      YAML
+
+      locale_file = Tempfile.new("yy")
+      locale_file.write(locale_content)
+      locale_file.rewind
+
+      CountryProfile.reset!
+      CountryProfile.country_paths = [base_file.path]
+      CountryProfile.locale_paths = [locale_file.path]
+
+      assert_equal(
+        {
+          "id" => "XX",
+          "feature" => {
+            "label" => "label",
+            "name" => "sample",
+          },
+        },
+        CountryProfile.find("XX").attributes,
+      )
+
+      assert_equal(
+        {
+          "id" => "XX_YY",
+          "feature" => {
+            "label" => "label",
+            "name" => "new sample",
+            "enabled" => true
+          },
+          "feature_2" => {
+            "valid?" => true,
+          },
+        },
+        CountryProfile.find("XX_YY").attributes,
       )
     end
 

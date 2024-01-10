@@ -13,14 +13,26 @@ module AtlasEngine
       class << self
         extend T::Sig
 
-        sig { params(file_path: String).returns(T.untyped) }
-        def load(file_path)
+        sig { params(_file_path: String).returns(T::Array[T.untyped]) }
+        def load(_file_path)
           # FrozenRecord's default is to operate on a single YAML file containing all the records.
           # A custom backend like ours, that uses separate files, must load all of them and return an array.
-          CountryProfile.country_paths.flat_map do |directory_pattern|
+          country_profiles = load_and_merge_fragments(CountryProfile.country_paths)
+          locale_profiles = load_and_merge_fragments(CountryProfile.locale_paths)
+
+          # These hashes are not complete country profiles, but rather fragments that will be merged
+          # onto the default profile template.
+          country_profiles + localize_profiles(country_profiles, locale_profiles)
+        end
+
+        private
+
+        sig { params(path_patterns: T::Array[String]).returns(T::Array[T::Hash[String, T.untyped]]) }
+        def load_and_merge_fragments(path_patterns)
+          path_patterns.flat_map do |directory_pattern|
             Dir[directory_pattern]
-          end.map do |country_profile|
-            super(country_profile)
+          end.map do |profile_path|
+            FrozenRecord::Backends::Yaml.load(profile_path)
           end.group_by do |profile|
             profile["id"]
           end.transform_values do |profile_fragments|
@@ -28,6 +40,31 @@ module AtlasEngine
               memo.deep_merge(fragment)
             end
           end.values
+        end
+
+        sig do
+          params(country_profiles: T::Array[T.untyped], locale_profiles: T::Array[T.untyped])
+            .returns(T::Array[T.untyped])
+        end
+        def localize_profiles(country_profiles, locale_profiles)
+          locale_profiles.map do |locale_profile|
+            base_profile_id = country_id_from_locale_id(locale_profile["id"])
+
+            base_profile = country_profiles.find do |country_profile|
+              country_profile["id"] == base_profile_id
+            end
+
+            (base_profile || {}).deep_merge(locale_profile)
+          end
+        end
+
+        sig { params(locale_id: String).returns(String) }
+        def country_id_from_locale_id(locale_id)
+          unless locale_id.match?(/\A[A-Z]{2}_[A-Z]{2}\z/)
+            raise "Invalid id for localized country profile: #{locale_id}"
+          end
+
+          T.must(locale_id.split("_").first)
         end
       end
     end
@@ -44,6 +81,10 @@ module AtlasEngine
 
     @@country_paths = T.let([
       File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/country_profile.yml")
+    ], T::Array[String])
+
+    @@locale_paths = T.let([
+      File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/locales/*/country_profile.yml")
     ], T::Array[String])
 
     @attributes = T.let([], T::Array[T.untyped])
@@ -72,6 +113,16 @@ module AtlasEngine
         @@country_paths = paths
       end
 
+      sig { returns(T::Array[String]) }
+      def locale_paths
+        @@locale_paths
+      end
+
+      sig { params(paths: T::Array[String]).void }
+      def locale_paths=(paths)
+        @@locale_paths = paths
+      end
+
       sig { params(paths: T.any(String, T::Array[String])).void }
       def add_default_paths(paths)
         T.unsafe(@@default_paths).append(*Array(paths))
@@ -82,11 +133,17 @@ module AtlasEngine
         T.unsafe(@@country_paths).append(*Array(paths))
       end
 
+      sig { params(paths: T.any(String, T::Array[String])).void }
+      def add_locale_paths(paths)
+        T.unsafe(@@locale_paths).append(*Array(paths))
+      end
+
       sig { void }
       def reset!
         unload!
         @@default_paths = []
         @@country_paths = []
+        @@locale_paths = []
         @default_attributes = nil
       end
 
@@ -111,18 +168,28 @@ module AtlasEngine
         end
       end
 
-      sig { params(country_code: String).returns(CountryProfile) }
-      def for(country_code)
+      sig { params(country_code: String, locale: T.nilable(String)).returns(CountryProfile) }
+      def for(country_code, locale = nil)
         raise CountryNotFoundError if country_code.blank?
 
         unless country_code == DEFAULT_PROFILE || Worldwide.region(code: country_code).country?
           raise CountryNotFoundError
         end
 
+        ids = [country_code.upcase]
+        ids.push("#{country_code.upcase}_#{locale.upcase}") if locale.present?
+
+        # if a localized profile is not found, fall back to the
+        # country's profile before falling back to the default profile
         begin
-          self.find(country_code.upcase)
+          id = ids.pop
+          self.find(id)
         rescue FrozenRecord::RecordNotFound
-          self.new(default_attributes.merge("id" => country_code.upcase))
+          if ids.present?
+            retry
+          else
+            self.new(default_attributes.merge("id" => id))
+          end
         end
       end
 

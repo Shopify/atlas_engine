@@ -28,7 +28,7 @@ module AtlasEngine
     end
     def initialize(country_code:, repository_class:, locale: nil, index_configuration: nil)
       @country_code = T.let(country_code.to_s.downcase, String)
-      @country_profile = T.let(CountryProfile.for(@country_code), CountryProfile)
+      @country_profile = T.let(CountryProfile.for(@country_code, locale), CountryProfile)
 
       @repository = T.let(
         repository_class.new(

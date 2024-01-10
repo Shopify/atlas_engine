@@ -39,6 +39,14 @@ module AtlasEngine
     end
 
     test "#initialize requires locale for multi-locale country" do
+      profile_attributes = {
+        "id" => "CH_DE",
+        "validation" => {
+          "index_locales" => ["de", "fr"],
+        },
+      }
+      CountryProfile.expects(:for).with("ch", "de").returns(CountryProfile.new(profile_attributes))
+
       stub_request(:get, %r{http\://.*/test_ch_de/_doc/123})
         .to_return(status: 200, body: document_result.to_json, headers: { "Content-Type" => "application/json" })
 

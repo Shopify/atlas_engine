@@ -52,7 +52,7 @@ module AtlasEngine
       @country_code = T.let(country_code.downcase.to_sym, Symbol)
       @locale = T.let(locale.present? ? locale.downcase : nil, T.nilable(String))
       @country = T.let(Worldwide.region(code: @country_code), Worldwide::Region)
-      @country_profile = T.let(CountryProfile.for(@country_code.to_s.upcase), CountryProfile)
+      @country_profile = T.let(CountryProfile.for(@country_code.to_s.upcase, @locale), CountryProfile)
       @shard_override = T.let(shard_override, T.nilable(Integer))
       @replica_override = T.let(replica_override, T.nilable(Integer))
       @directory = T.let(directory, String)
