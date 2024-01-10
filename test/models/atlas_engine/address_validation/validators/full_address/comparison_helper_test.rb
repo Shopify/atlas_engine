@@ -14,13 +14,13 @@ module AtlasEngine
           include AddressValidationTestHelper
 
           test "#street_comparison compares the session street sequences with the candidate street sequences" do
-            candidate = AddressValidation::Candidate.new(id: "A", source: { "street" => "County Road 34" })
+            candidate = Candidate.new(id: "A", source: { "street" => "County Road 34" })
             address = build_address(address1: "1234 County Road 34", country_code: "US")
-            session = AddressValidation::Session.new(address: address)
-            input_street_sequences = [AtlasEngine::AddressValidation::Token::Sequence.from_string(address.address1)]
-            session.datastore.street_sequences = input_street_sequences
+            datastore = Es::Datastore.new(address: address)
+            input_street_sequences = [Token::Sequence.from_string(address.address1)]
+            datastore.street_sequences = input_street_sequences
 
-            comparison = ComparisonHelper.street_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.street_comparison(datastore: datastore, candidate: candidate)
             candidate_street_sequences = candidate.component(:street).sequences
 
             comparisons = comparison.token_comparisons
@@ -37,13 +37,14 @@ module AtlasEngine
           end
 
           test "#city_comparison compares the analyzed city with the candidate city field" do
-            candidate = AddressValidation::Candidate.new(id: "A", source: { "city" => ["Bronx"] })
+            candidate = Candidate.new(id: "A", source: { "city" => ["Bronx"] })
             address = build_address(city: "The Bronx", country_code: "US")
-            session = AddressValidation::Session.new(address: address)
-            input_city_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string(address.city)
-            session.datastore.city_sequence = input_city_sequence
 
-            comparison = ComparisonHelper.city_comparison(session: session, candidate: candidate)
+            datastore = Es::Datastore.new(address: address)
+            input_city_sequence = Token::Sequence.from_string(address.city)
+            datastore.city_sequence = input_city_sequence
+
+            comparison = ComparisonHelper.city_comparison(datastore: datastore, candidate: candidate)
             candidate_city_sequences = candidate.component(:city).sequences
 
             comparisons = comparison.token_comparisons
@@ -59,16 +60,17 @@ module AtlasEngine
           end
 
           test "#city_comparison compares the analyzed city with the candidate city field that has multiple values" do
-            candidate = AddressValidation::Candidate.new(
+            candidate = Candidate.new(
               id: "A",
               source: { "city" => ["Bronx", "The Bronx", "El Bronxo"] },
             )
             address = build_address(city: "El Bronxo", country_code: "US")
-            session = AddressValidation::Session.new(address: address)
-            input_city_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string(address.city)
-            session.datastore.city_sequence = input_city_sequence
+            datastore = Es::Datastore.new(address: address)
 
-            comparison = ComparisonHelper.city_comparison(session: session, candidate: candidate)
+            input_city_sequence = Token::Sequence.from_string(address.city)
+            datastore.city_sequence = input_city_sequence
+
+            comparison = ComparisonHelper.city_comparison(datastore: datastore, candidate: candidate)
             candidate_city_sequences = candidate.component(:city).sequences
 
             comparisons = comparison.token_comparisons
@@ -84,18 +86,16 @@ module AtlasEngine
           end
 
           test "#province_code_comparison compares the session province with the candidate province field" do
-            candidate = AddressValidation::Candidate.new(
+            candidate = Candidate.new(
               id: "A",
               source: { "country_code" => "US", "province_code" => "TX" },
             )
             address = build_address(province_code: "US-TX", country_code: "US")
-            stubbed_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string("US-TX")
-
-            session = AddressValidation::Session.new(address: address)
-
-            comparison = ComparisonHelper.province_code_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.province_code_comparison(address: address, candidate: candidate)
 
             assert_empty comparison.unmatched_tokens
+
+            stubbed_sequence = Token::Sequence.from_string("US-TX")
             assert_equal stubbed_sequence, comparison.left_sequence
             assert_equal stubbed_sequence, comparison.right_sequence
           end
@@ -106,22 +106,21 @@ module AtlasEngine
               source: { "country_code" => "US", "province_code" => "PR" },
             )
             address = build_address(province_code: "US-PR", country_code: "US")
-            session = AddressValidation::Session.new(address: address)
 
-            expected_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string("PR")
-            comparison = ComparisonHelper.province_code_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.province_code_comparison(address: address, candidate: candidate)
 
             assert_empty comparison.unmatched_tokens
+
+            expected_sequence = Token::Sequence.from_string("PR")
             assert_equal expected_sequence, comparison.left_sequence
             assert_equal expected_sequence, comparison.right_sequence
           end
 
           test "#zip_comparison compares the session zip with the candidate zip field" do
-            candidate = AddressValidation::Candidate.new(id: "A", source: { "zip" => "J9A 2V2" })
+            candidate = Candidate.new(id: "A", source: { "zip" => "J9A 2V2" })
             address = build_address(country_code: "CA", zip: "j9a2v2")
-            session = AddressValidation::Session.new(address: address)
 
-            comparison = ComparisonHelper.zip_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.zip_comparison(address: address, candidate: candidate)
             candidate_zip_sequences = candidate.component(:zip).sequences
 
             assert_predicate comparison, :match?
@@ -131,11 +130,10 @@ module AtlasEngine
           end
 
           test "#zip_comparison compares the session zip with a truncated candidate zip field when applicable" do
-            candidate = AddressValidation::Candidate.new(id: "A", source: { "zip" => "S2919 BNA" })
+            candidate = Candidate.new(id: "A", source: { "zip" => "S2919 BNA" })
             address = build_address(country_code: "AR", zip: "S2919")
-            session = AddressValidation::Session.new(address: address)
 
-            comparison = ComparisonHelper.zip_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.zip_comparison(address: address, candidate: candidate)
 
             candidate.component(:zip).value = "S2919"
             expected_candidate_zip_sequences = candidate.component(:zip).sequences
@@ -147,24 +145,23 @@ module AtlasEngine
           end
 
           test "#building_comparison compares the session building number with the candidate building number ranges" do
-            candidate = AddressValidation::Candidate.new(
+            candidate = Candidate.new(
               id: "A",
               source: { "building_and_unit_ranges" => "{\"(0..99)/1\": {}}" },
             )
             address = build_address(country_code: "CA", address1: "1 Main St")
-            session = AddressValidation::Session.new(address: address)
+            datastore = Es::Datastore.new(address: address)
 
-            comparison = ComparisonHelper.building_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.building_comparison(datastore: datastore, candidate: candidate)
 
             assert comparison.match?
           end
 
           test "returns nil comparison for candidate when there is no field value to compare" do
-            candidate = AddressValidation::Candidate.new(id: "A", source: { "zip" => nil })
+            candidate = Candidate.new(id: "A", source: { "zip" => nil })
             address = build_address(country_code: "CA", zip: "j9a2v2")
-            session = AddressValidation::Session.new(address: address)
 
-            comparison = ComparisonHelper.zip_comparison(session: session, candidate: candidate)
+            comparison = ComparisonHelper.zip_comparison(address: address, candidate: candidate)
             candidate_zip_sequences = candidate.component(:zip).sequences
 
             assert_nil comparison

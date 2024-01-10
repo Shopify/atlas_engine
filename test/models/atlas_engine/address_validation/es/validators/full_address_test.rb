@@ -86,23 +86,6 @@ module AtlasEngine
             assert_equal :missing_building_number, result.concerns.first.code
           end
 
-          test "asynchronously fetches city and street sequences" do
-            @session.datastore.candidates = [candidate] # candidate is a perfect match.
-
-            result = AddressValidation::Result.new
-            @session.datastore.expects(:fetch_street_sequences_async)
-              .returns(Concurrent::Promises.fulfilled_future([]))
-            @session.datastore.expects(:fetch_city_sequence_async)
-              .returns(
-                Concurrent::Promises.fulfilled_future(AtlasEngine::AddressValidation::Token::Sequence.from_string("")),
-              )
-
-            full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
-            full_address.validate
-            assert_empty(result.concerns)
-          end
-
           test "does not query es if validation restrictions apply" do
             @address = address(
               country_code: "GG",
@@ -170,34 +153,6 @@ module AtlasEngine
             assert_equal 1, result.concerns.size
             assert_equal :zip_invalid_for_province, result.concerns.first.code
             assert_equal "94102", result.suggestions.first.attributes[:zip]
-          end
-
-          test "tracks the initial position of the top candidate when candidates are defined" do
-            @session.datastore.candidates = [
-              candidate(city: "San Fransauceco"), # close
-              candidate(city: "Man Francisco"), # best match, off by one letter on one field
-              candidate(city: "Saint Fransauceco"),
-            ]
-
-            result = AddressValidation::Result.new
-
-            assert_statsd_distribution("AddressValidation.query.initial_position_top_candidate", 2) do
-              full_address = @klass.new(address: @address, result: result)
-              full_address.session = @session
-              full_address.validate
-            end
-          end
-
-          test "tracks an initial position of 0 when there are no candidates" do
-            @session.datastore.candidates = []
-
-            result = AddressValidation::Result.new
-
-            assert_statsd_distribution("AddressValidation.query.initial_position_top_candidate", 0) do
-              full_address = @klass.new(address: @address, result: result)
-              full_address.session = @session
-              full_address.validate
-            end
           end
 
           test "atlas-engine.address_validation.validation_completed notifications event fires for nil best_candidate" do

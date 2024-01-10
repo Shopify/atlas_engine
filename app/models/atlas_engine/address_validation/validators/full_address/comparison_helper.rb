@@ -11,12 +11,12 @@ module AtlasEngine
 
             sig do
               params(
-                session: Session,
+                datastore: DatastoreBase,
                 candidate: Candidate,
-              ).returns(T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison))
+              ).returns(T.nilable(Token::Sequence::Comparison))
             end
-            def street_comparison(session:, candidate:)
-              street_sequences = session.datastore.fetch_street_sequences
+            def street_comparison(datastore:, candidate:)
+              street_sequences = datastore.fetch_street_sequences
               candidate_sequences = T.must(candidate.component(:street)).sequences
 
               street_sequences.map do |street_sequence|
@@ -29,27 +29,27 @@ module AtlasEngine
 
             sig do
               params(
-                session: Session,
+                datastore: DatastoreBase,
                 candidate: Candidate,
-              ).returns(T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison))
+              ).returns(T.nilable(Token::Sequence::Comparison))
             end
-            def city_comparison(session:, candidate:)
+            def city_comparison(datastore:, candidate:)
               best_comparison(
-                session.datastore.fetch_city_sequence,
+                datastore.fetch_city_sequence,
                 T.must(candidate.component(:city)).sequences,
               )
             end
 
             sig do
               params(
-                session: Session,
+                address: AbstractAddress,
                 candidate: Candidate,
-              ).returns(T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison))
+              ).returns(T.nilable(Token::Sequence::Comparison))
             end
-            def province_code_comparison(session:, candidate:)
+            def province_code_comparison(address:, candidate:)
               normalized_session_province_code = ValidationTranscriber::ProvinceCodeNormalizer.normalize(
-                country_code: session.country_code,
-                province_code: session.province_code,
+                country_code: address.country_code,
+                province_code: address.province_code,
               )
               normalized_candidate_province_code = ValidationTranscriber::ProvinceCodeNormalizer.normalize(
                 country_code: T.must(candidate.component(:country_code)).value,
@@ -57,28 +57,28 @@ module AtlasEngine
               )
 
               best_comparison(
-                AtlasEngine::AddressValidation::Token::Sequence.from_string(normalized_session_province_code),
-                [AtlasEngine::AddressValidation::Token::Sequence.from_string(normalized_candidate_province_code)],
+                Token::Sequence.from_string(normalized_session_province_code),
+                [Token::Sequence.from_string(normalized_candidate_province_code)],
               )
             end
 
             sig do
               params(
-                session: Session,
+                address: AbstractAddress,
                 candidate: Candidate,
-              ).returns(T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison))
+              ).returns(T.nilable(Token::Sequence::Comparison))
             end
-            def zip_comparison(session:, candidate:)
+            def zip_comparison(address:, candidate:)
               candidate.component(:zip)&.value = PostalCodeMatcher.new(
-                session.country_code,
-                session.zip,
+                T.must(address.country_code),
+                T.must(address.zip),
                 candidate.component(:zip)&.value,
               ).truncate
 
               normalized_zip = ValidationTranscriber::ZipNormalizer.normalize(
-                country_code: session.country_code, zip: session.zip,
+                country_code: address.country_code, zip: address.zip,
               )
-              zip_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string(normalized_zip)
+              zip_sequence = Token::Sequence.from_string(normalized_zip)
               best_comparison(
                 zip_sequence,
                 T.must(candidate.component(:zip)).sequences,
@@ -87,13 +87,13 @@ module AtlasEngine
 
             sig do
               params(
-                session: Session,
+                datastore: DatastoreBase,
                 candidate: Candidate,
               ).returns(NumberComparison)
             end
-            def building_comparison(session:, candidate:)
+            def building_comparison(datastore:, candidate:)
               NumberComparison.new(
-                numbers: session.parsings.potential_building_numbers,
+                numbers: datastore.parsings.potential_building_numbers,
                 candidate_ranges: building_ranges_from_candidate(candidate),
               )
             end
@@ -102,13 +102,13 @@ module AtlasEngine
 
             sig do
               params(
-                sequence: AtlasEngine::AddressValidation::Token::Sequence,
-                component_sequences: T::Array[AtlasEngine::AddressValidation::Token::Sequence],
-              ).returns(T.nilable(AtlasEngine::AddressValidation::Token::Sequence::Comparison))
+                sequence: Token::Sequence,
+                component_sequences: T::Array[Token::Sequence],
+              ).returns(T.nilable(Token::Sequence::Comparison))
             end
             def best_comparison(sequence, component_sequences)
               component_sequences.map do |component_sequence|
-                AtlasEngine::AddressValidation::Token::Sequence::Comparator.new(
+                Token::Sequence::Comparator.new(
                   left_sequence: sequence,
                   right_sequence: component_sequence,
                 ).compare
