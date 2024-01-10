@@ -27,6 +27,20 @@ module AtlasEngine
           assert query_builder.is_a?(Gb::AddressValidation::Es::QueryBuilder)
         end
 
+        test ".for returns a query builder if locale is provided for a multi-locale country" do
+          profile_attributes = {
+            "id" => "CH_DE",
+            "validation" => {
+              "index_locales" => ["de", "fr"],
+              "query_builder" => "AtlasEngine::AddressValidation::Es::DefaultQueryBuilder",
+            },
+          }
+          CountryProfile.expects(:for).with("CH", "de").returns(CountryProfile.new(profile_attributes)).at_least_once
+
+          query_builder = QueryBuilder.for(ch_address, "de")
+          assert_instance_of(Es::DefaultQueryBuilder, query_builder)
+        end
+
         private
 
         def us_address
@@ -56,6 +70,15 @@ module AtlasEngine
             province_code: nil,
             country_code: "GB",
             zip: "SW1P 4BY",
+          )
+        end
+
+        def ch_address
+          build_address(
+            address1: "2 Florastrasse",
+            city: "Uster",
+            country_code: "CH",
+            zip: "8610",
           )
         end
       end

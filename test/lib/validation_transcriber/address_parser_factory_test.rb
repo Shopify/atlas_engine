@@ -31,14 +31,14 @@ module AtlasEngine
 
       test "returns address parser if locale is provided for a multi-locale country" do
         profile_attributes = {
-          "id" => "CH",
+          "id" => "CH_DE",
           "validation" => {
             "key" => "some_value",
             "index_locales" => ["de", "fr"],
             "address_parser" => "AtlasEngine::ValidationTranscriber::AddressParserBase",
           },
         }
-        CountryProfile.any_instance.stubs(:attributes).returns(profile_attributes)
+        CountryProfile.expects(:for).with("CH", "de").returns(CountryProfile.new(profile_attributes))
 
         parser = AddressParserFactory.create(address: AddressValidation::Address.new(country_code: "CH"), locale: "de")
         assert_instance_of(AddressParserBase, parser)
