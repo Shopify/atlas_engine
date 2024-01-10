@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require "minitest/autorun"
 require "models/atlas_engine/address_validation/address_validation_test_helper"
 
 module AtlasEngine

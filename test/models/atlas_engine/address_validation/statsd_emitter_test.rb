@@ -3,7 +3,6 @@
 
 require "test_helper"
 require_relative "address_validation_test_helper"
-require "minitest/autorun"
 
 module AtlasEngine
   module AddressValidation
