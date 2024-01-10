@@ -18,6 +18,11 @@ module AtlasEngine
       attributes.dig("index_locales") || []
     end
 
+    sig { returns(T::Boolean) }
+    def multi_locale?
+      index_locales.size > 1
+    end
+
     sig do
       params(component: String)
         .returns(T::Array[T.class_of(AddressValidation::Validators::FullAddress::Exclusions::ExclusionBase)])

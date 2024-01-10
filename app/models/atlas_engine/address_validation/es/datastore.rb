@@ -23,7 +23,7 @@ module AtlasEngine
           @country_code = T.must(address.country_code.to_s)
           @profile = CountryProfile.for(country_code.to_s.upcase)
 
-          if locale.nil? && @profile.validation.index_locales.present?
+          if locale.nil? && @profile.validation.multi_locale?
             raise ArgumentError, "#{country_code} is a multi-locale country and requires a locale"
           end
 

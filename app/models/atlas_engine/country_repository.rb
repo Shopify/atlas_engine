@@ -65,7 +65,7 @@ module AtlasEngine
 
     sig { params(country_code: T.any(String, Symbol), locale: T.nilable(String)).returns(String) }
     def index_name(country_code:, locale: nil)
-      if country_profile.validation.index_locales.present?
+      if country_profile.validation.multi_locale?
         if country_profile.validation.index_locales.include?(locale)
           "#{country_code}_#{locale}"
         else
