@@ -134,7 +134,12 @@ module AtlasEngine
     def synonyms
       @synonyms ||= T.let(
         begin
-          file_name = "#{COUNTRIES_ROOT}/#{country_code}/synonyms.yml"
+          file_name = if locale.present?
+            "#{COUNTRIES_ROOT}/#{country_code}/locales/#{locale}/synonyms.yml"
+          else
+            "#{COUNTRIES_ROOT}/#{country_code}/synonyms.yml"
+          end
+
           empty_synonyms_hash = { street_synonyms: [], city_synonyms: [] }
 
           File.file?(file_name) ? YAML.load_file(file_name, freeze: true).deep_symbolize_keys : empty_synonyms_hash
