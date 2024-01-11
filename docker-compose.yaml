@@ -7,9 +7,6 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: "db"
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
     mem_limit: ${MYSQL_MEM_LIMIT}
     ports:
       - ${MYSQL_PORT}:3306
