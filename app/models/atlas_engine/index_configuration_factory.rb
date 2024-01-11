@@ -30,24 +30,19 @@ module AtlasEngine
     sig { returns(T.nilable(Integer)) }
     attr_reader :replica_override
 
-    sig { returns(String) }
-    attr_reader :directory
-
     sig do
       params(
         country_code: String,
         locale: T.nilable(String),
         shard_override: T.nilable(Integer),
         replica_override: T.nilable(Integer),
-        directory: String,
       ).void
     end
     def initialize(
       country_code:,
       locale: nil,
       shard_override: nil,
-      replica_override: nil,
-      directory: INDEX_CONFIGURATIONS_ROOT
+      replica_override: nil
     )
       @country_code = T.let(country_code.downcase.to_sym, Symbol)
       @locale = T.let(locale.present? ? locale.downcase : nil, T.nilable(String))
@@ -55,7 +50,6 @@ module AtlasEngine
       @country_profile = T.let(CountryProfile.for(@country_code.to_s.upcase, @locale), CountryProfile)
       @shard_override = T.let(shard_override, T.nilable(Integer))
       @replica_override = T.let(replica_override, T.nilable(Integer))
-      @directory = T.let(directory, String)
     end
 
     sig do
@@ -107,14 +101,17 @@ module AtlasEngine
 
     sig { params(country_code: Symbol, locale: T.nilable(String)).returns(T.nilable(String)) }
     def file_path(country_code, locale = nil)
-      country_root_file = File.join(COUNTRIES_ROOT, "#{country_code}/index_configuration.yml")
-      return country_root_file if File.file?(country_root_file)
-
-      file_name = locale.present? ? "#{country_code}_#{locale}.yml" : "#{country_code}.yml"
-      index_config_root_file = File.join(@directory, file_name)
-      if File.file?(index_config_root_file)
-        index_config_root_file
+      if country_code == :default
+        return File.join(INDEX_CONFIGURATIONS_ROOT, "default.yml")
       end
+
+      path = if locale.present?
+        File.join(COUNTRIES_ROOT, "#{country_code}/locales/#{locale}/index_configuration.yml")
+      else
+        File.join(COUNTRIES_ROOT, "#{country_code}/index_configuration.yml")
+      end
+
+      path if File.file?(path)
     end
 
     sig { void }
