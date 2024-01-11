@@ -38,6 +38,19 @@ module AtlasEngine
           assert_equal "Man Francisco", best_candidate.candidate.component(:city).value
         end
 
+
+        test "asynchronously determines the candidate having the best merged comparison compared to the address" do
+          @datastore.candidates = [
+            candidate(city: "San Fransauceco"), # close
+            candidate(city: "Man Francisco"), # best match, off by one letter on one field
+            candidate(city: "Saint Fransauceco"),
+          ]
+
+          best_candidate = CandidateSelector.new(datastore: @datastore, address: @address).best_candidate_async.value!
+
+          assert_equal "Man Francisco", best_candidate.candidate.component(:city).value
+        end
+
         test "asynchronously fetches city and street sequences" do
           @datastore.candidates = [candidate] # candidate is a perfect match.
           @datastore.expects(:fetch_street_sequences_async)

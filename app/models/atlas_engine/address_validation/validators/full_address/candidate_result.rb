@@ -23,7 +23,7 @@ module AtlasEngine
             @address_comparison = candidate.address_comparison
           end
 
-          sig { void }
+          sig { override.void }
           def update_result
             result.candidate = candidate&.serialize
             return if unmatched_components.empty?

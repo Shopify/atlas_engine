@@ -14,6 +14,13 @@ module AtlasEngine
           @address = T.let(address, AbstractAddress)
         end
 
+        sig { returns(Concurrent::Promises::Future) }
+        def best_candidate_async
+          Concurrent::Promises.future do
+            best_candidate
+          end
+        end
+
         sig { returns(T.nilable(CandidateTuple)) }
         def best_candidate
           street_sequences_future = datastore.fetch_street_sequences_async

@@ -17,9 +17,9 @@ module AtlasEngine
             @address = address
             @session = AddressValidation::Session.new(address: @address)
             # prime session cache to avoid calls to the DB in Datastore
-            @session.datastore.city_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string(@address.city)
+            @session.datastore.city_sequence = Token::Sequence.from_string(@address.city)
             @session.datastore.street_sequences = [
-              AtlasEngine::AddressValidation::Token::Sequence.from_string(@address.address1),
+              Token::Sequence.from_string(@address.address1),
             ]
           end
 
@@ -134,13 +134,88 @@ module AtlasEngine
             assert_equal "Man Francisco", result.suggestions.first.attributes[:city]
           end
 
+          test "picks the best candidate for a multi-locale country" do
+            @address = address(country_code: "CH", city: "Brn")
+            ch_session = AddressValidation::Session.new(address: @address)
+
+            ch_session.datastore(locale: "de").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "de").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+            ch_session.datastore(locale: "fr").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "fr").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+            ch_session.datastore(locale: "it").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "it").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+
+            ch_session.datastore(locale: "fr").candidates = [
+              candidate(city: "Zurich"),
+              candidate(city: "Ouster"),
+              candidate(city: "Berne"), # best match for french, off by 2
+            ]
+            ch_session.datastore(locale: "it").candidates = [
+              candidate(city: "Zurigo"),
+              candidate(city: "Austero"),
+              candidate(city: "Berna"), # best match for italian, off by 2
+            ]
+            ch_session.datastore(locale: "de").candidates = [
+              candidate(city: "Zurich"),
+              candidate(city: "Uster"),
+              candidate(city: "Bern"), # best overall match, off by 1
+            ]
+
+            result = AddressValidation::Result.new
+            ActiveSupport::Notifications.expects(:instrument)
+
+            full_address = @klass.new(address: @address, result: result)
+            full_address.session = ch_session
+            full_address.validate
+
+            assert_equal 1, result.concerns.size
+            assert_equal :city_inconsistent, result.concerns.first.code
+            assert_equal "Bern", result.suggestions.first.attributes[:city]
+          end
+
+          test "handles empty candidates during multi-locale best candidate selection" do
+            @address = address(country_code: "CH", city: "Brn")
+            ch_session = AddressValidation::Session.new(address: @address)
+
+            ch_session.datastore(locale: "de").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "de").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+            ch_session.datastore(locale: "fr").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "fr").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+            ch_session.datastore(locale: "it").city_sequence = Token::Sequence.from_string(@address.city)
+            ch_session.datastore(locale: "it").street_sequences = [Token::Sequence.from_string(@address.address1)]
+
+            ch_session.datastore(locale: "fr").candidates = [
+              candidate(city: "Berne"), # best match for french, off by 2
+            ]
+            ch_session.datastore(locale: "it").candidates = [
+              candidate(city: "Berna"), # best match for italian, off by 2
+            ]
+            ch_session.datastore(locale: "de").candidates = [] # no candidates for german
+
+            result = AddressValidation::Result.new
+            ActiveSupport::Notifications.expects(:instrument)
+
+            full_address = @klass.new(address: @address, result: result)
+            full_address.session = ch_session
+            full_address.validate
+
+            assert_equal 1, result.concerns.size
+            assert_equal :city_inconsistent, result.concerns.first.code
+            assert_equal "Berne", result.suggestions.first.attributes[:city]
+          end
+
           test "returns invalid_zip_and_province if province is valid and zip prefix is incompatible" do
             @address = address(zip: "84102") # invalid for California
             @session = AddressValidation::Session.new(address: @address)
 
-            @session.datastore.city_sequence = AtlasEngine::AddressValidation::Token::Sequence.from_string(@address.city)
+            @session.datastore.city_sequence = Token::Sequence.from_string(@address.city)
             @session.datastore.street_sequences = [
-              AtlasEngine::AddressValidation::Token::Sequence.from_string(@address.address1),
+              Token::Sequence.from_string(@address.address1),
             ]
             @session.datastore.candidates = [candidate(zip: "94102")]
 
