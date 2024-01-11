@@ -1,0 +1,15 @@
+id: CH_DE
+ingestion:
+  data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DecompoundingDataMapper
+validation:
+  address_parser: AtlasEngine::De::ValidationTranscriber::AddressParser
+  normalized_components:
+  - region2
+  - region3
+  - region4
+  - city_aliases.alias
+  - suburb
+  - street_decompounded
+decompounding_patterns:
+  street:
+  - (?<name>\w+)(?<suffix>allee|gasse|kai|lande|pfad|platz|pl|ring|strasse|str|weg|zeile)(?:\b)

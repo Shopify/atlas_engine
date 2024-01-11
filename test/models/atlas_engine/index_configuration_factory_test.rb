@@ -35,9 +35,9 @@ module AtlasEngine
       assert_not configurations.dig("settings", "index").key?("number_of_replicas")
     end
 
-    test "index_configuration correctly returns data for country with a custom index config file" do
+    test "index_configuration correctly returns data for a country with a custom index config file" do
       factory = IndexConfigurationFactory.new(
-        country_code: "DE",
+        country_code: "AT",
       )
 
       actual_config = factory.index_configuration
@@ -47,9 +47,10 @@ module AtlasEngine
       ).include?("german_normalization")
     end
 
-    test "index_configuration correctly returns data for country with a custom index config file in a country module" do
+    test "index_configuration correctly returns data for a country and locale with a custom index config file" do
       factory = IndexConfigurationFactory.new(
-        country_code: "AT",
+        country_code: "CH",
+        locale: "de",
       )
 
       actual_config = factory.index_configuration
@@ -155,102 +156,6 @@ module AtlasEngine
 
       assert_equal "3", configurations.dig("settings", "index", "number_of_shards")
       assert_equal "4", configurations.dig("settings", "index", "number_of_replicas")
-    end
-
-    test "use country locale configuration when locale config is defined and locale is provided" do
-      with_temp_config_dir do |dir|
-        write_temp_config_file(
-          dir: dir,
-          handle: "ca",
-          yaml_content: YAML.dump(
-            {
-              "settings" => {
-                "some_custom_setting" => "yes no toaster",
-                "country_setting" => "hi",
-              },
-            },
-          ),
-        )
-
-        write_temp_config_file(
-          dir: dir,
-          handle: "ca_fr",
-          yaml_content: YAML.dump(
-            {
-              "settings" => {
-                "some_custom_setting" => "oui non grille-pain",
-                "locale_setting" => "bonjour",
-              },
-            },
-          ),
-        )
-
-        factory = IndexConfigurationFactory.new(
-          country_code: "CA",
-          locale: "fr",
-          directory: dir,
-        )
-
-        actual_config = factory.index_configuration
-
-        assert_equal "oui non grille-pain", actual_config.dig("settings", "some_custom_setting")
-        assert_equal "hi", actual_config.dig("settings", "country_setting")
-        assert_equal "bonjour", actual_config.dig("settings", "locale_setting")
-      end
-    end
-
-    test "default to country locale when locale config is defined but the locale is not provided" do
-      with_temp_config_dir do |dir|
-        write_temp_config_file(
-          dir: dir,
-          handle: "ca",
-          yaml_content: YAML.dump(
-            {
-              "settings" => {
-                "some_custom_setting" => "yes no toaster",
-                "country_setting" => "hi",
-              },
-            },
-          ),
-        )
-
-        write_temp_config_file(
-          dir: dir,
-          handle: "ca_fr",
-          yaml_content: YAML.dump(
-            {
-              "settings" => {
-                "some_custom_setting" => "oui non grille-pain",
-                "locale_setting" => "bonjour",
-              },
-            },
-          ),
-        )
-
-        factory = IndexConfigurationFactory.new(
-          country_code: "CA",
-          directory: dir,
-        )
-
-        actual_config = factory.index_configuration
-
-        assert_equal "yes no toaster", actual_config.dig("settings", "some_custom_setting")
-        assert_equal "hi", actual_config.dig("settings", "country_setting")
-        assert_nil actual_config.dig("settings", "locale_setting")
-      end
-    end
-
-    test "default to country locale when locale config is not defined but the locale is provided" do
-      factory = IndexConfigurationFactory.new(
-        country_code: "DE",
-        locale: "fr",
-      )
-
-      actual_config = factory.index_configuration
-
-      assert actual_config.dig(
-        "settings", "index", "analysis", "analyzer", "text_analyzer", "filter"
-      ).include?("german_normalization")
     end
 
     test "includes city_synonyms in city_filter when countries/<cc>/synonyms.yml file is present" do
