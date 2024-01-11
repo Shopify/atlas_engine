@@ -178,6 +178,28 @@ module AtlasEngine
         "township, twp"
     end
 
+    test "includes city_synonyms in city_filter when countries/<cc>/locales/<locale>/synonyms.yml file is present and locale is provided" do
+      config = IndexConfigurationFactory.new(
+        country_code: "CH",
+        locale: "fr",
+      ).index_configuration(creating: true)
+
+      assert AtlasEngine::Engine.root.join("app/countries/atlas_engine/ch/locales/fr/synonyms.yml").exist?
+      assert_includes config.dig("settings", "index", "analysis", "analyzer", "city_analyzer", "filter"),
+        "city_synonyms"
+    end
+
+    test "adds a city_synonyms filter with values from countries/<cc>/locales/<locale>/synonyms.yml when present and locale is provided" do
+      config = IndexConfigurationFactory.new(
+        country_code: "CH",
+        locale: "de",
+      ).index_configuration(creating: true)
+
+      assert AtlasEngine::Engine.root.join("app/countries/atlas_engine/ch/locales/de/synonyms.yml").exist?
+      assert_includes config.dig("settings", "index", "analysis", "filter", "city_synonyms", "synonyms"),
+        "sankt, st"
+    end
+
     test "includes street_synonyms in street_filter when countries/<cc>/synonyms.yml file is present" do
       config = IndexConfigurationFactory.new(
         country_code: "US",
@@ -196,6 +218,28 @@ module AtlasEngine
       assert AtlasEngine::Engine.root.join("app/countries/atlas_engine/us/synonyms.yml").exist?
       assert_includes config.dig("settings", "index", "analysis", "filter", "street_synonyms", "synonyms"),
         "first, 1st"
+    end
+
+    test "includes street_synonyms in street_filter when countries/<cc>/locales/<locale>/synonyms.yml file is present and locale is provided" do
+      config = IndexConfigurationFactory.new(
+        country_code: "CH",
+        locale: "fr",
+      ).index_configuration(creating: true)
+
+      assert AtlasEngine::Engine.root.join("app/countries/atlas_engine/ch/locales/fr/synonyms.yml").exist?
+      assert_includes config.dig("settings", "index", "analysis", "analyzer", "street_analyzer", "filter"),
+        "street_synonyms"
+    end
+
+    test "adds a street_synonyms filter with values from countries/<cc>/locales/<locale>/synonyms.yml when present and locale is provided" do
+      config = IndexConfigurationFactory.new(
+        country_code: "CH",
+        locale: "de",
+      ).index_configuration(creating: true)
+
+      assert AtlasEngine::Engine.root.join("app/countries/atlas_engine/ch/locales/de/synonyms.yml").exist?
+      assert_includes config.dig("settings", "index", "analysis", "filter", "street_synonyms", "synonyms"),
+        "strasse, str"
     end
   end
 end

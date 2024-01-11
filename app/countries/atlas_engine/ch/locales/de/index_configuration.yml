@@ -38,18 +38,21 @@ settings:
           - icu_folding
           - strip_special_characters
           - street_suffix_decompounder
+          - street_synonyms
         street_analyzer:
           filter:
           - lowercase
           - german_normalization
           - icu_folding
           - strip_special_characters
+          - street_synonyms
         city_analyzer:
           filter:
           - lowercase
           - german_normalization
           - icu_folding
           - strip_special_characters
+          - city_synonyms
       filter:
         street_suffix_decompounder:
           type: pattern_capture
