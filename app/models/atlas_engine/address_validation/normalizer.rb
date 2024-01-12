@@ -18,6 +18,15 @@ module AtlasEngine
           .gsub("æ", "ae")
           .gsub("œ", "oe")
           .gsub("  ", " ")
+          # normalizes Arabic characters
+          .gsub("آ", "ا")
+          .gsub("أ", "ا")
+          .gsub("إ", "ا")
+          .gsub("ئ", "ي")
+          .gsub("ة", "ه")
+          .gsub("ى","ي" )
+          # removes Arabic stretching characters and diacritics
+          .gsub(/[\u064B|\u064C|\u064D|\u064E|\u064F|\u0650|\u0651|\u0652|\u0640]/, "")
           # TODO: Strip hyphens for USPS not zip
           .gsub(/[!@%&"'*,.();:]/, "")
           .downcase

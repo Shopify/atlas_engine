@@ -10,7 +10,7 @@ module AtlasEngine
         class << self
           extend T::Sig
           include Normalizer
-          ACCEPTABLE_CHARACTERS = /\w+|\p{hangul}+/
+          ACCEPTABLE_CHARACTERS = /\p{Alnum}/
 
           sig { params(string: T.nilable(String)).returns(Sequence) }
           def from_string(string)
