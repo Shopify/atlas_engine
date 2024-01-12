@@ -14,7 +14,7 @@ module AtlasEngine
         arabic_city_strings = {
           "الطائف" => "الطايف",
           "قرية" => "قريه",
-          "رحــــــيم" => "رحيم"
+          "رحــــــيم" => "رحيم",
         }
 
         arabic_city_strings.each do |city_string, expected_normalized_string|
