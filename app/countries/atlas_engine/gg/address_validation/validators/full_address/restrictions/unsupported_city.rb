@@ -18,10 +18,12 @@ module AtlasEngine
                 include AtlasEngine::Restrictions::Base
 
                 sig do
-                  override(allow_incompatible: true).params(address: AtlasEngine::AddressValidation::AbstractAddress)
-                    .returns(T::Boolean)
+                  override.params(
+                    address: AtlasEngine::AddressValidation::AbstractAddress,
+                    params: T.untyped,
+                  ).returns(T::Boolean)
                 end
-                def apply?(address:)
+                def apply?(address:, params: nil)
                   zip_prefix = UNSUPPORTED_CITY_ZIP_MAPPING[address.city&.upcase]
                   return false if zip_prefix.nil?
 

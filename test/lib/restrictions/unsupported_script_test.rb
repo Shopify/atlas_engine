@@ -16,7 +16,7 @@ module AtlasEngine
         ]
 
         addresses.each do |address|
-          assert UnsupportedScript.apply?(address: address, supported_script: :Latn)
+          assert UnsupportedScript.apply?(address: address, params: { supported_script: :Latn })
         end
       end
 
@@ -27,13 +27,18 @@ module AtlasEngine
         ]
 
         addresses.each do |address|
-          assert_not UnsupportedScript.apply?(address: address, supported_script: :Latn)
+          assert_not UnsupportedScript.apply?(address: address, params: { supported_script: :Latn })
         end
       end
 
       test "#apply? returns false is no script is detected in the address" do
         empty_address = build_address(address1: "", city: "")
-        assert_not UnsupportedScript.apply?(address: empty_address, supported_script: :Latn)
+        assert_not UnsupportedScript.apply?(address: empty_address, params: { supported_script: :Latn })
+      end
+
+      test "#apply? returns false if supported script is not passed in" do
+        empty_address = build_address(address1: "", city: "")
+        assert_not UnsupportedScript.apply?(address: empty_address)
       end
     end
   end

@@ -9,12 +9,15 @@ module AtlasEngine
         include Base
 
         sig do
-          override(allow_incompatible: true).params(
+          override.params(
             address: AtlasEngine::AddressValidation::AbstractAddress,
-            supported_script: Symbol,
+            params: T.untyped,
           ).returns(T::Boolean)
         end
-        def apply?(address:, supported_script:)
+        def apply?(address:, params: {})
+          supported_script = params[:supported_script]
+          return false if supported_script.nil?
+
           scripts = Worldwide.scripts.identify(
             text: address.address1.to_s + " " + address.address2.to_s + " " + address.city.to_s,
           )

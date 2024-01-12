@@ -8,8 +8,13 @@ module AtlasEngine
       extend T::Helpers
       interface!
 
-      sig { abstract.params(address: AtlasEngine::AddressValidation::AbstractAddress).void }
-      def apply?(address:); end
+      sig do
+        abstract.params(
+          address: AtlasEngine::AddressValidation::AbstractAddress,
+          params: T.untyped,
+        ).returns(T::Boolean)
+      end
+      def apply?(address:, params: nil); end
     end
   end
 end

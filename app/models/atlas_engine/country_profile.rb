@@ -75,6 +75,7 @@ module AtlasEngine
     self.base_path = ""
     self.backend = Backend
 
+    # rubocop:disable Style/ClassVars
     @@default_paths = T.let(
       [
         File.join(AtlasEngine::Engine.root, "db/data/country_profiles/default.yml"),
@@ -155,6 +156,7 @@ module AtlasEngine
         @@locale_paths = []
         @default_attributes = nil
       end
+      # rubocop:enable Style/ClassVars
 
       # Overriding (load_records) from FrozenRecord::Base
       # so that we only create attribute methods that are not already defined
