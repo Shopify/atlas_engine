@@ -46,11 +46,5 @@ module AtlasEngine
       attributes.dig("address_parser").constantize
       # rubocop:enable Sorbet/ConstantsFromStrings
     end
-
-    # PENDING: Move this to Atlas Private (not required in Engine)
-    # sig { returns(T::Hash[Symbol, T::Class[AddressLookup::Base]]) }
-    def carrier_address_lookups
-      attributes.dig("admin", "carrier_address_lookups").transform_values(&:constantize)
-    end
   end
 end
