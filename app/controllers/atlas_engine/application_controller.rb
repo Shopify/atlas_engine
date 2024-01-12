@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 module AtlasEngine
-  # rubocop:disable Sorbet/ConstantsFromStrings
-  class ApplicationController < AtlasEngine.parent_controller.constantize
-    # T.unsafe(self).include(AtlasEngine.parent_controller.constantize)
+  class ApplicationController < ActionController::Base
   end
-  # rubocop:enable Sorbet/ConstantsFromStrings
 end
