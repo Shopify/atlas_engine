@@ -114,9 +114,7 @@ module AtlasEngine
 
           sig { params(address: TAddress).returns(T::Boolean) }
           def supported_address?(address)
-            country_profile = CountryProfile.for(T.must(address.country_code))
-            restrictions = country_profile.validation.validation_restrictions
-            restrictions.none? { |restriction| restriction.apply?(address) }
+            RestrictionEvaluator.new(address).supported_address?
           end
         end
       end

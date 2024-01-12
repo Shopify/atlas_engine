@@ -32,12 +32,6 @@ module AtlasEngine
       validation_exclusions.map(&:constantize)
     end
 
-    sig { returns(T::Array[T.untyped]) }
-    def validation_restrictions
-      validation_restrictions = attributes.dig("restrictions") || []
-      validation_restrictions.map(&:constantize)
-    end
-
     sig { params(length: Integer).returns(T.nilable(T::Range[T.untyped])) }
     def partial_postal_code_range(length)
       range = attributes.dig("partial_postal_code_range_for_length", length)

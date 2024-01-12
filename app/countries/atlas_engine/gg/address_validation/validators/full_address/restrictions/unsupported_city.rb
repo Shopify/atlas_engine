@@ -7,7 +7,7 @@ module AtlasEngine
       module Validators
         module FullAddress
           module Restrictions
-            class UnsupportedCity              
+            class UnsupportedCity
               UNSUPPORTED_CITY_ZIP_MAPPING = {
                 "SARK" => "GY9",
                 "ALDERNEY" => "GY10",
@@ -15,12 +15,13 @@ module AtlasEngine
 
               class << self
                 extend T::Sig
+                include AtlasEngine::Restrictions::Base
 
-                sig { params(address: AtlasEngine::AddressValidation::AbstractAddress).returns(T::Boolean) }
-                def apply?(address)
+                sig { override(allow_incompatible: true).params(address: AtlasEngine::AddressValidation::AbstractAddress).returns(T::Boolean) }
+                def apply?(address:)
                   zip_prefix = UNSUPPORTED_CITY_ZIP_MAPPING[address.city&.upcase]
                   return false if zip_prefix.nil?
-                  
+
                   address.zip&.start_with?(zip_prefix).present?
                 end
               end

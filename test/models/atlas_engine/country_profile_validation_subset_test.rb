@@ -5,25 +5,6 @@ require "test_helper"
 
 module AtlasEngine
   class CountryProfileValidationSubsetTest < ActiveSupport::TestCase
-    test "#restrictions returns an empty array if no restrictions are defined" do
-      profile_attributes = {
-        "id" => "AD",
-        "validation" => {
-        },
-      }
-      assert_empty CountryProfile.new(profile_attributes).validation.restrictions
-    end
-
-    test "#restrictions returns the correct restrictions if defined" do
-      profile_attributes = {
-        "id" => "GG",
-        "validation" => {
-          "restrictions" => ["AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity"]
-        },
-      }
-      assert_equal ["AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity"], CountryProfile.new(profile_attributes).validation.restrictions
-    end
-
     test "index_locales returns the correct index locales if defined" do
       profile_attributes = {
         "id" => "CH",

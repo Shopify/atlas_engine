@@ -6,4 +6,6 @@ validation:
   enabled: true
   default_matching_strategy: es
   restrictions:
-    - AtlasEngine::Kr::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedScript
+    - class: AtlasEngine::Restrictions::UnsupportedScript
+      params:
+        supported_script: :Hangul

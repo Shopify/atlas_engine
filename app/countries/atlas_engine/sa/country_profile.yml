@@ -1,0 +1,10 @@
+id: SA
+validation:
+  enabled: false
+  default_matching_strategy: es
+  has_provinces: false
+  restrictions:
+  restrictions:
+    - class: AtlasEngine::Restrictions::UnsupportedScript
+      params:
+        supported_script: :Arabic
