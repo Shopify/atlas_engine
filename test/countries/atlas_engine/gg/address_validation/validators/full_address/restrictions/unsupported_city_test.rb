@@ -16,7 +16,7 @@ module AtlasEngine
               test "#apply? returns true if the address city and zip are unsupported" do
                 [{city: "Sark", zip: "GY9 3AA"}, {city: "Alderney", zip: "GY10 3AA"}].each do |city_zip|
                   unsupported_address = create_address(city: city_zip[:city], zip: city_zip[:zip])
-                  assert UnsupportedCity.apply?(unsupported_address)
+                  assert UnsupportedCity.apply?(address: unsupported_address)
                 end
               end
 
@@ -28,14 +28,14 @@ module AtlasEngine
                   {city: "St. Peter Port", zip: "GY1 2AA"},
                 ].each do |city_zip|
                   supported_address = create_address(city: city_zip[:city], zip: city_zip[:zip])
-                  assert_not UnsupportedCity.apply?(supported_address)
+                  assert_not UnsupportedCity.apply?(address: supported_address)
                 end
               end
 
               test "#apply returns false if city or zip is nil" do
                 [{city: "Sark", zip: nil}, {city: nil, zip: "GY9 3AA"}, {city: nil, zip: nil}].each do |city_zip|
                   supported_address = create_address(city: city_zip[:city], zip: city_zip[:zip])
-                  assert_not UnsupportedCity.apply?(supported_address)
+                  assert_not UnsupportedCity.apply?(address: supported_address)
                 end
               end
 

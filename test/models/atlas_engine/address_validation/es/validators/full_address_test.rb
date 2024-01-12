@@ -86,7 +86,7 @@ module AtlasEngine
             assert_equal :missing_building_number, result.concerns.first.code
           end
 
-          test "does not query es if validation restrictions apply" do
+          test "does not query es if the address is not supported" do
             @address = address(
               country_code: "GG",
               address1: "1 La Clôture de Bas",
