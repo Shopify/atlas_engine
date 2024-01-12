@@ -42,9 +42,7 @@ module AtlasEngine
 
     sig { returns(T::Class[ValidationTranscriber::AddressParserBase]) }
     def address_parser
-      # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("address_parser").constantize
-      # rubocop:enable Sorbet/ConstantsFromStrings
     end
   end
 end

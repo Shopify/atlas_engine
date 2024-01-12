@@ -37,13 +37,12 @@ module AtlasEngine
         AddressValidation::Validator.expects(:new).with(has_entries(
           matching_strategy: AddressValidation::MatchingStrategies::Local,
         ))
-        .once.returns(dummy_validator)
+          .once.returns(dummy_validator)
 
         Services::Validation.validate_address(request)
       end
 
       test "#validate_address with \"es\" matching strategy, calls validator if validation enabled" do
-
         request = AddressValidation::Request.new(
           address: @address_input,
           locale: "en",
@@ -54,10 +53,10 @@ module AtlasEngine
         AddressValidation::StatsdEmitter.expects(:new).returns(mock(run: nil)).once
         AddressValidation::LogEmitter.expects(:new).returns(mock(run: nil)).once
         AddressValidation::Validator.expects(:new)
-        .with(has_entries(
-          matching_strategy: AddressValidation::MatchingStrategies::Es,
-        ))
-        .once.returns(dummy_validator)
+          .with(has_entries(
+            matching_strategy: AddressValidation::MatchingStrategies::Es,
+          ))
+          .once.returns(dummy_validator)
 
         Services::Validation.validate_address(request)
       end

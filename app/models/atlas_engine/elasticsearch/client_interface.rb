@@ -18,7 +18,7 @@ module AtlasEngine
         params(
           path: String,
           body: T.nilable(BodyType),
-          options: ConfigType
+          options: ConfigType,
         ).returns(Response)
       end
       def get(path, body = nil, options = config.dup)
@@ -29,7 +29,7 @@ module AtlasEngine
         params(
           path: String,
           body: T.nilable(BodyType),
-          options: ConfigType
+          options: ConfigType,
         ).returns(Response)
       end
       def head(path, body = nil, options = config.dup)
@@ -40,7 +40,7 @@ module AtlasEngine
         params(
           path: String,
           body: T.nilable(BodyType),
-          options: ConfigType
+          options: ConfigType,
         ).returns(Response)
       end
       def post(path, body = nil, options = config.dup)
@@ -51,7 +51,7 @@ module AtlasEngine
         params(
           path: String,
           body: T.nilable(BodyType),
-          options: ConfigType
+          options: ConfigType,
         ).returns(Response)
       end
       def put(path, body = nil, options = config.dup)
@@ -62,7 +62,7 @@ module AtlasEngine
         params(
           path: String,
           body: T.nilable(BodyType),
-          options: ConfigType
+          options: ConfigType,
         ).returns(Response)
       end
       def delete(path, body = nil, options = config.dup)
@@ -74,7 +74,7 @@ module AtlasEngine
           method: T.any(Symbol, String),
           path: String,
           body: T.nilable(BodyType),
-          options: T::Hash[Symbol, T.untyped]
+          options: T::Hash[Symbol, T.untyped],
         ).returns(Response)
       end
       def request(method, path, body = nil, options = {}); end

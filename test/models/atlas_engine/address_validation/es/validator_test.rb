@@ -57,7 +57,10 @@ module AtlasEngine
               headers: { "Content-Type" => "application/json" },
             )
 
-          validator = AddressValidation::Validator.new(address: address, matching_strategy: MatchingStrategies::EsStreet)
+          validator = AddressValidation::Validator.new(
+            address: address,
+            matching_strategy: MatchingStrategies::EsStreet,
+          )
           result = validator.run
           result = result.attributes
 

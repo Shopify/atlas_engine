@@ -7,7 +7,9 @@ module AtlasEngine
 
     IndexConfigurations = T.type_alias { T::Hash[T.any(String, Symbol), T.untyped] }
 
-    INDEX_CONFIGURATIONS_ROOT = T.let(File.join(AtlasEngine::Engine.root, "db/data/address_synonyms/index_configurations"), String)
+    INDEX_CONFIGURATIONS_ROOT = T.let(
+      File.join(AtlasEngine::Engine.root, "db/data/address_synonyms/index_configurations"), String
+    )
     COUNTRIES_ROOT = T.let(File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine"), String)
 
     DEFAULT_NUMBER_OF_SHARDS = 1

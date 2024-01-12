@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 module AtlasEngine
   class ApplicationJob < ActiveJob::Base
     def argument(key)

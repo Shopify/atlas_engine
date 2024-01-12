@@ -41,7 +41,9 @@ module AtlasEngine
       UNIT_NUM_NO_HYPHEN = "(?<unit_num>[[:alpha:][:digit:]/]+)"
       PO_BOX = %r{(?:^|\s|/)(?:p(?:ost)?\.?\s*o(?:ffice)?\.?\s*box|box|postal\s*box)\s+(\d+)(?:$|\s)}i
 
-      sig { params(address: AddressValidation::AbstractAddress, preprocessor: T.nilable(AddressParserPreprocessor)).void }
+      sig do
+        params(address: AddressValidation::AbstractAddress, preprocessor: T.nilable(AddressParserPreprocessor)).void
+      end
       def initialize(address:, preprocessor: nil)
         raise ArgumentError, "country_code cannot be blank in address" if address.country_code.blank?
 

@@ -16,6 +16,7 @@ module AtlasEngine
       sig { params(zip: T.nilable(String), country_code: T.nilable(String)).returns(T.nilable(String)) }
       def truncate(zip:, country_code: nil)
         return if zip.nil?
+
         code = (country_code || @country_code).to_s.upcase
         case code
         when "IE"

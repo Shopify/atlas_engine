@@ -18,8 +18,7 @@ module AtlasEngine
     test "index_locales returns empty array if not defined" do
       profile_attributes = {
         "id" => "DE",
-        "validation" => {
-        },
+        "validation" => {},
       }
       assert_empty CountryProfile.new(profile_attributes).validation.index_locales
     end
@@ -37,8 +36,7 @@ module AtlasEngine
     test "multi_locale? returns false if country has no configured index_locales" do
       profile_attributes = {
         "id" => "DE",
-        "validation" => {
-        },
+        "validation" => {},
       }
       assert_not CountryProfile.new(profile_attributes).validation.multi_locale?
     end

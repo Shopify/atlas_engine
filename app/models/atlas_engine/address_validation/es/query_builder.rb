@@ -15,9 +15,7 @@ module AtlasEngine
           sig { params(address: AbstractAddress, locale: T.nilable(String)).returns(QueryBuilder) }
           def for(address, locale = nil)
             profile = CountryProfile.for(T.must(address.country_code), locale)
-            # rubocop:disable Sorbet/ConstantsFromStrings
             profile.attributes.dig("validation", "query_builder").constantize.new(address, locale)
-            # rubocop:enable Sorbet/ConstantsFromStrings
           end
         end
 

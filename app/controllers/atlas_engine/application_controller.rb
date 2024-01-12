@@ -1,6 +1,7 @@
-# typed: ignore
+# typed: false
+# frozen_string_literal: true
 
 module AtlasEngine
-  class ApplicationController < AtlasEngine.parent_controller.constantize
+  class ApplicationController < ActionController::Base
   end
 end

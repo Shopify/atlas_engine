@@ -56,7 +56,12 @@ module AtlasEngine
       test "#perform backfills blank streets using the value from next priority locale's record if others are blank" do
         @de_address.update(street: nil)
         @fr_address.update(street: "Sagistrasse")
-        AtlasEngine::CountryProfileValidationSubset.any_instance.expects(:index_locales).returns(["de", "fr", "it", "zz"])
+        AtlasEngine::CountryProfileValidationSubset.any_instance.expects(:index_locales).returns([
+          "de",
+          "fr",
+          "it",
+          "zz",
+        ])
 
         StreetBackfillJob.perform_now(
           country_code: @country_code,

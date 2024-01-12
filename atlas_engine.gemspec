@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "lib/atlas_engine/version"
 
 Gem::Specification.new do |spec|
@@ -22,19 +24,19 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 7.0.7.2"
-  spec.add_dependency "graphql"
-  spec.add_dependency "graphiql-rails"
-  spec.add_dependency "elastic-transport"
-  spec.add_dependency "elasticsearch-model"
-  spec.add_dependency "elasticsearch-rails"
-  spec.add_dependency "worldwide"
-  spec.add_dependency "state_machines-activerecord"
-  spec.add_dependency "rubyzip"
-  spec.add_dependency "frozen_record"
-  spec.add_dependency "annex_29"
-  spec.add_dependency "maintenance_tasks"
-  spec.add_dependency "htmlentities"
-  spec.add_dependency "sorbet-runtime"
-  spec.add_dependency "statsd-instrument"
+  spec.add_dependency("annex_29")
+  spec.add_dependency("elasticsearch-model")
+  spec.add_dependency("elasticsearch-rails")
+  spec.add_dependency("elastic-transport")
+  spec.add_dependency("frozen_record")
+  spec.add_dependency("graphiql-rails")
+  spec.add_dependency("graphql")
+  spec.add_dependency("htmlentities")
+  spec.add_dependency("maintenance_tasks")
+  spec.add_dependency("rails", ">= 7.0.7.2")
+  spec.add_dependency("rubyzip")
+  spec.add_dependency("sorbet-runtime")
+  spec.add_dependency("state_machines-activerecord")
+  spec.add_dependency("statsd-instrument")
+  spec.add_dependency("worldwide")
 end

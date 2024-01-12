@@ -53,7 +53,7 @@ module AtlasEngine
       repo = CountryRepository.new(
         country_code: "CH",
         repository_class: Elasticsearch::Repository,
-        locale: "de"
+        locale: "de",
       )
 
       response = repo.find(123)
@@ -62,7 +62,7 @@ module AtlasEngine
 
     test "#initialize raises error if locale is not provided for multi-locale country" do
       assert_raises(ArgumentError) do
-        repo = CountryRepository.new(
+        CountryRepository.new(
           country_code: "CH",
           repository_class: Elasticsearch::Repository,
         )
@@ -76,7 +76,7 @@ module AtlasEngine
       repo = CountryRepository.new(
         country_code: "US",
         repository_class: Elasticsearch::Repository,
-        locale: "en"
+        locale: "en",
       )
 
       response = repo.find(123)

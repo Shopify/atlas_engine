@@ -147,7 +147,6 @@ module AtlasEngine
             ch_session.datastore(locale: "it").city_sequence = Token::Sequence.from_string(@address.city)
             ch_session.datastore(locale: "it").street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-
             ch_session.datastore(locale: "fr").candidates = [
               candidate(city: "Zurich"),
               candidate(city: "Ouster"),

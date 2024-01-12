@@ -6,7 +6,6 @@ require "test_helper"
 module AtlasEngine
   module ValidationTranscriber
     class AddressParserFactoryTest < ActiveSupport::TestCase
-
       test "create raises an error if country_code is nil" do
         assert_raises(ArgumentError) do
           AddressParserFactory.create(address: AddressValidation::Address.new)

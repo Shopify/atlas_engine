@@ -8,7 +8,8 @@ module AtlasEngine
       attr_reader :address, :result, :components
 
       sig { params(address: AbstractAddress, result: Result, components: T.nilable(T::Array[Symbol])).void }
-      def initialize(address:, result:, components: [:country, :province, :zip, :city, :street, :building_number, :phone])
+      def initialize(address:, result:,
+        components: [:country, :province, :zip, :city, :street, :building_number, :phone])
         @address = address
         @result = result
         @components = components

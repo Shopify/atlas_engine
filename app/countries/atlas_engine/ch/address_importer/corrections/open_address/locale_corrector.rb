@@ -53,9 +53,10 @@ module AtlasEngine
                     "de"
                   end
                 elsif province_code == "GR"
-                  if zip < 7000 || zip >= 7013 && zip < 7015 || zip >= 7016 && zip < 7023 || zip >= 7031 && zip < 7050 ||
-                      zip >= 7077 && zip < 7104 || zip >= 7112 && zip < 7122 || zip >= 7126 && zip < 7130 ||
-                      zip >= 7137 && zip < 7147 || zip >= 7151 && zip < 7202 || zip >= 7500 && zip < 7562 || zip >= 7602
+                  if zip < 7000 || zip >= 7013 && zip < 7015 || zip >= 7016 && zip < 7023 ||
+                      zip >= 7031 && zip < 7050 || zip >= 7077 && zip < 7104 || zip >= 7112 && zip < 7122 ||
+                      zip >= 7126 && zip < 7130 || zip >= 7137 && zip < 7147 || zip >= 7151 && zip < 7202 ||
+                      zip >= 7500 && zip < 7562 || zip >= 7602
                     address[:locale] = "it"
                   elsif (zip == 7130 || zip >= 7402 && zip < 7404 || zip == 7477) && address[:street].start_with?("Via")
                     address[:locale] = "it"

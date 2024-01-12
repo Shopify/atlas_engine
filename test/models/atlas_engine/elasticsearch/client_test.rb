@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require_relative "./elasticsearch_test_helper"
+require_relative "elasticsearch_test_helper"
 
 module AtlasEngine
   module Elasticsearch
@@ -22,28 +22,28 @@ module AtlasEngine
         path = "/"
 
         mock_response_body = {
-          "name"=>"mock-name",
-          "cluster_name"=>"mock-cluster",
-          "cluster_uuid"=>"mock-uuid",
-          "version"=>
+          "name" => "mock-name",
+          "cluster_name" => "mock-cluster",
+          "cluster_uuid" => "mock-uuid",
+          "version" =>
           {
-            "number"=>"8.7.1",
-            "build_flavor"=>"default",
-            "build_type"=>"docker",
-            "build_hash"=>"f229ed3f893a515d590d0f39b05f68913e2d9b53",
-            "build_date"=>"2023-04-27T04:33:42.127815583Z",
-            "build_snapshot"=>false,
-            "lucene_version"=>"9.5.0",
-            "minimum_wire_compatibility_version"=>"7.17.0",
-            "minimum_index_compatibility_version"=>"7.0.0"
+            "number" => "8.7.1",
+            "build_flavor" => "default",
+            "build_type" => "docker",
+            "build_hash" => "f229ed3f893a515d590d0f39b05f68913e2d9b53",
+            "build_date" => "2023-04-27T04:33:42.127815583Z",
+            "build_snapshot" => false,
+            "lucene_version" => "9.5.0",
+            "minimum_wire_compatibility_version" => "7.17.0",
+            "minimum_index_compatibility_version" => "7.0.0",
           },
-          "tagline"=>"You Know, for Search"
+          "tagline" => "You Know, for Search",
         }
 
         mock_elasticsearch_response(
           method: :get,
           path: path,
-          body: mock_response_body
+          body: mock_response_body,
         )
 
         response = client.request(:get, path)
@@ -55,28 +55,28 @@ module AtlasEngine
       end
 
       test "#get makes a successful :get request" do
-        client.expects(:request).with(:get, "/", nil, {mock: "options"}).once.returns(@mock_response)
-        response = client.get("/", nil, {mock: "options"})
+        client.expects(:request).with(:get, "/", nil, { mock: "options" }).once.returns(@mock_response)
+        client.get("/", nil, { mock: "options" })
       end
 
       test "#head makes a successful :head request" do
-        client.expects(:request).with(:head, "/", nil, {mock: "options"}).once.returns(@mock_response)
-        response = client.head("/", nil, {mock: "options"})
+        client.expects(:request).with(:head, "/", nil, { mock: "options" }).once.returns(@mock_response)
+        client.head("/", nil, { mock: "options" })
       end
 
       test "#post makes a successful :post request" do
-        client.expects(:request).with(:post, "/", "mock body", {mock: "options"}).once.returns(@mock_response)
-        response = client.post("/", "mock body", {mock: "options"})
+        client.expects(:request).with(:post, "/", "mock body", { mock: "options" }).once.returns(@mock_response)
+        client.post("/", "mock body", { mock: "options" })
       end
 
       test "#put makes a successful :put request" do
-        client.expects(:request).with(:put, "/", "mock body", {mock: "options"}).once.returns(@mock_response)
-        response = client.put("/", "mock body", {mock: "options"})
+        client.expects(:request).with(:put, "/", "mock body", { mock: "options" }).once.returns(@mock_response)
+        client.put("/", "mock body", { mock: "options" })
       end
 
       test "#delete makes a successful :delete request" do
-        client.expects(:request).with(:delete, "/", "mock body", {mock: "options"}).once.returns(@mock_response)
-        response = client.delete("/", "mock body", {mock: "options"})
+        client.expects(:request).with(:delete, "/", "mock body", { mock: "options" }).once.returns(@mock_response)
+        client.delete("/", "mock body", { mock: "options" })
       end
 
       test "#find_index_by returns first index associated with alias" do
@@ -84,7 +84,7 @@ module AtlasEngine
         mock_elasticsearch_response(
           method: :get,
           path: "/_alias/#{alias_name}",
-          body: {"sample.0"=>{"aliases"=>{"sample"=>{"is_write_index"=>true}}}},
+          body: { "sample.0" => { "aliases" => { "sample" => { "is_write_index" => true } } } },
         )
 
         assert_equal("sample.0", client.find_index_by(alias_name: alias_name))

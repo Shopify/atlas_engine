@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 module AtlasEngine
   module AddressValidation
     class Request < T::Struct

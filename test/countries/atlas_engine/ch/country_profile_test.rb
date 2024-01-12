@@ -19,7 +19,8 @@ module AtlasEngine
       end
 
       test "ingestion open_address_feature_mapper is correct" do
-        assert_equal AtlasEngine::Ch::AddressImporter::OpenAddress::Mapper, @profile.ingestion.open_address_feature_mapper
+        assert_equal AtlasEngine::Ch::AddressImporter::OpenAddress::Mapper,
+          @profile.ingestion.open_address_feature_mapper
       end
 
       test "#correctors value is correct for source open-address" do

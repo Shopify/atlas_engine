@@ -75,17 +75,26 @@ module AtlasEngine
     self.base_path = ""
     self.backend = Backend
 
-    @@default_paths = T.let([
-      File.join(AtlasEngine::Engine.root, "db/data/country_profiles/default.yml")
-    ], T::Array[String])
+    @@default_paths = T.let(
+      [
+        File.join(AtlasEngine::Engine.root, "db/data/country_profiles/default.yml"),
+      ],
+      T::Array[String],
+    )
 
-    @@country_paths = T.let([
-      File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/country_profile.yml")
-    ], T::Array[String])
+    @@country_paths = T.let(
+      [
+        File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/country_profile.yml"),
+      ],
+      T::Array[String],
+    )
 
-    @@locale_paths = T.let([
-      File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/locales/*/country_profile.yml")
-    ], T::Array[String])
+    @@locale_paths = T.let(
+      [
+        File.join(AtlasEngine::Engine.root, "app/countries/atlas_engine/*/locales/*/country_profile.yml"),
+      ],
+      T::Array[String],
+    )
 
     @attributes = T.let([], T::Array[T.untyped])
     @records = T.let(nil, T.nilable(T::Array[T.untyped]))
@@ -183,12 +192,12 @@ module AtlasEngine
         # country's profile before falling back to the default profile
         begin
           id = ids.pop
-          self.find(id)
+          find(id)
         rescue FrozenRecord::RecordNotFound
           if ids.present?
             retry
           else
-            self.new(default_attributes.merge("id" => id))
+            new(default_attributes.merge("id" => id))
           end
         end
       end
@@ -230,7 +239,7 @@ module AtlasEngine
 
       private
 
-      sig {returns(T::Array[T.untyped])}
+      sig { returns(T::Array[T.untyped]) }
       def methods_to_be_created
         @attributes.to_a.flatten.reject do |attribute_name|
           instance_methods.include?(attribute_name.to_sym)

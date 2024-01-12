@@ -41,10 +41,10 @@ module AtlasEngine
       country_profile = CountryProfile.for("DE")
 
       assert_equal "Main strasse", FieldDecompounder.new(
-        field: :street, value: "Mainstrasse", country_profile: country_profile
+        field: :street, value: "Mainstrasse", country_profile: country_profile,
       ).call
       assert_equal "Main strasse", FieldDecompounder.new(
-        field: :street, value: "Mainstraße", country_profile: country_profile
+        field: :street, value: "Mainstraße", country_profile: country_profile,
       ).call
     end
 
