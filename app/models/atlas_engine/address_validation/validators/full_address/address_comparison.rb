@@ -19,19 +19,19 @@ module AtlasEngine
           def initialize(address:, candidate:, datastore:)
             @street_comparison = ComparisonHelper.street_comparison(
               datastore: datastore,
-              candidate: candidate
+              candidate: candidate,
             )
             @city_comparison = ComparisonHelper.city_comparison(
               datastore: datastore,
-              candidate: candidate
+              candidate: candidate,
             )
             @zip_comparison = ComparisonHelper.zip_comparison(
               address: address,
-              candidate: candidate
+              candidate: candidate,
             )
             @province_code_comparison = ComparisonHelper.province_code_comparison(
               address: address,
-              candidate: candidate
+              candidate: candidate,
             )
             @building_comparison = ComparisonHelper.building_comparison(
               datastore: datastore,
@@ -63,7 +63,9 @@ module AtlasEngine
 
           protected
 
-          sig { returns(T::Array[T.any(AtlasEngine::AddressValidation::Token::Sequence::Comparison, NumberComparison)]) }
+          sig do
+            returns(T::Array[T.any(AtlasEngine::AddressValidation::Token::Sequence::Comparison, NumberComparison)])
+          end
           def comparisons
             [
               street_comparison,

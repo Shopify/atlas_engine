@@ -26,9 +26,7 @@ module AtlasEngine
 
     sig { returns(T::Class[AddressImporter::OpenAddress::DefaultMapper]) }
     def open_address_feature_mapper
-      # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("open_address", "feature_mapper").constantize
-      # rubocop:enable Sorbet/ConstantsFromStrings
     end
 
     sig { returns(T.nilable(String)) }
@@ -38,9 +36,7 @@ module AtlasEngine
 
     sig { returns(T::Class[AddressValidation::Es::DataMappers::DefaultDataMapper]) }
     def data_mapper
-      # rubocop:disable Sorbet/ConstantsFromStrings
       attributes.dig("data_mapper").constantize
-      # rubocop:enable Sorbet/ConstantsFromStrings
     end
   end
 end

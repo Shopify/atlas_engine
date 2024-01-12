@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 module AtlasEngine
   module LogAssertionHelper
     def assert_log_append(level, source, message, additional_params = {})

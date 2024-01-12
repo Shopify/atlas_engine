@@ -40,7 +40,7 @@ module AtlasEngine
         @index_settings = T.let(index_settings, T::Hash[Symbol, T.untyped])
         @mapper_callable = T.let(
           mapper_callable || ->(record) { record.to_hash },
-          T.proc.params(arg0: T.untyped).returns(T.untyped)
+          T.proc.params(arg0: T.untyped).returns(T.untyped),
         )
       end
 
@@ -61,7 +61,7 @@ module AtlasEngine
       sig do
         override.params(
           ensure_clean: T::Boolean,
-          raise_errors: T::Boolean
+          raise_errors: T::Boolean,
         ).void
       end
       def create_next_index(ensure_clean: false, raise_errors: false)
@@ -76,12 +76,12 @@ module AtlasEngine
 
         body = {
           aliases: {
-            "#{new_alias}" => {
-              is_write_index: true
-            }
+            new_alias.to_s => {
+              is_write_index: true,
+            },
           },
           settings: index_settings,
-          mappings: index_mappings
+          mappings: index_mappings,
         }
 
         client.put(versioned_index_name, body)
@@ -91,7 +91,7 @@ module AtlasEngine
 
       sig do
         override.params(
-          raise_errors: T::Boolean
+          raise_errors: T::Boolean,
         ).void
       end
       def switch_to_next_index(raise_errors: false)
@@ -102,7 +102,7 @@ module AtlasEngine
 
       sig do
         override.params(
-          records: T.any(ActiveRecord::Relation, T::Array[PostAddressData])
+          records: T.any(ActiveRecord::Relation, T::Array[PostAddressData]),
         ).returns(T.nilable(Response))
       end
       def save_records_backfill(records)
@@ -208,8 +208,8 @@ module AtlasEngine
           update_aliases_for_index(
             index_name: current_index_name,
             remove_alias: active_alias,
-            add_alias: archived_alias
-            )
+            add_alias: archived_alias,
+          )
         end
 
         # activate the .new alias
@@ -217,8 +217,8 @@ module AtlasEngine
           update_aliases_for_index(
             index_name: next_index_name,
             remove_alias: new_alias,
-            add_alias: active_alias
-            )
+            add_alias: active_alias,
+          )
         end
       end
 
@@ -230,13 +230,13 @@ module AtlasEngine
         ).void
       end
       def update_aliases_for_index(index_name:, remove_alias:, add_alias:)
-        is_writable = (add_alias == active_alias) ? true : false
+        is_writable = add_alias == active_alias ? true : false
 
         body = {
           actions: [
             { remove: { index: index_name, alias: remove_alias } },
-            { add: { index: index_name, alias: add_alias, is_write_index: is_writable } }
-          ]
+            { add: { index: index_name, alias: add_alias, is_write_index: is_writable } },
+          ],
         }
 
         client.post("/_aliases", body)

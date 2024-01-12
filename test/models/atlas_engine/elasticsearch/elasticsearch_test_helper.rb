@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 module AtlasEngine
   module Elasticsearch
     module TestHelper
@@ -10,7 +13,7 @@ module AtlasEngine
       end
 
       def reset
-        client.put("_cluster/settings", {"transient" => {"action.destructive_requires_name" => false}})
+        client.put("_cluster/settings", { "transient" => { "action.destructive_requires_name" => false } })
         client.delete("/*?ignore_unavailable=true")
       end
 
@@ -20,12 +23,12 @@ module AtlasEngine
 
         body = {
           aliases: {
-            "#{test_alias_name}" => {
-              is_write_index: true
-            }
+            test_alias_name.to_s => {
+              is_write_index: true,
+            },
           },
           settings: settings,
-          mappings: mappings
+          mappings: mappings,
         }
 
         client.put("/#{test_index_name}", body)
@@ -38,16 +41,16 @@ module AtlasEngine
         headers: { "content-type" => "application/json" },
         body: {}
       )
-        url = "#{ENV["ELASTICSEARCH_URL"]}/" + path.sub(/^\//, '')
+        url = "#{ENV["ELASTICSEARCH_URL"]}/" + path.sub(%r{^/}, "")
         stub_request(method, url).to_return(
           status: status,
           headers: headers,
-          body: body.to_json
+          body: body.to_json,
         )
       end
 
       def cleanup_by_prefix(prefix)
-        client.put("_cluster/settings", {"transient" => {"action.destructive_requires_name" => false}})
+        client.put("_cluster/settings", { "transient" => { "action.destructive_requires_name" => false } })
         client.delete("/#{correct_name(prefix)}*?ignore_unavailable=true")
       end
 

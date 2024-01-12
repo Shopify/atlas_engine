@@ -2,13 +2,85 @@ inherit_gem:
   rubocop-shopify: rubocop.yml
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 3.2
   Exclude:
     - bin/*
     - node_modules/**/*
     - db/schema.rb
+  SuggestExtensions: false
 
-Sorbet/ForbidSuperclassConstLiteral:
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-sorbet
+
+Rails/UnknownEnv:
+  Environments:
+    # without this, rubocop complains about references to the staging environment
+    - production
+    - development
+    - test
+    - staging
+
+Sorbet:
+  Enabled: true
+
+# All files in Atlas must have a valid sigil
+#
+# For example, `typed: false`, `typed: true` or `typed: strict`.
+Sorbet/ValidSigil:
+  Enabled: true
   Exclude:
-    - db/migrate/*.rb
-    - db/lhm/*.rb
+  - app/utils/sorbet.rb
+  - db/migrate/**/*.rb
+
+# All files in Atlas must be at least at strictness `false`
+Sorbet/FalseSigil:
+  Enabled: true
+  Include:
+  - "**/*.rb"
+  - "**/*.rbi"
+  - "**/*.rake"
+  - "**/*.ru"
+
+  Exclude:
+  - bin/**/*
+  - db/**/*.rb
+  - script/**/*
+  - lib/generators/atlas_engine/install_generator.rb
+
+
+# Sorbet sigil must come first
+Sorbet/EnforceSigilOrder:
+  Enabled: true
+
+# Enforce the order of signature parts
+#
+# Fist the inheritance related builders, then params, then order and finally the
+# modifier: `abstract.params(...).returns(...).soft`.
+Sorbet/SignatureBuildOrder:
+  Enabled: true
+
+# Enforce a compatible keyword arguments with Sorbet
+#
+# All keyword arguments are at the end of the parameters list, and all keyword
+# arguments with a default value must be after those without default values.
+Sorbet/KeywordArgumentOrdering:
+  Enabled: true
+
+# Forbid constants through meta-programming
+#
+# Things like `constantize` or `const_get`.
+Sorbet/ConstantsFromStrings:
+  Enabled: false
+
+# Forbid include from non-literal constants
+#
+# Things like `include some_method`.
+Sorbet/ForbidIncludeConstLiteral:
+  Enabled: false
+
+# Disabling this cop until we are able to clean up violations
+Sorbet/CallbackConditionalsBinding:
+  Enabled: false

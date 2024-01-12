@@ -111,5 +111,4 @@ module AtlasEngine
       province_code.blank? && !country.province_optional?
     end
   end
-
 end

@@ -10,7 +10,7 @@ module AtlasEngine
 
       sig { params(code: ErrorCode, message: String).returns(CodedError) }
       def error(code, message)
-        error = CodedError.new(code, message)
+        CodedError.new(code, message)
       end
     end
   end

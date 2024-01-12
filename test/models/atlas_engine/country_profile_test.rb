@@ -5,7 +5,6 @@ require "test_helper"
 
 module AtlasEngine
   class CountryProfileTest < ActiveSupport::TestCase
-
     class SampleChildProfile < AtlasEngine::CountryProfile; end
 
     def setup
@@ -97,11 +96,13 @@ module AtlasEngine
 
     test "#correctors returns an array of corrector class names for a given data source" do
       country_profile = CountryProfile.for("IT")
-      assert_equal([
-        AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector,
-        AtlasEngine::It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector,
-      ],
-        country_profile.ingestion.correctors(source: "open_address"))
+      assert_equal(
+        [
+          AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector,
+          AtlasEngine::It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector,
+        ],
+        country_profile.ingestion.correctors(source: "open_address"),
+      )
     end
 
     test "#correctors returns an empty array when an unknown source is provided" do
@@ -305,7 +306,7 @@ module AtlasEngine
           "feature" => {
             "label" => "label",
             "name" => "new sample",
-            "enabled" => true
+            "enabled" => true,
           },
           "feature_2" => {
             "valid?" => true,
@@ -334,7 +335,7 @@ module AtlasEngine
       CountryProfile.reset!
       CountryProfile.country_paths = [us_file.path]
 
-      assert_equal({"name"=>"sample"}, CountryProfile.for("US").feature)
+      assert_equal({ "name" => "sample" }, CountryProfile.for("US").feature)
     end
 
     test "attribute methods do not override defined methods" do

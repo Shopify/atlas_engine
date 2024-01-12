@@ -24,7 +24,7 @@ module AtlasEngine
 
       test "parsings returns the correct parsings" do
         session = AddressValidation::Session.new(address: address)
-        assert_equal [{:building_num=>"123", :street=>"Main Street"}], session.parsings.parsings
+        assert_equal [{ building_num: "123", street: "Main Street" }], session.parsings.parsings
       end
 
       test "datastore returns the correct datastore" do
@@ -42,7 +42,7 @@ module AtlasEngine
         session.datastore(locale: "it")
         assert_equal 1, session.datastore_hash.size
 
-        ch_session = AddressValidation::Session.new(address: address_ch)
+        AddressValidation::Session.new(address: address_ch)
         assert_equal AtlasEngine::AddressValidation::Es::Datastore, session.datastore(locale: "fr").class
         assert_equal 2, session.datastore_hash.size
       end

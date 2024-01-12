@@ -4,7 +4,6 @@
 require "test_helper"
 require_relative "../log_assertion_helper"
 
-
 module AtlasEngine
   module AddressImporter
     class ImportLogHelperTest < ActiveSupport::TestCase
@@ -43,7 +42,12 @@ module AtlasEngine
       test "#import_log_info logs with additional params" do
         additional = { "param1" => "hello" }
 
-        assert_log_append(:info, "AtlasEngine::AddressImporter::ImportLogHelperTest::DummyClass", "import complete", additional)
+        assert_log_append(
+          :info,
+          "AtlasEngine::AddressImporter::ImportLogHelperTest::DummyClass",
+          "import complete",
+          additional,
+        )
 
         DummyClass.new.import_log_info(
           country_import: @country_import,
@@ -59,7 +63,12 @@ module AtlasEngine
       test "#import_log_error logs with additional params" do
         additional = { "param1" => "hi" }
 
-        assert_log_append(:error, "AtlasEngine::AddressImporter::ImportLogHelperTest::DummyClass", "import in progress", additional)
+        assert_log_append(
+          :error,
+          "AtlasEngine::AddressImporter::ImportLogHelperTest::DummyClass",
+          "import in progress",
+          additional,
+        )
 
         with_stub_notify_events do
           DummyClass.new.import_log_error(
@@ -98,7 +107,11 @@ module AtlasEngine
 
         assert_log_append(:error, "AtlasEngine::AddressImporter::ImportLogHelperTest::DummyClass", message, additional)
 
-        DummyClass.new.import_log_error(country_import: @country_import, message: message, additional_params: additional)
+        DummyClass.new.import_log_error(
+          country_import: @country_import,
+          message: message,
+          additional_params: additional,
+        )
         event = Event.find_by(country_import_id: @country_import.id)
 
         assert_equal message, event.message
@@ -108,7 +121,8 @@ module AtlasEngine
       def with_stub_notify_events(notification_count = 1, &block)
         mock_instance = mock
         mock_instance.expects(:notify).times(notification_count)
-        AddressImporter::ImportEventsNotifier::Notifier.expects(:instance).returns(mock_instance).times(notification_count)
+        AddressImporter::ImportEventsNotifier::Notifier.expects(:instance)
+          .returns(mock_instance).times(notification_count)
         yield
         AddressImporter::ImportEventsNotifier::Notifier.unstub(:instance)
       end

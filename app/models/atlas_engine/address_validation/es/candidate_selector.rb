@@ -43,7 +43,7 @@ module AtlasEngine
               address_comparison = AtlasEngine::AddressValidation::Validators::FullAddress::AddressComparison.new(
                 address: address,
                 candidate: candidate,
-                datastore: datastore
+                datastore: datastore,
               )
               tuple = CandidateTuple.new(address_comparison, position, candidate)
               tuple if tuple.address_comparison.potential_match?

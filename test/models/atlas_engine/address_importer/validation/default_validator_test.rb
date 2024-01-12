@@ -21,7 +21,7 @@ module AtlasEngine
         test ".new initializes the base_validator with additional_field_validations" do
           original_additional_validations = AtlasEngine.address_importer_additional_field_validations
 
-          expected_validations = {
+          {
             province_code: [AddressImporter::Validation::FieldValidations::Province],
             zip: [AddressImporter::Validation::FieldValidations::Zip],
             city: [AddressImporter::Validation::FieldValidations::City],
@@ -34,7 +34,7 @@ module AtlasEngine
           AtlasEngine.address_importer_additional_field_validations = expected_additional_validations
 
           actual = DefaultValidator.new(country_code: "CA")
-          assert_equal expected_additional_validations, actual.additional_field_validations
+          assert_equal(expected_additional_validations, actual.additional_field_validations)
         ensure
           AtlasEngine.address_importer_additional_field_validations = original_additional_validations
         end

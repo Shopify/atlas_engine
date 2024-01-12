@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 module Maintenance
   module AtlasEngine
     class GeoJsonImportTask < MaintenanceTasks::Task

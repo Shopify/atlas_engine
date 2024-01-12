@@ -25,7 +25,7 @@ module AtlasEngine
               AtlasEngine::AddressValidation::Request.new(
                 address: address,
                 locale: locale,
-                matching_strategy: matching_strategy
+                matching_strategy: matching_strategy,
               ),
             )
           end

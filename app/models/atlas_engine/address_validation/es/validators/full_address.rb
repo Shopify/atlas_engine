@@ -61,9 +61,9 @@ module AtlasEngine
                 candidate_futures.filter_map(&:value!).min
               ensure
                 # We want our futures to complete even when we do not consume their value.
-                candidate_futures&.map { |future| future.wait! }
+                candidate_futures&.map(&:wait!)
               end,
-              T.nilable(CandidateTuple)
+              T.nilable(CandidateTuple),
             )
           end
 

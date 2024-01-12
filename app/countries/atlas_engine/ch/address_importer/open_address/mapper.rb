@@ -6,7 +6,9 @@ module AtlasEngine
     module AddressImporter
       module OpenAddress
         class Mapper < AtlasEngine::AddressImporter::OpenAddress::DefaultMapper
-          sig { params(feature: AtlasEngine::AddressImporter::OpenAddress::Feature).returns(T::Hash[Symbol, T.untyped]) }
+          sig do
+            params(feature: AtlasEngine::AddressImporter::OpenAddress::Feature).returns(T::Hash[Symbol, T.untyped])
+          end
           def map(feature)
             region, city, street, number, unit, postcode = feature["properties"].values_at(
               "region",

@@ -37,7 +37,7 @@ module AtlasEngine
 
             CountryProfile.any_instance.expects(:attributes).returns(profile_attributes)
 
-            refute @klass.new(address).supported_address?
+            assert_not @klass.new(address).supported_address?
           end
 
           test "it correctly applies restrictions when additional params are not required" do
@@ -51,14 +51,15 @@ module AtlasEngine
               "id" => "GG",
               "validation" => {
                 "restrictions" => [{
-                  "class" => "AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity",
+                  "class" =>
+                    "AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity",
                 }],
               },
             }
 
             CountryProfile.any_instance.expects(:attributes).returns(profile_attributes)
 
-            refute @klass.new(address).supported_address?
+            assert_not @klass.new(address).supported_address?
           end
 
           test "it returns true if no restrictions are defined" do

@@ -1,6 +1,8 @@
-require "active_support/core_ext/integer/time"
-require 'factory_bot_rails'
+# typed: false
+# frozen_string_literal: true
 
+require "active_support/core_ext/integer/time"
+require "factory_bot_rails"
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -21,7 +23,7 @@ Rails.application.configure do
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=#{1.hour.to_i}"
+    "Cache-Control" => "public, max-age=#{1.hour.to_i}",
   }
 
   # Show full error reports and disable caching.
@@ -66,6 +68,6 @@ Rails.application.configure do
 
   # Configure FactoryBot to load factories from the engine paths
   config.factory_bot.definition_file_paths = [
-    File.join(AtlasEngine::Engine.root, "test/factories")
+    File.join(AtlasEngine::Engine.root, "test/factories"),
   ].union(Dir[File.join(AtlasEngine::Engine.root, "test/countries/*/factories")])
 end

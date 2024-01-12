@@ -33,10 +33,8 @@ module AtlasEngine
           @pipeline_path ||= T.let(VALIDATION_PIPELINES_ROOT, T.nilable(String))
         end
 
-        sig { params(path: String).void }
-        def pipeline_path=(path)
-          @pipeline_path = path
-        end
+        sig { params(pipeline_path: String).void }
+        attr_writer :pipeline_path
       end
 
       self.base_path = VALIDATION_PIPELINES_ROOT
@@ -46,9 +44,7 @@ module AtlasEngine
       def pipeline
         attributes.dig("pipeline").map do |config|
           PredicateConfig.new(
-            # rubocop:disable Sorbet/ConstantsFromStrings
             class_name: config["class"].constantize,
-            # rubocop:enable Sorbet/ConstantsFromStrings
             field: config["field"].to_sym,
           )
         end

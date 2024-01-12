@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 require "atlas_engine/version"
 require "atlas_engine/engine"
 require "graphql"
@@ -16,7 +19,6 @@ require "sorbet-runtime"
 require "statsd-instrument"
 
 module AtlasEngine
-
   # @!attribute parent_controller
   #   @scope class
   #

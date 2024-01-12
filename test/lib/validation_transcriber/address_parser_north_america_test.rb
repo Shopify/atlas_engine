@@ -158,7 +158,12 @@ module AtlasEngine
             "Suite 281",
             [
               { building_num: "3952", street: "D Clairemont Meas Blvd (Mail only)" },
-              { building_num: "3952", street: "D Clairemont Meas Blvd (Mail only)", unit_type: "Suite", unit_num: "281" },
+              {
+                building_num: "3952",
+                street: "D Clairemont Meas Blvd (Mail only)",
+                unit_type: "Suite",
+                unit_num: "281",
+              },
             ],
           ],
           [

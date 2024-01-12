@@ -1,5 +1,6 @@
 # typed: strict
 # frozen_string_literal: true
+
 module AtlasEngine
   module Gb
     module ValidationTranscriber

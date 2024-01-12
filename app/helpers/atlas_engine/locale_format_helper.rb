@@ -15,18 +15,21 @@ module AtlasEngine
 
       private
 
-      SUPPORTED_LOCALE_MAP = T.let({
-        DA: "da",
-        DE: "de",
-        EN: "en",
-        ES: "es",
-        FR: "fr",
-        IT: "it",
-        JA: "ja",
-        NL: "nl",
-        "PT-BR": "pt-BR",
-        PT: "pt",
-      }, T::Hash[T.untyped, T.untyped])
+      SUPPORTED_LOCALE_MAP = T.let(
+        {
+          DA: "da",
+          DE: "de",
+          EN: "en",
+          ES: "es",
+          FR: "fr",
+          IT: "it",
+          JA: "ja",
+          NL: "nl",
+          "PT-BR": "pt-BR",
+          PT: "pt",
+        },
+        T::Hash[T.untyped, T.untyped],
+      )
 
       sig { params(locale: String).returns(T.nilable(String)) }
       def resolve_supported_locale(locale)

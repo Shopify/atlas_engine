@@ -17,9 +17,9 @@ module AtlasEngine
       end
 
       def setup
-        @body = {name: "mock body"}
+        @body = { name: "mock body" }
         @status = 200
-        @headers = {name: "mock header"}
+        @headers = { name: "mock header" }
 
         @mock_response = MockResponse.new(body: @body, status: @status, headers: @headers)
       end

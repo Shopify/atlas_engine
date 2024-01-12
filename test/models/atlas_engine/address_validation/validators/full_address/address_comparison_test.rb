@@ -20,8 +20,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Bronx"],
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
             @address = build_address(address1: "10 County Road 34", city: "Bronx", zip: "10001", country_code: "US")
             @datastore = Es::Datastore.new(address: @address)
@@ -36,8 +36,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["blah"],
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
 
             city_mismatch = AddressComparison.new(
@@ -63,8 +63,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Bronx"],
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(100..199)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(100..199)/1\": {}}",
+              },
             )
 
             unmatched_building_number = AddressComparison.new(
@@ -90,8 +90,8 @@ module AtlasEngine
                 "street" => "County rod 34", # Edit distance of 1
                 "city" => ["Bronx"],
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
 
             city_mismatch = Candidate.new(
@@ -100,8 +100,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Brigx"], # Edit distance of 2
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
 
             street_mismatch_comparison = AddressComparison.new(
@@ -127,8 +127,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Broni"], # Edit distance of 1
                 "zip" => "10001",
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
 
             zip_mismatch = Candidate.new(
@@ -137,8 +137,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Bronx"],
                 "zip" => "10002", # Edit distance of 1
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
 
             city_mismatch_comparison = AddressComparison.new(
@@ -159,7 +159,7 @@ module AtlasEngine
           test "#<=> handles cases when one side has empty comparisons" do
             empty_candidate = Candidate.new(
               id: "123",
-              source: {}
+              source: {},
             )
             empty_comparison = AddressComparison.new(
               address: @address,
@@ -173,8 +173,8 @@ module AtlasEngine
                 "street" => "County Road 34",
                 "city" => ["Bronx"],
                 "zip" => "10002", # Edit distance of 1
-                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}"
-              }
+                "building_and_unit_ranges" => "{\"(0..99)/1\": {}}",
+              },
             )
             zip_mismatch_comparison = AddressComparison.new(
               address: @address,
@@ -189,7 +189,7 @@ module AtlasEngine
           test "#<=> handles cases when there are no text comparisons but there is data in number comparison" do
             numbers_only_candidate = Candidate.new(
               id: "123",
-              source: {"building_and_unit_ranges" => "{\"(0..99)/1\": {}}"}
+              source: { "building_and_unit_ranges" => "{\"(0..99)/1\": {}}" },
             )
             numbers_comparison = AddressComparison.new(
               address: @address,
@@ -201,7 +201,7 @@ module AtlasEngine
               id: "123",
               source: {
                 "building_and_unit_ranges" => "{\"(100..199)/1\": {}}",
-              }
+              },
             )
             non_matching_range_comparison = AddressComparison.new(
               address: @address,
@@ -216,7 +216,7 @@ module AtlasEngine
           test "#<=> handles cases when there are no text comparisons and no numbers data in number comparison" do
             non_matching_range_candidate_1 = Candidate.new(
               id: "123",
-              source: {"building_and_unit_ranges" => "{\"(100..199)/1\": {}}"}
+              source: { "building_and_unit_ranges" => "{\"(100..199)/1\": {}}" },
             )
             non_matching_numbers_comparison_1 = AddressComparison.new(
               address: @address,
@@ -228,7 +228,7 @@ module AtlasEngine
               id: "123",
               source: {
                 "building_and_unit_ranges" => "{\"(200..299)/1\": {}}",
-              }
+              },
             )
             non_matching_numbers_comparison_2 = AddressComparison.new(
               address: @address,
@@ -243,7 +243,7 @@ module AtlasEngine
           test "#potential_match? returns true when the street comparison is nil" do
             empty_candidate = Candidate.new(
               id: "123",
-              source: {}
+              source: {},
             )
             address_comparison = AddressComparison.new(
               address: @address,
@@ -258,7 +258,7 @@ module AtlasEngine
               id: "123",
               source: {
                 "street" => "County St 34",
-              }
+              },
             )
             address_comparison = AddressComparison.new(
               address: @address,
@@ -273,7 +273,7 @@ module AtlasEngine
               id: "123",
               source: {
                 "street" => "blah blah road",
-              }
+              },
             )
             address_comparison = AddressComparison.new(
               address: @address,

@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -8,7 +11,7 @@ require "sorbet-runtime"
 Bundler.require(*Rails.groups)
 
 # Load dotenv only in development or test environment
-if ['development', 'test'].include? ENV['RAILS_ENV']
+if ["development", "test"].include?(ENV["RAILS_ENV"])
   Dotenv::Railtie.load
 end
 
@@ -16,7 +19,7 @@ require "atlas_engine"
 
 module Dummy
   class Application < Rails::Application
-    config.load_defaults Rails::VERSION::STRING.to_f
+    config.load_defaults(Rails::VERSION::STRING.to_f)
 
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = false

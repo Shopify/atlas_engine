@@ -28,7 +28,8 @@ module AtlasEngine
           end
 
           test "#update_result adds invalid zip concern when zip is invalid for province" do
-            @address = build_address(**@default_address.merge({ province_code: "AB" })) # K2P 1L4 is not valid for Alberta
+            # K2P 1L4 is not valid for Alberta
+            @address = build_address(**@default_address.merge({ province_code: "AB" }))
             result = build_result
 
             @klass.new(session: session, result: result).update_result

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAtlasEnginePostAddresses < ActiveRecord::Migration[7.0]
   def change
     create_table(:atlas_engine_post_addresses, if_not_exists: true) do |t|

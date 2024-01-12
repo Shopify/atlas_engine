@@ -38,7 +38,6 @@ module AtlasEngine
           assert_equal "Man Francisco", best_candidate.candidate.component(:city).value
         end
 
-
         test "asynchronously determines the candidate having the best merged comparison compared to the address" do
           @datastore.candidates = [
             candidate(city: "San Fransauceco"), # close

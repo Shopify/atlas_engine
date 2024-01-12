@@ -204,8 +204,8 @@ module AtlasEngine
             assert_empty zip_concern.suggestion_ids
           end
 
-          test "does not add an invalid zip concern when ConcernBuilder.should_suggest? is false and given zip/province /
-              are mutually consistent" do
+          test "does not add an invalid zip concern when ConcernBuilder.should_suggest? is false and given /
+            zip/province are mutually consistent" do
             ConcernBuilder.expects(:should_suggest?).once.returns(false)
             @address = address
             result = result()
@@ -217,8 +217,8 @@ module AtlasEngine
             assert_empty result.suggestions
           end
 
-          test "adds address_unknown concern without suggestions when ConcernBuilder.should_suggest? is false candidate /
-              differs from input address by 3+ fields" do
+          test "adds address_unknown concern without suggestions when ConcernBuilder.should_suggest? is false /
+              candidate differs from input address by 3+ fields" do
             ConcernBuilder.expects(:should_suggest?).once.returns(false)
             @address = address
             result = result()

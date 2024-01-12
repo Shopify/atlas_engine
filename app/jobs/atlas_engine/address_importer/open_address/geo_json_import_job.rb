@@ -101,7 +101,8 @@ module AtlasEngine
         end
 
         sig do
-          params(addresses: T::Array[T::Hash[Symbol, T.untyped]]).returns(T::Array[T.nilable(T::Hash[Symbol, T.untyped])])
+          params(addresses: T::Array[T::Hash[Symbol,
+            T.untyped]]).returns(T::Array[T.nilable(T::Hash[Symbol, T.untyped])])
         end
         def condense_addresses(addresses)
           addresses
@@ -165,7 +166,7 @@ module AtlasEngine
           in nil # Undefined: let everything through
             ->(_row) { true }
           in /\w+(::\w+)+/ => sym # Class name
-            cls = sym.constantize # rubocop:disable Sorbet/ConstantsFromStrings
+            cls = sym.constantize
             inst = cls.new(country_import: country_import)
             inst.method(:filter).to_proc
           end

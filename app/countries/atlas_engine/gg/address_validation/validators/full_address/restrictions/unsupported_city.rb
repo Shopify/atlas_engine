@@ -17,7 +17,10 @@ module AtlasEngine
                 extend T::Sig
                 include AtlasEngine::Restrictions::Base
 
-                sig { override(allow_incompatible: true).params(address: AtlasEngine::AddressValidation::AbstractAddress).returns(T::Boolean) }
+                sig do
+                  override(allow_incompatible: true).params(address: AtlasEngine::AddressValidation::AbstractAddress)
+                    .returns(T::Boolean)
+                end
                 def apply?(address:)
                   zip_prefix = UNSUPPORTED_CITY_ZIP_MAPPING[address.city&.upcase]
                   return false if zip_prefix.nil?

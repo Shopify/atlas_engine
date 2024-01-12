@@ -14,7 +14,8 @@ module AtlasEngine
 
             @parsings = T.let(
               AtlasEngine::Gb::ValidationTranscriber::FullAddressParser
-                .new(address: address).parse, T::Array[ValidationTranscriber::ParsedAddress]
+                .new(address: address).parse,
+              T::Array[ValidationTranscriber::ParsedAddress],
             )
           end
 

@@ -15,7 +15,7 @@ module AtlasEngine
 
         # Expected format: [suffix, pre_directional, name, post_directional]
         # Note that the directionals may be absent.
-        # Also, suffix is really a prefix in French, but we keep the existing terminology for cross-language consistency.
+        # Suffix is actually a prefix in French, but we keep the existing terminology for cross-language consistency.
 
         suffix = nil
         pre_directional = nil

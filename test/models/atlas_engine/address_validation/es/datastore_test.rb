@@ -99,7 +99,9 @@ module AtlasEngine
         end
 
         test "#fetch_city_sequence records the state of an unresolved async future at the time of the call" do
-          delayed_future = Concurrent::Promises.delay { AtlasEngine::AddressValidation::Token::Sequence.from_string("") }
+          delayed_future = Concurrent::Promises.delay do
+            AtlasEngine::AddressValidation::Token::Sequence.from_string("")
+          end
           @datastore.instance_variable_set(:@city_sequence_future, delayed_future)
 
           assert_statsd_increment(
