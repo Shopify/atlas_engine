@@ -23,7 +23,7 @@ module AtlasEngine
               additional_params = restriction["params"]&.transform_keys(&:to_sym)
 
               params = { address: address }
-              params = params.merge!(additional_params) if additional_params.present?
+              params = params.merge!({ params: additional_params }) if additional_params.present?
 
               return false if class_name.constantize.send(:apply?, **params)
             end

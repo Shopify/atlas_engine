@@ -10,11 +10,6 @@ module AtlasEngine
 
         include Singleton
 
-        sig { override.params(client: NilClass).void }
-        def initialize(client: nil)
-          @client = client
-        end
-
         sig do
           override.params(
             event: Event,

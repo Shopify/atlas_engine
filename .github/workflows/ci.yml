@@ -62,6 +62,9 @@ jobs:
     - name: Ruby Tests
       run: bundle exec rails test
 
+    - name: Lint
+      run: bundle exec rubocop
+
     - name: Typecheck
       run: bundle exec srb tc
 

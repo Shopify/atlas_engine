@@ -18,8 +18,10 @@ module AtlasEngine
           end
         end
 
-        sig { abstract.params(client: T.untyped).void }
-        def initialize(client: nil); end
+        sig { params(client: T.untyped).void }
+        def initialize(client: nil)
+          @client = client
+        end
 
         sig do
           abstract.params(
