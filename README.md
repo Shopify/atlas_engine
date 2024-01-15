@@ -9,7 +9,7 @@ This is a rails engine that is meant to provide end-to-end address validation fo
 #### Initial setup
 Add the engine to your gemfile
 ```
-gem "atlas_engine", git: "https://github.com/Shopify/atlas-engine"
+gem "atlas_engine", git: "https://github.com/Shopify/atlas_engine_private"
 ```
 
 Run the following commands to install the engine in your rails app
