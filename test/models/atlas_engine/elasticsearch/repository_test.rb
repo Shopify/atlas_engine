@@ -450,7 +450,7 @@ module AtlasEngine
 
         @repository.save_records_backfill(records)
 
-        # PENDING: Waiting for the index to update, there should be a better way to implement this
+        # Waiting for the index to update
         sleep(1)
 
         response = @repository.client.get("#{@repository.new_alias}/_search")
@@ -478,7 +478,7 @@ module AtlasEngine
 
         @repository.save_records_backfill(records)
 
-        # PENDING: Waiting for the index to update, there should be a better way to implement this
+        # Waiting for the index to update
         sleep(1)
 
         response = @repository.search({})

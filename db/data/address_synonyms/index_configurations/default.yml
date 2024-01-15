@@ -138,5 +138,4 @@ settings:
         <% end %>
         strip_special_characters:
           type: "pattern_replace"
-          # TODO: Pull from Country Profile https://github.com/Shopify/address/issues/1081
           pattern: "[!|@|%|&|\"|'|*|,|.|(|)|;|:]"

@@ -231,7 +231,7 @@ module AtlasEngine
 
           test "atlas-engine.address_validation.validation_completed notifications event fires for nil best_candidate" do
             @session.datastore.candidates = [] # candidate is nil.
-            result = AddressValidation::Result.new(client_request_id: "1234", origin: "https://checkout.shopify.com")
+            result = AddressValidation::Result.new(client_request_id: "1234", origin: "https://random-url.com")
 
             ActiveSupport::Notifications.expects(:instrument)
 
