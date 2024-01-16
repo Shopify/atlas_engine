@@ -29,7 +29,7 @@ module AtlasEngine
               city: [city.titleize],
               suburb: nil,
               zip: postcode,
-              street: street.titleize,
+              street: street,
               building_and_unit_ranges: housenumber_and_unit(number, unit),
               latitude: geometry(feature)&.at(1),
               longitude: geometry(feature)&.at(0),

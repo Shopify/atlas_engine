@@ -9,3 +9,4 @@ ingestion:
     open_address:
       - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector
       - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector
+      - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::SpecialCharacterCorrector
