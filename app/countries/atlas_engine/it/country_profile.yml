@@ -7,6 +7,6 @@ ingestion:
     feature_mapper: AtlasEngine::It::AddressImporter::OpenAddress::Mapper
   correctors:
     open_address:
+      - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::SpecialCharacterCorrector
       - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector
       - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::ProvinceCorrector
-      - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::SpecialCharacterCorrector
