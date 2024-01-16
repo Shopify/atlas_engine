@@ -15,12 +15,12 @@ module AtlasEngine
              {
                "hash" => "924942534778cb4f",
                "number" => "55",
-               "street" => "LocalitÃ  Pontone Rocchi",
+               "street" => "Via della Libertà",
                "unit" => "",
-               "city" => "CIVITAVECCHIA",
-               "district" => "ROME",
-               "region" => "LAZIO",
-               "postcode" => "00053",
+               "city" => "EBOLI",
+               "district" => "SALERNO",
+               "region" => "CAMPANIA",
+               "postcode" => "84025",
                "id" => "13800054839073",
              },
               "geometry" => { "type" => "Point", "coordinates" => [11.793187, 42.107467] },
@@ -33,13 +33,13 @@ module AtlasEngine
               source_id: "OA-13800054839073",
               locale: "IT",
               country_code: "IT",
-              province_code: "RM", # province code from district
-              region1: "LAZIO",
-              region2: "ROME",
-              city: ["Civitavecchia"], # the city has been titleized
+              province_code: "SA", # province code from district
+              region1: "CAMPANIA",
+              region2: "SALERNO",
+              city: ["Eboli"], # the city has been titleized
               suburb: nil,
-              zip: "00053",
-              street: "Localitã  Pontone Rocchi",
+              zip: "84025",
+              street: "Via della Libertà",
               building_and_unit_ranges: { "55" => {} },
               latitude: 42.107467,
               longitude: 11.793187,

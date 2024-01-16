@@ -19,25 +19,25 @@ module AtlasEngine
               }
 
               SPECIAL_CHAR_STREET_MAPPING = {
-                "ã¹" => "ù",
-                "ã²" => "ò",
-                "ã³" => "ò",
-                "ã¡" => "à",
-                "ã¢" => "â",
-                "ã¼" => "ü",
-                "ã±" => "ñ",
-                "ã«" => "ë",
-                "ã¨" => "è",
-                "ã©" => "e",
-                "ã®" => "i",
-                "ã´" => "o",
-                "ãª" => "ê",
-                "ã»" => "u",
-                "ã¶" => "ö",
-                "ã¬" => "ì",
-                "ã¤" => "a",
-                "ã§" => "c",
-                "ãº" => "u",
+                "Ã¹" => "ù",
+                "Ã²" => "ò",
+                "Ã³" => "ò",
+                "Ã¡" => "à",
+                "Ã¢" => "â",
+                "Ã¼" => "ü",
+                "Ã±" => "ñ",
+                "Ã«" => "ë",
+                "Ã¨" => "è",
+                "Ã©" => "e",
+                "Ã®" => "i",
+                "Ã´" => "o",
+                "Ãª" => "ê",
+                "Ã»" => "u",
+                "Ã¶" => "ö",
+                "Ã¬" => "ì",
+                "Ã¤" => "a",
+                "Ã§" => "c",
+                "Ãº" => "u",
               }
 
               sig { params(address: Hash).void }
@@ -60,7 +60,7 @@ module AtlasEngine
 
                 re = special_char_regex(SPECIAL_CHAR_STREET_MAPPING)
                 address[:street] = address[:street].gsub(re, SPECIAL_CHAR_STREET_MAPPING)
-                address[:street] = address[:street].tr("ã", "à")
+                address[:street] = address[:street].tr("Ã", "à")
               end
 
               sig { params(mapping: Hash).returns(Regexp) }
