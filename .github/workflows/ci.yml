@@ -35,6 +35,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       DB: db
+      MYSQL_ROOT_USER: root
       MYSQL_USER: root
       MYSQL_PASSWORD:
 
