@@ -18,27 +18,27 @@ module AtlasEngine
                 "ã\u008C" => "ì",
               }
 
-              SPECIAL_CHAR_STREET_MAPPING = {
-                "Ã¹" => "ù",
-                "Ã²" => "ò",
-                "Ã³" => "ò",
-                "Ã¡" => "à",
-                "Ã¢" => "â",
-                "Ã¼" => "ü",
-                "Ã±" => "ñ",
-                "Ã«" => "ë",
-                "Ã¨" => "è",
-                "Ã©" => "e",
-                "Ã®" => "i",
-                "Ã´" => "o",
-                "Ãª" => "ê",
-                "Ã»" => "u",
-                "Ã¶" => "ö",
-                "Ã¬" => "ì",
-                "Ã¤" => "a",
-                "Ã§" => "c",
-                "Ãº" => "u",
-              }
+              # SPECIAL_CHAR_STREET_MAPPING = {
+              #   "Ã¹" => "ù",
+              #   "Ã²" => "ò",
+              #   "Ã³" => "ò",
+              #   "Ã¡" => "à",
+              #   "Ã¢" => "â",
+              #   "Ã¼" => "ü",
+              #   "Ã±" => "ñ",
+              #   "Ã«" => "ë",
+              #   "Ã¨" => "è",
+              #   "Ã©" => "e",
+              #   "Ã®" => "i",
+              #   "Ã´" => "o",
+              #   "Ãª" => "ê",
+              #   "Ã»" => "u",
+              #   "Ã¶" => "ö",
+              #   "Ã¬" => "ì",
+              #   "Ã¤" => "a",
+              #   "Ã§" => "c",
+              #   "Ãº" => "u",
+              # }
 
               sig { params(address: Hash).void }
               def apply(address)
@@ -58,9 +58,18 @@ module AtlasEngine
               def fix_street_special_chars(address)
                 return unless address[:street]
 
-                re = special_char_regex(SPECIAL_CHAR_STREET_MAPPING)
-                address[:street] = address[:street].gsub(re, SPECIAL_CHAR_STREET_MAPPING)
-                address[:street] = address[:street].tr("Ã", "à")
+                address[:street] = address[:street].encode("iso-8859-1")
+
+                bytes = address[:street].bytes
+                if bytes.include?(195)
+                  i = bytes.index(195)
+                  if i == bytes.length - 1 || bytes[i + 1] == 32
+                    bytes.insert(i + 1, 160)
+                    address[:street] = bytes.pack("c*")
+                  end
+                end
+
+                address[:street] = address[:street].force_encoding("utf-8")
               end
 
               sig { params(mapping: Hash).returns(Regexp) }
