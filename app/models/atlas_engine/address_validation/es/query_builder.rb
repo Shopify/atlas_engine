@@ -152,7 +152,7 @@ module AtlasEngine
             "term" => {
               "province_code" => { "value" => address.province_code.to_s.downcase },
             },
-          } if profile.attributes.dig("validation", "has_provinces")
+          } if profile.attributes.dig("validation", "has_provinces") && address.province_code.present?
         end
       end
     end

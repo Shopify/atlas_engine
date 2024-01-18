@@ -19,7 +19,7 @@ module AtlasEngine
               "bool" =>
                 {
                   "should" => clauses,
-                  "minimum_should_match" => [clauses.count - 2, 2].max,
+                  "minimum_should_match" => 3,
                 },
             },
           }

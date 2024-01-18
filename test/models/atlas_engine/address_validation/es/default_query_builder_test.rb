@@ -31,7 +31,7 @@ module AtlasEngine
           assert_equal expected_address_query("us_missing"), query_builder.full_address_query
         end
 
-        test "#full_address_query returns a query with minimum_should_match of at least 2" do
+        test "#full_address_query returns a query with minimum_should_match of 3" do
           query_builder = DefaultQueryBuilder.new(us_address)
           query_builder.stubs(:city_clause).returns(nil)
           query_builder.stubs(:zip_clause).returns(nil)
@@ -92,6 +92,21 @@ module AtlasEngine
           assert_equal expected_address_query("without_province_code"), query_builder.full_address_query
         end
 
+        test "#full_address_query does not return a province clause if validation.has_provinces is true but address does not have a province_code" do
+          profile_attributes = {
+            "id" => "XX",
+            "validation" => {
+              "key" => "some_value",
+              "has_provinces" => true,
+              "address_parser" => "AtlasEngine::ValidationTranscriber::AddressParserNorthAmerica",
+            },
+          }
+
+          CountryProfile.any_instance.stubs(:attributes).returns(profile_attributes)
+          query_builder = DefaultQueryBuilder.new(us_address_wo_province)
+          assert_equal expected_address_query("without_province_code"), query_builder.full_address_query
+        end
+
         test "#full_address_query returns nested city_aliases clause" do
           profile_attributes = {
             "id" => "XX",
@@ -114,6 +129,16 @@ module AtlasEngine
             address1: "123 Main Street",
             city: "San Francisco",
             province_code: "CA",
+            country_code: "US",
+            zip: "94102",
+          )
+        end
+
+        def us_address_wo_province
+          build_address(
+            address1: "123 Main Street",
+            city: "San Francisco",
+            province_code: nil,
             country_code: "US",
             zip: "94102",
           )
