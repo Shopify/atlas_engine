@@ -13,6 +13,7 @@ module AtlasEngine
               BM_PARISH_AND_CITY_NAMES = {
                 "Devonshire" => "Devonshire Parish",
                 "Hamilton" => "Hamilton Parish",
+                "City of Hamilton" => "Hamilton",
                 "Paget" => "Paget Parish",
                 "Pembroke" => "Pembroke Parish",
                 "Sandys" => "Sandys Parish",

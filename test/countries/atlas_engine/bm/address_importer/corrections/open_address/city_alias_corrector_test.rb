@@ -31,7 +31,7 @@ module AtlasEngine
               bm_cities = [
                 {
                   input: ["City of Hamilton"],
-                  expected: ["City of Hamilton"], # no aliases
+                  expected: ["City of Hamilton", "Hamilton"],
                 },
                 {
                   input: ["Hamilton"],
@@ -72,6 +72,10 @@ module AtlasEngine
                 {
                   input: ["Warwick"],
                   expected: ["Warwick", "Warwick Parish"],
+                },
+                {
+                  input: ["Another City"],
+                  expected: ["Another City"], # no aliases
                 },
               ]
 
