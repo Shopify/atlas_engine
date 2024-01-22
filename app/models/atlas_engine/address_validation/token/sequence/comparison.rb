@@ -48,6 +48,9 @@ module AtlasEngine
             edit_distance = aggregate_edit_distance <=> other.aggregate_edit_distance
             return edit_distance if edit_distance.nonzero?
 
+            unmatched_length = unmachted_tokens_length <=> other.unmachted_tokens_length
+            return unmatched_length if unmatched_length.nonzero?
+
             prefixes = count_by_qualifier(:prefix) <=> other.count_by_qualifier(:prefix)
             return prefixes * -1 if prefixes.nonzero?
 
@@ -103,6 +106,11 @@ module AtlasEngine
           sig { returns(Integer) }
           def aggregate_edit_distance
             token_comparisons.sum(&:edit_distance)
+          end
+
+          sig { returns(Integer) }
+          def unmachted_tokens_length
+            unmatched_tokens.map(&:value).sum(&:length)
           end
 
           sig { returns(Integer) }

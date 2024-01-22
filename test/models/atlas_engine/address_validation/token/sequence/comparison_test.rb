@@ -159,6 +159,20 @@ module AtlasEngine
             assert seq_comp_b.better_than?(seq_comp_a)
           end
 
+          test "smaller sum of unmatched token string lengths wins when edit distance is same" do
+            token1 = token(value: "dummy1")
+            token2 = token(value: "dumy1")
+
+            comparisons_a = [@comp_2]
+            seq_comp_a = sequence_comparison(token_comparisons: comparisons_a, unmatched_tokens: [token1])
+
+            comparisons_b = [@comp_2]
+            seq_comp_b = sequence_comparison(token_comparisons: comparisons_b, unmatched_tokens: [token2])
+
+            assert seq_comp_a.worse_than?(seq_comp_b)
+            assert seq_comp_b.better_than?(seq_comp_a)
+          end
+
           test "most prefixes wins" do
             comparisons_a = [@prefix_2, @prefix_2]
 
