@@ -1,6 +1,6 @@
 id: LT
 validation:
   enabled: true
-  default_matching_strategy: es
+  default_matching_strategy: local
   address_parser: AtlasEngine::Lt::ValidationTranscriber::AddressParser
   has_provinces: false
