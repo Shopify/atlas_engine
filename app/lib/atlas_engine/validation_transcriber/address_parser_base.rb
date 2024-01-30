@@ -72,6 +72,7 @@ module AtlasEngine
           address_line, po_box = extract_po_box(address_line)
 
           country_regex_formats.each do |format|
+            debugger
             m = format.match(address_line)
             next if m.nil?
 

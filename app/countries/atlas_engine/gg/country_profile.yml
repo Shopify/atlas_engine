@@ -3,5 +3,9 @@ validation:
   enabled: true
   default_matching_strategy: es
   has_provinces: false
+  address_parser: AtlasEngine::Gg::ValidationTranscriber::AddressParser
   restrictions:
     - class: AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity
+  comparison_policies:
+    city:
+      unmatched: ignore_left_unmatched
