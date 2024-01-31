@@ -56,4 +56,8 @@ pipeline:
     class: AtlasEngine::AddressValidation::Validators::Predicates::Phone::Valid
   - field: address
     class: AtlasEngine::AddressValidation::Validators::Predicates::FullAddress::Found
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForProvince
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForCountry
 

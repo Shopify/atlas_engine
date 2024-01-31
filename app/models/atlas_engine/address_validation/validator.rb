@@ -117,11 +117,39 @@ module AtlasEngine
           local_concerns[config.field] = [] if local_concerns[config.field].nil?
           next if local_concerns[config.field].present?
 
+          next if config.field == :address && concerns_preclude_validation(local_concerns.values.flatten)
+
           concern = config.class_name.new(field: config.field, address: pipeline_address, cache: cache).evaluate
 
           local_concerns[config.field] << concern if concern.present?
         end
         local_concerns
+      end
+
+      sig { params(local_concerns: T::Array[Concern]).returns(T::Boolean) }
+      def concerns_preclude_validation(local_concerns)
+        has_error_concerns?(local_concerns) || exceeds_max_token_length?(local_concerns)
+      end
+
+      sig { params(local_concerns: T::Array[Concern]).returns(T::Boolean) }
+      def has_error_concerns?(local_concerns)
+        error_concerns = local_concerns.select { |concern| concern.type == Concern::TYPES[:error] }
+        error_concerns.flat_map(&:field_names).intersect?([
+          :country,
+          :province,
+          :city,
+          :zip,
+          :address1,
+          :address2,
+        ])
+      end
+
+      sig { params(local_concerns: T::Array[Concern]).returns(T::Boolean) }
+      def exceeds_max_token_length?(local_concerns)
+        local_concerns.flat_map(&:code).intersect?([
+          :address1_contains_too_many_words,
+          :address2_contains_too_many_words,
+        ])
       end
 
       sig { params(local_concerns: T::Hash[Symbol, T::Array[Concern]]).void }
