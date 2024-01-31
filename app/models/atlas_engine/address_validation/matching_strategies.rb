@@ -10,6 +10,7 @@ module AtlasEngine
         Es = new("es")
         EsStreet = new("es_street")
         Local = new("local")
+        EsPredicates = new("es_predicates")
       end
     end
   end

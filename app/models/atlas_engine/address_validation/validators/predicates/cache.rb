@@ -31,6 +31,14 @@ module AtlasEngine
               @empty_region
             end
           end
+
+          sig { returns(T.nilable(AtlasEngine::AddressValidation::Validators::FullAddress::AddressComparison)) }
+          def address_comparison
+            @address_comparison ||= AddressValidation::Es::CandidateSelector.new(
+              datastore: AtlasEngine::AddressValidation::Es::Datastore.new(address: @address),
+              address: @address,
+            ).best_candidate&.address_comparison # TODO: get rid of the tuple, it's not needed
+          end
         end
       end
     end

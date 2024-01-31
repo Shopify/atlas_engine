@@ -39,6 +39,7 @@ type Field {
 
 enum MatchingStrategy {
   ES
+  ES_PREDICATES
   ES_STREET
   LOCAL
 }

@@ -127,7 +127,7 @@ module AtlasEngine
       sig { params(local_concerns: T::Hash[Symbol, T::Array[Concern]]).void }
       def populate_result(local_concerns)
         local_concerns.keys.each do |field|
-          if local_concerns[field]&.empty? && [:address2, :phone].exclude?(field)
+          if local_concerns[field]&.empty? && [:address2, :phone, :address].exclude?(field)
             result.validation_scope << T.must(FIELD_MAP[field])
           end
 
