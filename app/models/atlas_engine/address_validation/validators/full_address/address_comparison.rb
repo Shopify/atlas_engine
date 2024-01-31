@@ -14,13 +14,14 @@ module AtlasEngine
           delegate :street_comparison,
             :city_comparison,
             :province_code_comparison,
-            :zip_comparison,
             :building_comparison,
             to: :comparison_helper
 
           sig { params(address: AbstractAddress, candidate: Candidate, datastore: DatastoreBase).void }
           def initialize(address:, candidate:, datastore:)
             @comparison_helper = ComparisonHelper.new(address:, candidate:, datastore:)
+
+            @zip_comparison = ZipComparison.new(address: address, candidate: candidate, datastore: datastore)
           end
 
           sig { params(other: AddressComparison).returns(Integer) }
@@ -43,6 +44,10 @@ module AtlasEngine
           sig { returns(T::Boolean) }
           def potential_match?
             street_comparison.nil? || T.must(street_comparison).potential_match?
+          end
+
+          def zip_comparison
+            @zip_comparison.compare
           end
 
           protected

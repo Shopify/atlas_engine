@@ -64,23 +64,7 @@ module AtlasEngine
 
           sig { returns(T.nilable(Token::Sequence::Comparison)) }
           def zip_comparison
-            return @zip_comparison if defined?(@zip_comparison)
-
-            candidate.component(:zip)&.value = PostalCodeMatcher.new(
-              T.must(address.country_code),
-              T.must(address.zip),
-              candidate.component(:zip)&.value,
-            ).truncate
-
-            normalized_zip = ValidationTranscriber::ZipNormalizer.normalize(
-              country_code: address.country_code, zip: address.zip,
-            )
-            zip_sequence = Token::Sequence.from_string(normalized_zip)
-            @zip_comparison = best_comparison(
-              zip_sequence,
-              T.must(candidate.component(:zip)).sequences,
-              field_policy(:zip),
-            )
+            ZipComparison.new(address: address, candidate: candidate, datastore: datastore).compare
           end
 
           sig { returns(NumberComparison) }
