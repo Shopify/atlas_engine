@@ -41,6 +41,7 @@ enum MatchingStrategy {
   ES
   ES_PREDICATES
   ES_STREET
+  ES_STREET_PREDICATES
   LOCAL
 }
 

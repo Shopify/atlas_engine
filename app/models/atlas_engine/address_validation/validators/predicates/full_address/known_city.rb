@@ -19,20 +19,20 @@ module AtlasEngine
 
             sig { returns(T::Boolean) }
             def province_zip_match?
-              @cache.address_comparison&.province_code_comparison&.match? &&
-                @cache.address_comparison&.zip_comparison&.match?
+              (@cache.address_comparison&.province_code_comparison&.match? || false) &&
+                (@cache.address_comparison&.zip_comparison&.match? || false)
             end
 
             sig { returns(T::Boolean) }
             def province_street_match?
-              @cache.address_comparison&.province_code_comparison&.match? &&
-                @cache.address_comparison&.street_comparison&.match?
+              (@cache.address_comparison&.province_code_comparison&.match? || false) &&
+                (@cache.address_comparison&.street_comparison&.match? || false)
             end
 
             sig { returns(T::Boolean) }
             def zip_street_match?
-              @cache.address_comparison&.zip_comparison&.match? &&
-                @cache.address_comparison&.city_comparison&.match?
+              (@cache.address_comparison&.zip_comparison&.match? || false) &&
+                (@cache.address_comparison&.street_comparison&.match? || false)
             end
 
             sig { returns(String) }

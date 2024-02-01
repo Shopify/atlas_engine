@@ -11,6 +11,7 @@ module AtlasEngine
         EsStreet = new("es_street")
         Local = new("local")
         EsPredicates = new("es_predicates")
+        EsStreetPredicates = new("es_street_predicates")
       end
     end
   end
