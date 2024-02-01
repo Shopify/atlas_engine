@@ -122,7 +122,7 @@ module AtlasEngine
           next if config.field != :address &&
             local_concerns[:address].present? &&
             local_concerns[:address].none? { |c| c.code == :address_unknown }
-          next if local_concerns[config.field].present?
+          next if config.field != :address && local_concerns[config.field].present?
 
           next if config.field == :address && concerns_preclude_validation(local_concerns.values.flatten)
 

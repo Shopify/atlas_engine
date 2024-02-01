@@ -6,11 +6,11 @@ module AtlasEngine
     module Validators
       module Predicates
         module FullAddress
-          class KnownZip < Predicate
+          class KnownCity < Predicate
             sig { override.returns(T.nilable(Concern)) }
             def evaluate
-              if !@cache.address_comparison&.zip_comparison&.match? &&
-                  (province_city_match? || province_street_match? || city_street_match?)
+              if !@cache.address_comparison&.city_comparison&.match? &&
+                  (province_zip_match? || province_street_match? || zip_street_match?)
                 build_concern
               end
             end
@@ -18,9 +18,9 @@ module AtlasEngine
             private
 
             sig { returns(T::Boolean) }
-            def province_city_match?
+            def province_zip_match?
               @cache.address_comparison&.province_code_comparison&.match? &&
-                @cache.address_comparison&.city_comparison&.match?
+                @cache.address_comparison&.zip_comparison&.match?
             end
 
             sig { returns(T::Boolean) }
@@ -30,19 +30,19 @@ module AtlasEngine
             end
 
             sig { returns(T::Boolean) }
-            def city_street_match?
-              @cache.address_comparison&.street_comparison&.match? &&
+            def zip_street_match?
+              @cache.address_comparison&.zip_comparison&.match? &&
                 @cache.address_comparison&.city_comparison&.match?
             end
 
             sig { returns(String) }
             def message
-              if city_street_match?
-                "Enter a valid ZIP for #{address.address1}, #{address.city}"
-              elsif province_city_match?
-                "Enter a valid ZIP for #{address.city}, #{province_name}"
-              elsif province_street_match?
-                "Enter a valid ZIP for #{address.address1}, #{province_name}"
+              if province_street_match?
+                "Enter a valid city for #{address.address1}, #{province_name}"
+              elsif province_zip_match?
+                "Enter a valid city for #{address.zip}, #{province_name}"
+              elsif zip_street_match?
+                "Enter a valid city for #{address.address1}, #{address.zip}"
               else
                 ""
               end
@@ -59,8 +59,8 @@ module AtlasEngine
             def build_concern
               suggestion = build_suggestion
               Concern.new(
-                field_names: [:zip],
-                code: :zip_inconsistent,
+                field_names: [:city],
+                code: :city_inconsistent,
                 type: T.must(Concern::TYPES[:warning]),
                 type_level: 3,
                 suggestion_ids: [T.must(suggestion.id)],
@@ -72,7 +72,7 @@ module AtlasEngine
             sig { returns(Suggestion) }
             def build_suggestion
               Suggestion.new(
-                zip: @cache.address_comparison&.candidate&.component(:zip)&.first_value,
+                city: @cache.address_comparison&.candidate&.component(:city)&.first_value,
               )
             end
           end
