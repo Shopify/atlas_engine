@@ -28,6 +28,9 @@ module AtlasEngine
       sig { returns(T.nilable(FullAddressValidatorBase)) }
       attr_reader :full_address_validator
 
+      sig { returns(T.nilable(String)) }
+      attr_accessor :serialized_candidate
+
       FIELD_MAP = T.let(
         {
           country: "country_code",
@@ -115,9 +118,17 @@ module AtlasEngine
         cache = Validators::Predicates::Cache.new(pipeline_address)
         @predicate_pipeline.pipeline.each do |config|
           local_concerns[config.field] = [] if local_concerns[config.field].nil?
+          # if there are address concerns, only run remaining address concerns unless address is unknown
+          next if config.field != :address &&
+            local_concerns[:address].present? &&
+            local_concerns[:address].none? { |c| c.code == :address_unknown }
           next if local_concerns[config.field].present?
 
           next if config.field == :address && concerns_preclude_validation(local_concerns.values.flatten)
+
+          if config.field == :address
+            self.serialized_candidate = cache.address_comparison&.candidate&.serialize
+          end
 
           concern = config.class_name.new(field: config.field, address: pipeline_address, cache: cache).evaluate
 
@@ -164,6 +175,7 @@ module AtlasEngine
             result.suggestions << T.must(concern.suggestion) if concern.suggestion.present?
           end
         end
+        result.candidate = serialized_candidate
       end
 
       sig { void }

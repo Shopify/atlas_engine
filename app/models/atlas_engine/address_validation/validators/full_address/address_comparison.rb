@@ -65,8 +65,6 @@ module AtlasEngine
             @building_comparison ||= field_comparison(field: :building)
           end
 
-          protected
-
           sig do
             returns(T::Array[FieldComparisonBase])
           end
@@ -79,6 +77,8 @@ module AtlasEngine
               building_comparison,
             ].compact_blank
           end
+
+          protected
 
           sig { returns(T::Array[AtlasEngine::AddressValidation::Token::Sequence::Comparison]) }
           def text_comparisons

@@ -58,6 +58,8 @@ pipeline:
     class: AtlasEngine::AddressValidation::Validators::Predicates::FullAddress::Found
   - field: address
     class: AtlasEngine::AddressValidation::Validators::Predicates::FullAddress::KnownZip
+  - field: address
+    class: AtlasEngine::AddressValidation::Validators::Predicates::FullAddress::KnownProvince
   - field: zip
     class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForProvince
   - field: zip
