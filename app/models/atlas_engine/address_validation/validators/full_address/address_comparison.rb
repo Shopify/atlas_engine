@@ -78,8 +78,6 @@ module AtlasEngine
             ].compact_blank
           end
 
-          protected
-
           sig { returns(T::Array[AtlasEngine::AddressValidation::Token::Sequence::Comparison]) }
           def text_comparisons
             [

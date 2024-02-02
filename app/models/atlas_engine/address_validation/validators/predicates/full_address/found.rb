@@ -29,7 +29,7 @@ module AtlasEngine
             # TODO: ideally this could be filtered out in the address_comparison
             sig { returns(T::Boolean) }
             def too_many_unmatched_components?
-              unmatched_component_count = @cache.address_comparison&.comparisons&.map(&:match?)&.count(false) || 0
+              unmatched_component_count = @cache.address_comparison&.text_comparisons&.map(&:match?)&.count(false) || 0
               unmatched_component_count > unmatched_components_suggestion_threshold
             end
 
