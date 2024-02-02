@@ -8,10 +8,14 @@ module AtlasEngine
         class Cache
           extend T::Sig
 
+          sig { returns(T.nilable(Suggestion)) }
+          attr_accessor :suggestion
+
           sig { params(address: Address).void }
           def initialize(address)
             @address = address
             @empty_region = Worldwide::Region.new(iso_code: "ZZ")
+            @suggestion = nil
           end
 
           sig { returns(Worldwide::Region) }

@@ -10,13 +10,30 @@ module AtlasEngine
             sig { override.returns(T.nilable(Concern)) }
             def evaluate
               if !@cache.address_comparison&.province_code_comparison&.match? &&
-                  @cache.address_comparison&.zip_comparison&.match? &&
-                  @cache.address_comparison&.city_comparison&.match?
+                  (city_zip_match? || city_street_match? || zip_street_match?)
                 build_concern
               end
             end
 
             private
+
+            sig { returns(T::Boolean) }
+            def city_zip_match?
+              (@cache.address_comparison&.city_comparison&.match? || false) &&
+                (@cache.address_comparison&.zip_comparison&.match? || false)
+            end
+
+            sig { returns(T::Boolean) }
+            def city_street_match?
+              (@cache.address_comparison&.city_comparison&.match? || false) &&
+                (@cache.address_comparison&.street_comparison&.match? || false)
+            end
+
+            sig { returns(T::Boolean) }
+            def zip_street_match?
+              (@cache.address_comparison&.zip_comparison&.match? || false) &&
+                (@cache.address_comparison&.street_comparison&.match? || false)
+            end
 
             sig { returns(Concern) }
             def build_concern
@@ -34,20 +51,30 @@ module AtlasEngine
 
             sig { returns(String) }
             def message
-              @cache.country
-                .field(key: :province)
-                .error(
-                  code: :unknown_for_city_and_zip,
-                  options: { city: address.city, zip: address.zip },
-                ).to_s
+              if city_zip_match?
+                "Enter a valid province for #{address.city}, #{address.zip}"
+              elsif city_street_match?
+                "Enter a valid province for #{address.address1}, #{address.city}"
+              elsif zip_street_match?
+                "Enter a valid province for #{address.address1}, #{address.zip}"
+              else
+                ""
+              end
             end
 
             sig { returns(Suggestion) }
             def build_suggestion
-              Suggestion.new(
-                province_code: @cache.address_comparison&.candidate&.component(:province_code)&.first_value,
-                country_code: address.country_code.to_s,
-              )
+              province_code_suggestion = @cache.address_comparison&.candidate&.component(:province_code)&.first_value
+
+              if @cache.suggestion.nil?
+                @cache.suggestion = Suggestion.new(
+                  province_code: @cache.address_comparison&.candidate&.component(:province_code)&.first_value,
+                  country_code: address.country_code.to_s,
+                )
+              else
+                T.must(@cache.suggestion).province_code = province_code_suggestion
+              end
+              T.must(@cache.suggestion)
             end
           end
         end

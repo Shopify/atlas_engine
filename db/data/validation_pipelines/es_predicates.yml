@@ -63,7 +63,7 @@ pipeline:
   - field: address
     class: AtlasEngine::AddressValidation::Validators::Predicates::FullAddress::KnownProvince
   - field: zip
-    class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForProvince
-  - field: zip
     class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForCountry
+  - field: zip
+    class: AtlasEngine::AddressValidation::Validators::Predicates::Zip::ValidForProvince
 

@@ -73,18 +73,29 @@ module AtlasEngine
 
             sig { returns(Suggestion) }
             def build_suggestion
-              suggested_street = @cache.address_comparison&.street_comparison&.right_sequence&.raw_value
-              original_street = @cache.address_comparison&.street_comparison&.left_sequence&.raw_value
+              sequence_comparison = @cache.address_comparison&.street_comparison&.sequence_comparison
 
-              if address.address1.to_s.include?(original_street)
-                Suggestion.new(
-                  address1: address1.to_s.sub(original_street, suggested_street),
-                )
+              suggested_street = sequence_comparison&.right_sequence&.raw_value
+              original_street = sequence_comparison&.left_sequence&.raw_value
+
+              if @cache.suggestion.nil?
+                @cache.suggestion = if address.address1.to_s.include?(original_street)
+                  Suggestion.new(
+                    address1: address1.to_s.sub(original_street, suggested_street),
+                    country_code: address.country_code.to_s,
+                  )
+                else
+                  Suggestion.new(
+                    address2: address2.to_s.sub(original_street, suggested_street),
+                    country_code: address.country_code.to_s,
+                  )
+                end
+              elsif address.address1.to_s.include?(original_street)
+                T.must(@cache.suggestion).address1 = address1.to_s.sub(original_street, suggested_street)
               else
-                Suggestion.new(
-                  address2: address2.to_s.sub(original_street, suggested_street),
-                )
+                T.must(@cache.suggestion).address2 = address2.to_s.sub(original_street, suggested_street)
               end
+              T.must(@cache.suggestion)
             end
           end
         end

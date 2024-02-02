@@ -176,6 +176,7 @@ module AtlasEngine
           end
         end
         result.candidate = serialized_candidate
+        result.suggestions.uniq!
       end
 
       sig { void }

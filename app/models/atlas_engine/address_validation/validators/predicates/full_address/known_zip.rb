@@ -71,9 +71,16 @@ module AtlasEngine
 
             sig { returns(Suggestion) }
             def build_suggestion
-              Suggestion.new(
-                zip: @cache.address_comparison&.candidate&.component(:zip)&.first_value,
-              )
+              zip_suggestion = @cache.address_comparison&.candidate&.component(:zip)&.first_value
+              if @cache.suggestion.nil?
+                @cache.suggestion = Suggestion.new(
+                  zip: zip_suggestion,
+                  country_code: address.country_code.to_s,
+                )
+              else
+                T.must(@cache.suggestion).zip = zip_suggestion
+              end
+              T.must(@cache.suggestion)
             end
           end
         end
