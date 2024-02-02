@@ -71,8 +71,14 @@ module AtlasEngine
 
             sig { returns(Suggestion) }
             def build_suggestion
+              city_comparison = @cache.address_comparison&.city_comparison
+              city_suggestion = if city_comparison&.token_match_count == 0 || (city_comparison&.aggregate_distance&.> 2)
+                @cache.address_comparison&.candidate&.component(:city)&.first_value
+              else
+                city_comparison&.right_sequence&.raw_value
+              end
               Suggestion.new(
-                city: @cache.address_comparison&.candidate&.component(:city)&.first_value,
+                city: city_suggestion,
               )
             end
           end
