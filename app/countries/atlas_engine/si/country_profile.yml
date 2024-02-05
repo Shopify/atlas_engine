@@ -8,11 +8,12 @@ ingestion:
 validation:
   enabled: true
   default_matching_strategy: es
+  has_province: false
   # exclusions:
   #   city:
   #     - AtlasEngine::Si::AddressValidation::Exclusions::UnknownCity
   address_comparison:
-    city: AtlasEngine::AddressValidation::Validators::FullAddress::CityComparison
+    city: AtlasEngine::Si::AddressValidation::FieldComparisons::CityComparison
   address_parser: AtlasEngine::Si::ValidationTranscriber::AddressParser
   comparison_policies:
     street:
