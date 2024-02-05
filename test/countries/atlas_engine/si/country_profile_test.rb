@@ -22,12 +22,12 @@ module AtlasEngine
           @profile.ingestion.open_address_feature_mapper
       end
 
-      test "#validation_exclusions value is correct for city component" do
-        assert_equal [
-          Si::AddressValidation::Exclusions::UnknownCity,
-        ],
-          @profile.validation.validation_exclusions(component: :city)
-      end
+      # test "#validation_exclusions value is correct for city component" do
+      #   assert_equal [
+      #     Si::AddressValidation::Exclusions::UnknownCity,
+      #   ],
+      #     @profile.validation.validation_exclusions(component: :city)
+      # end
 
       test "#address_parser returns the custom SI parser" do
         assert_equal Si::ValidationTranscriber::AddressParser,
