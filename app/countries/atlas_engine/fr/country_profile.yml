@@ -12,3 +12,4 @@ validation:
   enabled: true
   default_matching_strategy: es
   has_provinces: false
+  zip_length: 5
