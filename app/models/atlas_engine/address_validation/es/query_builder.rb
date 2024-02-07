@@ -152,7 +152,7 @@ module AtlasEngine
           )
           {
             "match" => {
-              "zip" => { "query" => normalized_zip, "fuzziness" => "auto" },
+              "zip" => { "query" => normalized_zip },
             },
           }
         end
