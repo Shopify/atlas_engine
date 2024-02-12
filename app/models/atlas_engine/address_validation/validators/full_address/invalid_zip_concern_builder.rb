@@ -11,20 +11,23 @@ module AtlasEngine
 
             sig do
               params(
+                country: Worldwide::Region,
                 address: AbstractAddress,
                 suggestion_ids: T::Array[String],
               ).returns(T.nilable(AddressValidation::Concern))
             end
-            def for(address, suggestion_ids)
-              country = Worldwide.region(code: address.country_code)
-
+            def for(country, address, suggestion_ids)
               province = country.zone(code: address.province_code.presence || "")
               return unless country.has_zip?
 
               if country_expects_zone_in_address?(country) && province.province?
-                InvalidZipForProvinceConcern.new(address, suggestion_ids) unless province.valid_zip?(address.zip)
+                InvalidZipForProvinceConcern.new(
+                  country,
+                  address,
+                  suggestion_ids,
+                ) unless province.valid_zip?(address.zip)
               else
-                InvalidZipForCountryConcern.new(address, suggestion_ids) unless country.valid_zip?(address.zip)
+                InvalidZipForCountryConcern.new(country, address, suggestion_ids) unless country.valid_zip?(address.zip)
               end
             end
 

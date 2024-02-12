@@ -11,10 +11,11 @@ module AtlasEngine
           sig { void }
           def update_result
             result.concerns << UnknownAddressConcern.new(
+              country,
               address,
             )
 
-            concern = InvalidZipConcernBuilder.for(session.address, [])
+            concern = InvalidZipConcernBuilder.for(country, session.address, [])
             result.concerns << concern if concern
 
             update_result_scope

@@ -8,7 +8,7 @@ module AtlasEngine
         class ConcernBuilder
           extend T::Sig
 
-          attr_reader :unmatched_component, :unmatched_field, :matched_components, :address, :suggestion_ids
+          attr_reader :unmatched_component, :unmatched_field, :matched_components, :address, :suggestion_ids, :country
 
           class << self
             extend T::Sig
@@ -39,7 +39,9 @@ module AtlasEngine
 
             sig { params(address: AbstractAddress).returns(T::Boolean) }
             def valid_zip_for_province?(address)
-              !country_has_zip_codes(address) || province_postal_code_valid?(address)
+              country = Worldwide.region(code: address.country_code)
+
+              !country.has_zip? || province_postal_code_valid?(country, address)
             end
 
             private
@@ -49,15 +51,10 @@ module AtlasEngine
               component_keys.include?(:province_code) && component_keys.intersection([:zip, :city]).one?
             end
 
-            sig { params(address: AbstractAddress).returns(T::Boolean) }
-            def country_has_zip_codes(address)
-              Worldwide.region(code: address.country_code).has_zip?
-            end
-
-            def province_postal_code_valid?(address)
+            sig { params(country: Worldwide::Region, address: AbstractAddress).returns(T::Boolean) }
+            def province_postal_code_valid?(country, address)
               return true if address.province_code.blank?
 
-              country = Worldwide.region(code: address.country_code)
               return true if country.hide_provinces_from_addresses
 
               province = country.zone(code: address.province_code)
@@ -75,6 +72,7 @@ module AtlasEngine
 
           sig do
             params(
+              country: Worldwide::Region,
               unmatched_component: Symbol,
               matched_components: T::Array[Symbol],
               address: AbstractAddress,
@@ -82,12 +80,14 @@ module AtlasEngine
               unmatched_field: T.nilable(Symbol),
             ).void
           end
-          def initialize(unmatched_component:, matched_components:, address:, suggestion_ids:, unmatched_field: nil)
+          def initialize(country:, unmatched_component:, matched_components:, address:, suggestion_ids:,
+            unmatched_field: nil)
             @unmatched_component = unmatched_component
             @unmatched_field = unmatched_field
             @matched_components = matched_components
             @address = address
             @suggestion_ids = suggestion_ids
+            @country = country
           end
 
           sig { returns(AddressValidation::Concern) }
@@ -106,7 +106,7 @@ module AtlasEngine
 
           sig { returns(AddressValidation::Concern) }
           def build_zip_concern
-            concern = InvalidZipConcernBuilder.for(address, suggestion_ids)
+            concern = InvalidZipConcernBuilder.for(country, address, suggestion_ids)
             return concern if concern
 
             if :province_code.in?(matched_components) && :city.in?(matched_components)

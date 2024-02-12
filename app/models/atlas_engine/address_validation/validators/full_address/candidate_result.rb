@@ -20,7 +20,8 @@ module AtlasEngine
               .void
           end
           def initialize(candidate:, session:, result:)
-            super(session: session, result: result)
+            @country = Worldwide.region(code: session.address.country_code)
+            super(country: country, session: session, result: result)
             @candidate = candidate.candidate
             @address_comparison = candidate.address_comparison
           end
@@ -47,6 +48,9 @@ module AtlasEngine
           sig { returns(AddressComparison) }
           attr_reader :address_comparison
 
+          sig { returns(Worldwide::Region) }
+          attr_reader :country
+
           sig { void }
           def update_concerns_and_suggestions
             if suggestable?
@@ -58,11 +62,11 @@ module AtlasEngine
 
           sig { void }
           def add_concerns_without_suggestions
-            concern = InvalidZipConcernBuilder.for(session.address, [])
+            concern = InvalidZipConcernBuilder.for(country, session.address, [])
             result.concerns << concern if concern
 
             if ConcernBuilder.too_many_unmatched_components?(session.address, unmatched_components.keys)
-              result.concerns << UnknownAddressConcern.new(session.address)
+              result.concerns << UnknownAddressConcern.new(country, session.address)
             end
           end
 
@@ -76,6 +80,7 @@ module AtlasEngine
               end
 
               concern = ConcernBuilder.new(
+                country: country,
                 unmatched_component: unmatched_component,
                 unmatched_field: field_name,
                 matched_components: matched_components_to_validate.keys,

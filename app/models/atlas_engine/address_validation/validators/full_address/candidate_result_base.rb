@@ -11,8 +11,9 @@ module AtlasEngine
 
           abstract!
 
-          sig { params(session: Session, result: Result).void }
-          def initialize(session:, result:)
+          sig { params(country: Worldwide::Region, session: Session, result: Result).void }
+          def initialize(country:, session:, result:)
+            @country = country
             @session = session
             @result = result
           end
@@ -22,7 +23,7 @@ module AtlasEngine
 
           private
 
-          attr_reader :session, :result
+          attr_reader :session, :result, :country
 
           delegate :address, to: :session
 

@@ -11,12 +11,12 @@ module AtlasEngine
           sig { returns(TAddress) }
           attr_reader :address
 
-          sig { params(address: TAddress).void }
-          def initialize(address)
+          sig { params(country: Worldwide::Region, address: TAddress).void }
+          def initialize(country, address)
             @address = address
             super(
               code: :address_unknown,
-              message: Worldwide.region(code: address.country_code).field(key: :address).error(code: :may_not_exist),
+              message: country.field(key: :address).error(code: :may_not_exist),
               type: T.must(Concern::TYPES[:warning]),
               type_level: 1,
               suggestion_ids: [],

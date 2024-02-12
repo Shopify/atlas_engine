@@ -8,13 +8,14 @@ module AtlasEngine
         class FullAddress < FullAddressValidatorBase
           include LogHelper
 
-          attr_reader :address, :result
+          attr_reader :address, :result, :country
           attr_accessor :session
 
           sig { params(address: TAddress, result: Result).void }
           def initialize(address:, result: Result.new)
             super
             @session = T.let(Session.new(address: address, matching_strategy: MatchingStrategies::Es), Session)
+            @country = T.let(Worldwide.region(code: address.country_code), Worldwide::Region)
           end
 
           sig { override.returns(Result) }
@@ -30,11 +31,15 @@ module AtlasEngine
           sig { returns(AddressValidation::Validators::FullAddress::CandidateResultBase) }
           def build_candidate_result
             unless supported_address?(address)
-              return AddressValidation::Validators::FullAddress::UnsupportedScriptResult.new(session:, result:)
+              return AddressValidation::Validators::FullAddress::UnsupportedScriptResult.new(
+                country:,
+                session:,
+                result:,
+              )
             end
 
             if best_candidate.nil?
-              AddressValidation::Validators::FullAddress::NoCandidateResult.new(session:, result:)
+              AddressValidation::Validators::FullAddress::NoCandidateResult.new(country:, session:, result:)
             else
               AddressValidation::Validators::FullAddress::CandidateResult.new(
                 candidate: T.must(best_candidate),

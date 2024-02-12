@@ -26,11 +26,12 @@ module AtlasEngine
       def emit(component)
         concerns = component_concerns(component)
         ending_breadcrumb = concerns.present? ? "invalid" : "valid"
+        region = Worldwide.region(code: address.country_code)
 
-        country_code = if address.country_code.blank? || !Worldwide.region(code: address.country_code).country?
+        country_code = if address.country_code.blank? || !region.country?
           "no_country"
         else
-          Worldwide.region(code: address.country_code).iso_code
+          region.iso_code
         end
 
         I18n.with_locale("en") do

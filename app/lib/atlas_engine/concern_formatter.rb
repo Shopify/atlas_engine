@@ -29,7 +29,8 @@ module AtlasEngine
 
     sig { returns(Worldwide::Region) }
     def country
-      @country ||= Worldwide.region(code: address.country_code)
+      # it is expected that this is implemented in the including class
+      raise NotImplementedError
     end
 
     sig { returns(Worldwide::Region) }
