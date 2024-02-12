@@ -10,10 +10,14 @@ module AtlasEngine
       class AddressParserTest < ActiveSupport::TestCase
         include AtlasEngine::AddressValidation::AddressValidationTestHelper
 
-        test "One line addresses" do
+        test "Parser can extract suburb from address2" do
           [
-            # building number incorrectly added before street name, with punctuation
-            [:nz, "1028 RIVER ROAD", "QUEENWOOD", [{ street: "RIVER ROAD", building_num: "1028", suburb: "QUEENWOOD" }]],
+            [
+              :nz,
+              "1028 RIVER ROAD",
+              "QUEENWOOD",
+              [{ street: "RIVER ROAD", building_num: "1028", suburb: "QUEENWOOD" }],
+            ],
           ].each do |country_code, address1, address2, expected|
             check_parsing(AddressParser, country_code, address1, address2, expected)
           end
