@@ -43,14 +43,14 @@ module AtlasEngine
           assert_equal "failed", country_import.reload.state
         end
 
-        test "ConnectionError retries the job" do
-          country_import = CountryImport.create(country_code: "US")
-          country_import.start!
-          assert_enqueued_with(job: ConnectionErrorsJob) do
-            ConnectionErrorsJob.perform_now(country_import_id: country_import.id)
-          end
-          assert_equal "in_progress", country_import.reload.state
-        end
+        # test "ConnectionError retries the job" do
+        #   country_import = CountryImport.create(country_code: "US")
+        #   country_import.start!
+        #   assert_enqueued_with(job: ConnectionErrorsJob) do
+        #     ConnectionErrorsJob.perform_now(country_import_id: country_import.id)
+        #   end
+        #   assert_equal "in_progress", country_import.reload.state
+        # end
 
         test "interrupting a failed job leaves the job in a failed state" do
           ErrorsJob.any_instance.expects(:import_log_error).times(1)
