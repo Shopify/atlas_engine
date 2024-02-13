@@ -35,7 +35,7 @@ module AtlasEngine
         def initialize(address, parsings, locale = nil)
           @address = address
           @profile = CountryProfile.for(T.must(address.country_code), locale)
-          @parsings = ValidationTranscriber::AddressParsings.new(address_input: address, locale: locale)
+          @parsings = parsings
         end
 
         sig { abstract.returns(T::Hash[String, T.untyped]) }

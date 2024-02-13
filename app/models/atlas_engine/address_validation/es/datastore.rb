@@ -33,7 +33,7 @@ module AtlasEngine
           end
 
           @parsings = ValidationTranscriber::AddressParsings.new(address_input: address, locale: locale)
-          @query_builder = QueryBuilder.for(address, @parsings, locale)
+          @query_builder = QueryBuilder.for(address, parsings, locale)
         end
 
         sig do
