@@ -18,18 +18,17 @@ module AtlasEngine
 
                 sig do
                   override.params(
-                    session: AtlasEngine::AddressValidation::Session,
                     candidate: AtlasEngine::AddressValidation::Candidate,
                     address_comparison: AtlasEngine::AddressValidation::Validators::FullAddress::AddressComparison,
                   )
                     .returns(T::Boolean)
                 end
-                def apply?(session, candidate, address_comparison)
+                def apply?(candidate, address_comparison)
                   candidate_si = extract_component_from_city(candidate, :si)
                   candidate_gu = extract_component_from_city(candidate, :gu)
 
-                  (candidate_si.present? && contains_component?(:si, candidate_si, session)) ||
-                    (candidate_gu.present? && contains_component?(:gu, candidate_gu, session))
+                  (candidate_si.present? && contains_component?(:si, candidate_si, address_comparison)) ||
+                    (candidate_gu.present? && contains_component?(:gu, candidate_gu, address_comparison))
                 end
 
                 private
@@ -53,11 +52,11 @@ module AtlasEngine
                   params(
                     type: Symbol,
                     value: String,
-                    session: AtlasEngine::AddressValidation::Session,
+                    address_comparison: AtlasEngine::AddressValidation::Validators::FullAddress::AddressComparison,
                   ).returns(T::Boolean)
                 end
-                def contains_component?(type, value, session)
-                  session.parsings.parsings.pluck(type)&.include?(value) || session.city&.include?(value)
+                def contains_component?(type, value, address_comparison)
+                  address_comparison.parsings.parsings.pluck(type)&.include?(value) || address_comparison.address.city&.include?(value)
                 end
               end
             end

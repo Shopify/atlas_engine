@@ -14,12 +14,11 @@ module AtlasEngine
 
               sig do
                 abstract.params(
-                  session: Session,
                   candidate: Candidate,
                   address_comparison: AddressComparison,
                 ).returns(T::Boolean)
               end
-              def apply?(session, candidate, address_comparison); end
+              def apply?(candidate, address_comparison); end
             end
           end
         end

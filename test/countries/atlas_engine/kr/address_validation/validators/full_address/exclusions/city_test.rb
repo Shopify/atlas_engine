@@ -33,7 +33,7 @@ module AtlasEngine
 
                 comparison = mock_address_comparison("창원시", "창원시")
 
-                assert City.apply?(session(address), candidate_address, comparison)
+                assert City.apply?(candidate_address, comparison)
               end
 
               test "#apply? returns true when candidate city (gu only) is present in sesssion address components" do
@@ -56,7 +56,7 @@ module AtlasEngine
 
                 comparison = mock_address_comparison("창원시", "마산회원구")
 
-                assert City.apply?(session(address), candidate_address, comparison)
+                assert City.apply?(candidate_address, comparison)
               end
 
               test "#apply? returns true when candidate city (si and gu) are present in session address components" do
@@ -79,7 +79,7 @@ module AtlasEngine
 
                 comparison = mock_address_comparison("창원시", "창원시 마산회원구")
 
-                assert City.apply?(session(address), candidate_address, comparison)
+                assert City.apply?(candidate_address, comparison)
               end
 
               test "#apply? returns false when candidate si is not present in session address components" do
@@ -102,7 +102,7 @@ module AtlasEngine
 
                 comparison = mock_address_comparison("창원시", "창원시 마산회원구")
 
-                assert_not City.apply?(session(address), candidate_address, comparison)
+                assert_not City.apply?(candidate_address, comparison)
               end
 
               test "#apply? returns false when candidate gu is not present in session address components" do
@@ -125,7 +125,7 @@ module AtlasEngine
 
                 comparison = mock_address_comparison("창원시", "창원시 마산회원구")
 
-                assert_not City.apply?(session(address), candidate_address, comparison)
+                assert_not City.apply?(candidate_address, comparison)
               end
 
               def mock_address_comparison(given_city, candidate_city)

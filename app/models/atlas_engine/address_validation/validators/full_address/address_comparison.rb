@@ -9,7 +9,9 @@ module AtlasEngine
           extend T::Sig
           include Comparable
 
-          attr_reader :address, :candidate, :datastore
+          attr_reader :address, :candidate, :datastore, :parsings
+
+          delegate :parsings, to: :datastore
 
           sig { params(address: AbstractAddress, candidate: Candidate, datastore: DatastoreBase).void }
           def initialize(address:, candidate:, datastore:)
