@@ -12,15 +12,27 @@ module AtlasEngine
         class << self
           extend T::Sig
 
-          sig { params(address: AbstractAddress, locale: T.nilable(String)).returns(QueryBuilder) }
-          def for(address, locale = nil)
+          sig do
+            params(
+              address: AbstractAddress,
+              parsings: ValidationTranscriber::AddressParsings,
+              locale: T.nilable(String),
+            ).returns(QueryBuilder)
+          end
+          def for(address, parsings, locale = nil)
             profile = CountryProfile.for(T.must(address.country_code), locale)
-            profile.attributes.dig("validation", "query_builder").constantize.new(address, locale)
+            profile.attributes.dig("validation", "query_builder").constantize.new(address, parsings, locale)
           end
         end
 
-        sig { params(address: AbstractAddress, locale: T.nilable(String)).void }
-        def initialize(address, locale = nil)
+        sig do
+          params(
+            address: AbstractAddress,
+            parsings: ValidationTranscriber::AddressParsings,
+            locale: T.nilable(String),
+          ).void
+        end
+        def initialize(address, parsings, locale = nil)
           @address = address
           @profile = CountryProfile.for(T.must(address.country_code), locale)
           @parsings = ValidationTranscriber::AddressParsings.new(address_input: address, locale: locale)
