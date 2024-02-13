@@ -13,14 +13,15 @@ module AtlasEngine
 
           sig do
             params(
+              country: Worldwide::Region,
               candidate: AddressValidation::CandidateTuple,
               session: Session,
               result: Result,
             )
               .void
           end
-          def initialize(candidate:, session:, result:)
-            super(session: session, result: result)
+          def initialize(country:, candidate:, session:, result:)
+            super(country: country, session: session, result: result)
             @candidate = candidate.candidate
             @address_comparison = candidate.address_comparison
           end
@@ -47,6 +48,9 @@ module AtlasEngine
           sig { returns(AddressComparison) }
           attr_reader :address_comparison
 
+          sig { returns(Worldwide::Region) }
+          attr_reader :country
+
           sig { void }
           def update_concerns_and_suggestions
             if suggestable?
@@ -58,24 +62,25 @@ module AtlasEngine
 
           sig { void }
           def add_concerns_without_suggestions
-            concern = InvalidZipConcernBuilder.for(session.address, [])
+            concern = InvalidZipConcernBuilder.for(country, session.address, [])
             result.concerns << concern if concern
 
             if ConcernBuilder.too_many_unmatched_components?(session.address, unmatched_components.keys)
-              result.concerns << UnknownAddressConcern.new(session.address)
+              result.concerns << UnknownAddressConcern.new(country, session.address)
             end
           end
 
           sig { void }
           def add_concerns_with_suggestions
             unmatched_components_to_validate.keys.each do |unmatched_component|
-              field_name = unmatched_field_name(unmatched_component)
+              field_name = field_name(unmatched_component)
               if field_name.nil?
                 log_unknown_field_name
                 next
               end
 
               concern = ConcernBuilder.new(
+                country: country,
                 unmatched_component: unmatched_component,
                 unmatched_field: field_name,
                 matched_components: matched_components_to_validate.keys,
@@ -89,7 +94,7 @@ module AtlasEngine
 
           sig { returns(Suggestion) }
           def suggestion
-            unmatched_fields = { street: unmatched_field_name(:street) }.compact
+            unmatched_fields = { street: field_name(:street) }.compact
 
             @suggestion ||= SuggestionBuilder.from_comparisons(
               session.address.to_h,
@@ -163,7 +168,7 @@ module AtlasEngine
           end
 
           sig { params(component: Symbol).returns(T.nilable(Symbol)) }
-          def unmatched_field_name(component)
+          def field_name(component)
             return component unless component == :street
             return if unmatched_components_to_validate[:street].nil?
 
@@ -178,10 +183,7 @@ module AtlasEngine
 
           sig { void }
           def log_unknown_field_name
-            potential_streets = { potential_streets: session.parsings.potential_streets }
-            input_address = session.address.to_h.compact_blank.except(:phone)
-            log_details = input_address.merge(potential_streets)
-            log_info("[AddressValidation] Unable to identify unmatched field name", log_details)
+            log_error("[AddressValidation] Unable to identify unmatched field name", input_address)
           end
         end
       end
