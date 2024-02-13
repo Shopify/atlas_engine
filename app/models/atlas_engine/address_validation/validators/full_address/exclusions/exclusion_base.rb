@@ -14,7 +14,7 @@ module AtlasEngine
 
               sig do
                 abstract.params(
-                  candidate: Candidate,
+                  candidate: Candidate, # the candidate is part of the comparison, so we can remove that too
                   address_comparison: AddressComparison,
                 ).returns(T::Boolean)
               end
