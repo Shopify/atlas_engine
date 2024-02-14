@@ -5,3 +5,6 @@ validation:
   has_provinces: false
   restrictions:
     - class: AtlasEngine::Gg::AddressValidation::Validators::FullAddress::Restrictions::UnsupportedCity
+  comparison_policies:
+    city:
+      unmatched: ignore_left_unmatched
