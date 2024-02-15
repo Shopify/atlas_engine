@@ -2,6 +2,4 @@ id: NZ
 validation:
   address_parser: AtlasEngine::Nz::ValidationTranscriber::AddressParser
   address_comparison:
-    suburb:
-      comparator: AtlasEngine::Nz::AddressComparison::SuburbComparison
-      text_based: true
+    suburb: AtlasEngine::Nz::AddressComparison::SuburbComparison
