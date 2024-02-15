@@ -18,9 +18,9 @@ module AtlasEngine
         assert_equal ["de", "fr", "it"], @profile.validation.index_locales
       end
 
-      test "ingestion open_address_feature_mapper is correct" do
+      test "ingestion post_address_mapper is correct for source open_address" do
         assert_equal AtlasEngine::Ch::AddressImporter::OpenAddress::Mapper,
-          @profile.ingestion.open_address_feature_mapper
+          @profile.ingestion.post_address_mapper("open_address")
       end
 
       test "#correctors value is correct for source open-address" do

@@ -11,7 +11,7 @@ module AtlasEngine
         def initialize(country_import:, locale: nil)
           @country_code = country_import.country_code
           @locale = locale
-          @mapper = CountryProfile.for(@country_code).ingestion.open_address_feature_mapper.new(
+          @mapper = CountryProfile.for(@country_code).ingestion.post_address_mapper("open_address").new(
             country_code: @country_code, locale: @locale,
           )
           @corrector = AddressImporter::Corrections::Corrector.new(country_code: @country_code, source: "open_address")

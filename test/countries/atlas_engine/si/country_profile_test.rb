@@ -17,9 +17,9 @@ module AtlasEngine
           @profile.ingestion.correctors(source: "open_address")
       end
 
-      test "#feature_mapper value is correct for source open-address" do
+      test "#post_address_mapper value is correct for source open-address" do
         assert_equal AtlasEngine::Si::AddressImporter::OpenAddress::Mapper,
-          @profile.ingestion.open_address_feature_mapper
+          @profile.ingestion.post_address_mapper("open_address")
       end
 
       test "#validation_exclusions value is correct for city component" do

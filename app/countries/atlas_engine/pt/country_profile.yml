@@ -3,8 +3,8 @@ ingestion:
   correctors:
     open_address:
       - AtlasEngine::Pt::AddressImporter::Corrections::OpenAddress::CityCorrector
-  open_address:
-    feature_mapper: AtlasEngine::Pt::AddressImporter::OpenAddress::Mapper
+  post_address_mapper:
+    open_address: AtlasEngine::Pt::AddressImporter::OpenAddress::Mapper
 validation:
   enabled: true
   default_matching_strategy: es

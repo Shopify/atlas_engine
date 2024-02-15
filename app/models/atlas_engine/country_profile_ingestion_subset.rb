@@ -24,9 +24,9 @@ module AtlasEngine
       attributes.dig("settings", "min_zip_edge_ngram")
     end
 
-    sig { returns(T::Class[AddressImporter::OpenAddress::DefaultMapper]) }
-    def open_address_feature_mapper
-      attributes.dig("open_address", "feature_mapper").constantize
+    sig { params(source: String).returns(T::Class[AddressImporter::OpenAddress::DefaultMapper]) }
+    def post_address_mapper(source)
+      attributes.dig("post_address_mapper", source).constantize
     end
 
     sig { returns(T.nilable(String)) }

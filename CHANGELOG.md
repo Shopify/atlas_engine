@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+- Rearrange storage of feature mappers in country profiles [#137](https://github.com/Shopify/atlas_engine/pull/137)
 - Remove session from Validation::Exclusion [#135](https://github.com/Shopify/atlas_engine/pull/135)
 - Send parsings and country profile into QueryBuilder initializer [#134](https://github.com/Shopify/atlas_engine/pull/134)
 - Remove the unnecessary instantiation of worldwide region from CountryProfile.for [#130](https://github.com/Shopify/atlas_engine/pull/130)

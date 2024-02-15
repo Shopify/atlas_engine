@@ -8,8 +8,8 @@ validation:
       - AtlasEngine::It::AddressValidation::Validators::FullAddress::Exclusions::City
   unmatched_components_suggestion_threshold: 1
 ingestion:
-  open_address:
-    feature_mapper: AtlasEngine::It::AddressImporter::OpenAddress::Mapper
+  post_address_mapper:
+    open_address: AtlasEngine::It::AddressImporter::OpenAddress::Mapper
   correctors:
     open_address:
       - AtlasEngine::It::AddressImporter::Corrections::OpenAddress::CityCorrector

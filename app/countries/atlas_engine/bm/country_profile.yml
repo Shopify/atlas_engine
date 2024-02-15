@@ -3,8 +3,8 @@ ingestion:
   correctors:
     open_address:
       - AtlasEngine::Bm::AddressImporter::Corrections::OpenAddress::CityAliasCorrector
-  open_address:
-    feature_mapper: AtlasEngine::Bm::AddressImporter::OpenAddress::Mapper
+  post_address_mapper:
+    open_address: AtlasEngine::Bm::AddressImporter::OpenAddress::Mapper
 validation:
   enabled: true
   has_provinces: true

@@ -1,3 +1,4 @@
 id: ES
 validation:
   address_parser: AtlasEngine::Es::ValidationTranscriber::AddressParser
+

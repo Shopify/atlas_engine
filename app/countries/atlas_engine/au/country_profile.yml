@@ -3,8 +3,8 @@ ingestion:
   settings:
     min_zip_edge_ngram: "1"
     max_zip_edge_ngram: "4"
-  open_address:
-    feature_mapper: AtlasEngine::Au::AddressImporter::OpenAddress::Mapper
+  post_address_mapper:
+    open_address: AtlasEngine::Au::AddressImporter::OpenAddress::Mapper
 validation:
   address_parser: AtlasEngine::Au::ValidationTranscriber::AddressParser
   enabled: true

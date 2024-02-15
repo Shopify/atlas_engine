@@ -4,8 +4,8 @@ ingestion:
   correctors: {}
   settings: {}
   data_mapper: AtlasEngine::AddressValidation::Es::DataMappers::DefaultDataMapper
-  open_address:
-    feature_mapper: AtlasEngine::AddressImporter::OpenAddress::DefaultMapper
+  post_address_mapper:
+    open_address: AtlasEngine::AddressImporter::OpenAddress::DefaultMapper
 validation:
   enabled: false
   has_provinces: true
