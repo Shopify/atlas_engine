@@ -69,9 +69,14 @@ module AtlasEngine
 
           sig { params(locale: T.nilable(String)).returns(Concurrent::Promises::Future) }
           def best_candidate_future(locale = nil)
+            datastore = AtlasEngine::AddressValidation::Es::Datastore.new(
+              address: address,
+              locale: locale,
+            )
+
             AddressValidation::Es::CandidateSelector.new(
-              datastore: session.datastore(locale: locale),
-              address: session.address,
+              datastore: datastore,
+              address: address,
             ).best_candidate_async
           end
 

@@ -69,7 +69,7 @@ module AtlasEngine
           sig { void }
           def add_concerns_with_suggestions
             unmatched_components_to_validate.keys.each do |unmatched_component|
-              field_name = unmatched_field_name(unmatched_component)
+              field_name = field_name(unmatched_component)
               if field_name.nil?
                 log_unknown_field_name
                 next
@@ -89,7 +89,7 @@ module AtlasEngine
 
           sig { returns(Suggestion) }
           def suggestion
-            unmatched_fields = { street: unmatched_field_name(:street) }.compact
+            unmatched_fields = { street: field_name(:street) }.compact
 
             @suggestion ||= SuggestionBuilder.from_comparisons(
               session.address.to_h,
@@ -163,7 +163,7 @@ module AtlasEngine
           end
 
           sig { params(component: Symbol).returns(T.nilable(Symbol)) }
-          def unmatched_field_name(component)
+          def field_name(component)
             return component unless component == :street
             return if unmatched_components_to_validate[:street].nil?
 
@@ -178,10 +178,8 @@ module AtlasEngine
 
           sig { void }
           def log_unknown_field_name
-            potential_streets = { potential_streets: session.parsings.potential_streets }
             input_address = session.address.to_h.compact_blank.except(:phone)
-            log_details = input_address.merge(potential_streets)
-            log_info("[AddressValidation] Unable to identify unmatched field name", log_details)
+            log_error("[AddressValidation] Unable to identify unmatched field name", input_address)
           end
         end
       end

@@ -16,15 +16,16 @@ module AtlasEngine
             @klass = AddressValidation::Es::Validators::FullAddress
             @address = address
             @session = AddressValidation::Session.new(address: @address)
-            # prime session cache to avoid calls to the DB in Datastore
-            @session.datastore.city_sequence = Token::Sequence.from_string(@address.city)
-            @session.datastore.street_sequences = [
+            # prime datastore cache to avoid calls to the DB in Datastore
+            @datastore = AddressValidation::Es::Datastore.new(address: @address)
+            @datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            @datastore.street_sequences = [
               Token::Sequence.from_string(@address.address1),
             ]
           end
 
           test "does not modify the result if there are existing error concerns related to other address fields" do
-            @session.expects(:datastore).never
+            AddressValidation::Es::Datastore.expects(:new).never
 
             [:country, :province, :zip, :city, :address1, :address2].each do |scope|
               result = AddressValidation::Result.new
@@ -45,7 +46,7 @@ module AtlasEngine
           end
 
           test "does not modify the result if there are addrees1 or address2 tokens exceed max count" do
-            @session.expects(:datastore).never
+            AddressValidation::Es::Datastore.expects(:new).never
 
             [:address1, :address2].each do |scope|
               result = AddressValidation::Result.new
@@ -66,7 +67,8 @@ module AtlasEngine
           end
 
           test "proceeds with full address validation when there are only warning-level concerns" do
-            @session.datastore.candidates = [candidate] # candidate is a perfect match.
+            @datastore.candidates = [candidate] # candidate is a perfect match.
+            AddressValidation::Es::Datastore.expects(:new).returns(@datastore)
 
             result = AddressValidation::Result.new
             result.add_concern(
@@ -80,7 +82,6 @@ module AtlasEngine
 
             AddressValidation::Validators::FullAddress::CandidateResult.any_instance.expects(:update_result)
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
             full_address.validate
             assert_equal 1, result.concerns.size
             assert_equal :missing_building_number, result.concerns.first.code
@@ -94,21 +95,20 @@ module AtlasEngine
               city: "Sark", # Sark is not supported in GG
             )
 
-            @session = AddressValidation::Session.new(address: @address)
             result = AddressValidation::Result.new
 
-            @session.expects(:datastore).never
+            AddressValidation::Es::Datastore.expects(:new).never
 
             @klass.new(address: @address, result: result).validate
           end
 
           test "returns address_unknown if the full address query produces no results" do
-            @session.datastore.candidates = []
+            @datastore.candidates = []
+            AddressValidation::Es::Datastore.expects(:new).returns(@datastore)
 
             result = AddressValidation::Result.new
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
             full_address.validate
 
             assert_equal 1, result.concerns.size
@@ -116,17 +116,17 @@ module AtlasEngine
           end
 
           test "picks the candidate having the best merged comparison compared to the address" do
-            @session.datastore.candidates = [
+            @datastore.candidates = [
               candidate(city: "San Fransauceco"), # close
               candidate(city: "Man Francisco"), # best match, off by one letter on one field
               candidate(city: "Saint Fransauceco"),
             ]
+            AddressValidation::Es::Datastore.expects(:new).returns(@datastore)
 
             result = AddressValidation::Result.new
             ActiveSupport::Notifications.expects(:instrument)
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
             full_address.validate
 
             assert_equal 1, result.concerns.size
@@ -136,38 +136,52 @@ module AtlasEngine
 
           test "picks the best candidate for a multi-locale country" do
             @address = address(address1: "Mövenweg", zip: "8597", country_code: "CH", city: "Brn", province_code: "")
-            ch_session = AddressValidation::Session.new(address: @address)
+            ch_de_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "de")
+            ch_fr_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "fr")
+            ch_it_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "it")
 
-            ch_session.datastore(locale: "de").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "de").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_de_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_de_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "fr").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "fr").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_fr_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_fr_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "it").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "it").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_it_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_it_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "fr").candidates = [
+            ch_fr_datastore.candidates = [
               candidate(city: "Zurich"),
               candidate(city: "Ouster"),
               candidate(city: "Berne"), # best match for french, off by 2
             ]
-            ch_session.datastore(locale: "it").candidates = [
+            ch_it_datastore.candidates = [
               candidate(city: "Zurigo"),
               candidate(city: "Austero"),
               candidate(city: "Berna"), # best match for italian, off by 2
             ]
-            ch_session.datastore(locale: "de").candidates = [
+            ch_de_datastore.candidates = [
               candidate(city: "Zurich"),
               candidate(city: "Uster"),
               candidate(city: "Bern"), # best overall match, off by 1
             ]
 
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "de",
+            ).returns(ch_de_datastore)
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "fr",
+            ).returns(ch_fr_datastore)
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "it",
+            ).returns(ch_it_datastore)
+
             result = AddressValidation::Result.new
             ActiveSupport::Notifications.expects(:instrument)
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = ch_session
             full_address.validate
 
             assert_equal 1, result.concerns.size
@@ -177,30 +191,44 @@ module AtlasEngine
 
           test "handles empty candidates during multi-locale best candidate selection" do
             @address = address(country_code: "CH", city: "Brn")
-            ch_session = AddressValidation::Session.new(address: @address)
+            ch_de_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "de")
+            ch_fr_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "fr")
+            ch_it_datastore = AddressValidation::Es::Datastore.new(address: @address, locale: "it")
 
-            ch_session.datastore(locale: "de").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "de").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_de_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_de_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "fr").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "fr").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_fr_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_fr_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "it").city_sequence = Token::Sequence.from_string(@address.city)
-            ch_session.datastore(locale: "it").street_sequences = [Token::Sequence.from_string(@address.address1)]
+            ch_it_datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            ch_it_datastore.street_sequences = [Token::Sequence.from_string(@address.address1)]
 
-            ch_session.datastore(locale: "fr").candidates = [
+            ch_fr_datastore.candidates = [
               candidate(city: "Berne"), # best match for french, off by 2
             ]
-            ch_session.datastore(locale: "it").candidates = [
+            ch_it_datastore.candidates = [
               candidate(city: "Berna"), # best match for italian, off by 2
             ]
-            ch_session.datastore(locale: "de").candidates = [] # no candidates for german
+            ch_de_datastore.candidates = [] # no candidates for german
+
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "de",
+            ).returns(ch_de_datastore)
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "fr",
+            ).returns(ch_fr_datastore)
+            AddressValidation::Es::Datastore.expects(:new).with(
+              address: @address,
+              locale: "it",
+            ).returns(ch_it_datastore)
 
             result = AddressValidation::Result.new
             ActiveSupport::Notifications.expects(:instrument)
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = ch_session
             full_address.validate
 
             assert_equal 1, result.concerns.size
@@ -210,18 +238,18 @@ module AtlasEngine
 
           test "returns invalid_zip_and_province if province is valid and zip prefix is incompatible" do
             @address = address(zip: "84102") # invalid for California
-            @session = AddressValidation::Session.new(address: @address)
+            datastore = AddressValidation::Es::Datastore.new(address: @address)
 
-            @session.datastore.city_sequence = Token::Sequence.from_string(@address.city)
-            @session.datastore.street_sequences = [
+            datastore.city_sequence = Token::Sequence.from_string(@address.city)
+            datastore.street_sequences = [
               Token::Sequence.from_string(@address.address1),
             ]
-            @session.datastore.candidates = [candidate(zip: "94102")]
+            datastore.candidates = [candidate(zip: "94102")]
+            AddressValidation::Es::Datastore.expects(:new).returns(datastore)
 
             result = AddressValidation::Result.new
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
             full_address.validate
 
             assert_equal 1, result.concerns.size
@@ -230,13 +258,14 @@ module AtlasEngine
           end
 
           test "atlas_engine.address_validation.validation_completed notifications event fires for nil best_candidate" do
-            @session.datastore.candidates = [] # candidate is nil.
+            @datastore.candidates = [] # candidate is nil.
             result = AddressValidation::Result.new(client_request_id: "1234", origin: "https://random-url.com")
 
+            AddressValidation::Es::Datastore.expects(:new).returns(@datastore)
             ActiveSupport::Notifications.expects(:instrument)
 
             full_address = @klass.new(address: @address, result: result)
-            full_address.session = @session
+
             full_address.validate
           end
 
