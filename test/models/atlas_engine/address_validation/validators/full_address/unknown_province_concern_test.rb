@@ -29,26 +29,6 @@ module AtlasEngine
             }
             assert_equal expected_attributes, concern.attributes
           end
-
-          test "#attributes concern - Canada (fr)" do
-            concern = @klass.new(
-              build_address(country_code: "ca", city: "Saint-Néant", zip: "J9A 1A1"),
-              @suggestion_ids,
-            )
-
-            expected_attributes = {
-              field_names: [:province],
-              message: "Saisir une province valide pour Saint-Néant, J9A 1A1",
-              code: :province_inconsistent,
-              type: "error",
-              type_level: 1,
-              suggestion_ids: @suggestion_ids,
-            }
-
-            I18n.with_locale("fr") do
-              assert_equal expected_attributes, concern.attributes
-            end
-          end
         end
       end
     end

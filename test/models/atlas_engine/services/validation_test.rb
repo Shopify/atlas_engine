@@ -141,6 +141,33 @@ module AtlasEngine
         Services::Validation.validate_address(request)
       end
 
+      test "#validate_address translates the result according to the given locale" do
+        @address_input = build_address(
+          # Gyeongbokgung Palace
+          address1: "사직로 161", # 161 Sajik-ro
+          city: "종로구", # Jongno-gu
+          province_code: "KR-11", # Seoul
+          country_code: "KR",
+          zip: "47333", # This is in Busan, the other end of the country, therefore invalid for Seoul
+        )
+
+        request = AddressValidation::Request.new(
+          address: @address_input,
+          locale: "ko",
+          matching_strategy: :LOCAL,
+        )
+
+        AddressValidation::StatsdEmitter.expects(:new).returns(mock(run: nil)).once
+        AddressValidation::LogEmitter.expects(:new).returns(mock(run: nil)).once
+
+        result = Services::Validation.validate_address(request)
+        concern = result.concerns.first
+
+        assert_equal "서울특별시의 유효한 우편 번호 입력", concern.message
+        assert_equal :zip_invalid_for_province, concern.code
+        assert_equal "ko", result.locale
+      end
+
       test "#validate_address caches concerns only if config = true" do
         original_config_value = Rails.configuration.x.captured_concerns.enabled
         Rails.configuration.x.captured_concerns.enabled = true

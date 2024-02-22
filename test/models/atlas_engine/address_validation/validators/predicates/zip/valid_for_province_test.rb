@@ -48,33 +48,6 @@ module AtlasEngine
 
               assert_equal expected_concern, concern&.attributes
             end
-            test "is not valid for province message translates the country name" do
-              address = build_address_obj(
-                # Gyeongbokgung Palace
-                address1: "사직로 161", # 161 Sajik-ro
-                city: "종로구", # Jongno-gu
-                province_code: "KR-11", # Seoul
-                country_code: "KR",
-                zip: "47333", # This is in Busan, the other end of the country, therefore invalid for Seoul
-              )
-              I18n.with_locale(:ko) do
-                concern = ValidForProvince.new(field: :zip, address: address).evaluate
-
-                expected_concern = {
-                  field_names: [:zip, :country, :province],
-                  message: I18n.t(
-                    "worldwide._default.addresses.zip.errors.invalid_for_province",
-                    province: Worldwide.region(code: "KR").zone(code: "KR-11").full_name,
-                  ),
-                  code: :zip_invalid_for_province,
-                  type: "error",
-                  type_level: 3,
-                  suggestion_ids: [],
-                }
-
-                assert_equal expected_concern, concern&.attributes
-              end
-            end
 
             test "when zip won't match due to lack of source data, but province is a US territory" do
               address = build_address_obj(

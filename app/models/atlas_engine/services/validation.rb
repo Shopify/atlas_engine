@@ -15,29 +15,32 @@ module AtlasEngine
         sig { params(request: AddressValidation::Request).returns(AddressValidation::Result) }
         def validate_address(request)
           country_code = request.address.country_code
+          locale = request.locale
           handle_metrics(Validation::VALIDATE_ADDRESS, country_code, false) do
-            matching_strategy = if validation_enabled?(request.address)
-              serialize_strategy(request.matching_strategy, request.address)
-            else
-              AddressValidation::MatchingStrategies::Local
+            I18n.with_locale(locale) do
+              matching_strategy = if validation_enabled?(request.address)
+                serialize_strategy(request.matching_strategy, request.address)
+              else
+                AddressValidation::MatchingStrategies::Local
+              end
+
+              validator = AddressValidation::Validator.new(
+                address: request.address,
+                locale: request.locale,
+                matching_strategy: matching_strategy,
+                context: request.address.context.to_h,
+              )
+              result = validator.run
+
+              AddressValidation::StatsdEmitter.new(address: request.address, result: result).run
+              AddressValidation::LogEmitter.new(address: request.address, result: result).run
+
+              if Rails.configuration.x.captured_concerns.enabled
+                AddressValidation::ConcernProducer.add(result, request.address.context.to_h)
+              end
+
+              result
             end
-
-            validator = AddressValidation::Validator.new(
-              address: request.address,
-              locale: request.locale,
-              matching_strategy: matching_strategy,
-              context: request.address.context.to_h,
-            )
-            result = validator.run
-
-            AddressValidation::StatsdEmitter.new(address: request.address, result: result).run
-            AddressValidation::LogEmitter.new(address: request.address, result: result).run
-
-            if Rails.configuration.x.captured_concerns.enabled
-              AddressValidation::ConcernProducer.add(result, request.address.context.to_h)
-            end
-
-            result
           end
         end
 

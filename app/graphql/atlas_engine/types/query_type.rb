@@ -20,15 +20,13 @@ module AtlasEngine
         country_code = address.country_code
         tags = ["country:#{country_code}", "matching_strategy:#{matching_strategy}"]
         measure("validation", tags) do
-          I18n.with_locale(locale) do
-            Services::Validation.validate_address(
-              AtlasEngine::AddressValidation::Request.new(
-                address: address,
-                locale: locale,
-                matching_strategy: matching_strategy,
-              ),
-            )
-          end
+          Services::Validation.validate_address(
+            AtlasEngine::AddressValidation::Request.new(
+              address: address,
+              locale: locale,
+              matching_strategy: matching_strategy,
+            ),
+          )
         end
       end
 
