@@ -6,6 +6,8 @@ gemspec
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby file: ".ruby-version"
+
 group :development, :test do
   gem "dotenv-rails", require: "dotenv/rails-now"
   # For loading the /graphiql assests
