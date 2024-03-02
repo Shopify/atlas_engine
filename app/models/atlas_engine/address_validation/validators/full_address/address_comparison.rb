@@ -91,8 +91,6 @@ module AtlasEngine
             comparators.select(&:relevant?).map(&:component)
           end
 
-          protected
-
           sig do
             returns(T::Array[FieldComparisonBase])
           end
