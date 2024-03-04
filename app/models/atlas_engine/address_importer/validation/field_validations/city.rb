@@ -38,7 +38,7 @@ module AtlasEngine
           end
 
           def validate
-            errors << "City is required" unless city&.any?(&:present?)
+            errors << "City is required" unless city&.any?(&:present?) # check if city is present
           end
         end
       end

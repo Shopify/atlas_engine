@@ -5,7 +5,7 @@ module AtlasEngine
   class PostAddress < ApplicationRecord
     extend T::Sig
 
-    validates :country_code, :city, presence: true
+    validates :country_code, presence: true
     validate :country_must_be_supported, :province_must_match_country, :zip_must_match_country_and_province
     serialize :city, type: Array, coder: YAML
 

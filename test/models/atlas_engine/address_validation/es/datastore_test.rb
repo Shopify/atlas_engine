@@ -45,6 +45,13 @@ module AtlasEngine
           assert_equal "San Francisco", sequence.raw_value
         end
 
+        test "#fetch_city_sequence returns empty token sequence if address' city is blank" do
+          @datastore = AddressValidation::Es::Datastore.new(address: address_no_city)
+          sequence = @datastore.fetch_city_sequence
+          assert_equal sequence.size, 0
+          assert_nil sequence.raw_value
+        end
+
         test "#fetch_city_sequence does not call ES for the same query" do
           stub_request(:post, %r{http\://.*/test_us/_analyze})
             .to_return(status: 200, body: analyze_query_results.to_json, headers: @headers)

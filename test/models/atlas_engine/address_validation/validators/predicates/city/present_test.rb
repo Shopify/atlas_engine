@@ -53,6 +53,14 @@ module AtlasEngine
 
               assert_nil Present.new(field: :city, address: address).evaluate
             end
+
+            test "when city is not present, but country does not require city" do
+              address = build_address_obj(
+                country_code: "AE",
+              )
+
+              assert_nil Present.new(field: :city, address: address).evaluate
+            end
           end
         end
       end

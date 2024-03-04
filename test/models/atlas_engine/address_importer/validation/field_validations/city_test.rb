@@ -16,11 +16,16 @@ module AtlasEngine
             assert_empty errors
           end
 
-          test "when not present" do
+          test "when not present and required" do
             errors = City.new(address: build_post_address_struct(city: nil)).validation_errors
             expected_errors = ["City is required"]
 
             assert_equal expected_errors, errors
+          end
+
+          test "when not present and not required" do
+            errors = City.new(address: build_post_address_struct(country_code: "AE", city: nil)).validation_errors
+            assert_empty errors
           end
         end
       end

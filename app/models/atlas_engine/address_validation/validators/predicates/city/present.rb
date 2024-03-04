@@ -12,6 +12,8 @@ module AtlasEngine
               return unless @cache.country.country?
               return if @cache.country.field(key: :city).autofill(locale: :en).present?
 
+              # return if city optional
+
               build_concern if @address.city.blank?
             end
 
