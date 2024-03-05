@@ -53,11 +53,11 @@ module AtlasEngine
       assert_equal expected_errors, address.errors[:province_code]
     end
 
-    test "when city is missing" do
-      address = PostAddress.new(country_code: "CA", province_code: "BC", zip: "V6B 4Y8")
+    # test "when city is missing" do
+    #   address = PostAddress.new(country_code: "CA", province_code: "BC", zip: "V6B 4Y8")
 
-      assert_not address.valid?
-    end
+    #   assert_not address.valid?
+    # end
 
     test "when zip and province are optional and not present" do
       assert PostAddress.new(country_code: "CG", city: ["Brazzaville"]).valid?

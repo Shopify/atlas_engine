@@ -65,16 +65,6 @@ module AtlasEngine
             assert_comparison(i_el, :equal, c_el, comparisons[0])
             assert_comparison(i_bronxo, :equal, c_bronxo, comparisons[1])
           end
-
-          test "#sequence_comparison returns nil if the address city field is empty" do
-            candidate = Candidate.new(id: "A", source: { "city" => ["Bronx"] })
-            address = build_address(city: "", country_code: "US")
-            datastore = Es::Datastore.new(address: address)
-
-            city_comparison = CityComparison.new(address:, candidate:, datastore:, component: :city)
-
-            assert_nil city_comparison.sequence_comparison
-          end
         end
       end
     end

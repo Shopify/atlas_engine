@@ -49,7 +49,7 @@ module AtlasEngine
           @datastore = AddressValidation::Es::Datastore.new(address: address_no_city)
           sequence = @datastore.fetch_city_sequence
           assert_equal sequence.size, 0
-          assert_nil sequence.raw_value
+          assert_equal "", sequence.raw_value
         end
 
         test "#fetch_city_sequence does not call ES for the same query" do
@@ -738,6 +738,15 @@ module AtlasEngine
           build_address(
             address1: "PO BOX 111",
             city: "San Francisco",
+            province_code: "CA",
+            country_code: "US",
+            zip: "94102",
+          )
+        end
+
+        def address_no_city
+          build_address(
+            address1: "123 Main Street",
             province_code: "CA",
             country_code: "US",
             zip: "94102",

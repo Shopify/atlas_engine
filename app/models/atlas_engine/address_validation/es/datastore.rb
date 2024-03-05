@@ -117,7 +117,8 @@ module AtlasEngine
         sig { returns(Token::Sequence) }
         def fetch_city_sequence_internal
           city_value = address.city
-          # return empty sequence if city is nil
+          return Token::Sequence.new(tokens: [], raw_value: city_value) if city_value.blank?
+
           request = {
             analyzer: :city_analyzer,
             text: city_value,

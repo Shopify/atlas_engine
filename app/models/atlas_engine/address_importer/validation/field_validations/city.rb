@@ -17,6 +17,7 @@ module AtlasEngine
             ).void
           end
           def initialize(address:, allow_partial_zip: false)
+            @country_code = address.country_code
             @city = address.city
             @errors = []
           end
@@ -38,6 +39,8 @@ module AtlasEngine
           end
 
           def validate
+            return if @country_code == "AE" # replace with countryDB check
+
             errors << "City is required" unless city&.any?(&:present?) # check if city is present
           end
         end

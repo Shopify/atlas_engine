@@ -11,8 +11,7 @@ module AtlasEngine
             def evaluate
               return unless @cache.country.country?
               return if @cache.country.field(key: :city).autofill(locale: :en).present?
-
-              # return if city optional
+              return if address.country_code == "AE" # replace with countryDB check
 
               build_concern if @address.city.blank?
             end
