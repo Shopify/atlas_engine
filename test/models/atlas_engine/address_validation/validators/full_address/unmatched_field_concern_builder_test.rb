@@ -56,7 +56,7 @@ module AtlasEngine
 
             expected_attributes = {
               field_names: [:province],
-              message: "Region may be incorrect.",
+              message: "Province may be incorrect.",
               code: :province_inconsistent,
               type: "warning",
               type_level: 3,
